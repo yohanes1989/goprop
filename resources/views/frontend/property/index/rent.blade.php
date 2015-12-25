@@ -1,0 +1,1 @@
+@include('frontend.property.index.sell')

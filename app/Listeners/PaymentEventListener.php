@@ -1,0 +1,55 @@
+<?php
+
+namespace GoProp\Listeners;
+
+use Carbon\Carbon;
+use GoProp\Events\Event;
+use GoProp\Models\Payment;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Session;
+use Webpresso\MyShortCart\Facades\MyShortCart;
+
+class PaymentEventListener
+{
+    /**
+     * Create the event listener.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param  Event  $event
+     * @return void
+     */
+    public function handle(Event $event)
+    {
+        if($event instanceof \GoProp\Events\PaymentCompletedEvent){
+            switch($event->transactionDetail['method']){
+                case MyShortCart::getMachineName():
+                    if ($event->transactionDetail['status'] == 'success') {
+                        $payment = Payment::findOrFail($event->transactionDetail['transaction_id']);
+
+                        if (isset($event->transactionDetail['payment_channel'])) {
+
+                        }else{
+                            $payment->update([
+                                'status' => Payment::STATUS_PAID,
+                                'amount' => $event->transactionDetail['amount'],
+                                'received_at' => Carbon::now()->toDateTimeString()
+                            ]);
+
+                            Session::set('payment_redirect_to', route('frontend.property.success', ['id' => $payment->order->package->id]));
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+}

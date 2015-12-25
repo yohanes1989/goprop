@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: GoProp
+        psr4_prefix: GoProp
+        src_path: app
