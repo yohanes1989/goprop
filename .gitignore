@@ -1,11 +1,8 @@
 /vendor
 /node_modules
 
-storage/app/
-storage/framework/cache/
-storage/framework/sessions/
-storage/framework/views/
-
+storage/
+bootstrap/cache/
 .env.*.php
 .env.php
 .env
