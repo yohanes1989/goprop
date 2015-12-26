@@ -1,12 +1,10 @@
 /vendor
 /node_modules
 
-storage/
-bootstrap/cache/
 .env.*.php
 .env.php
 .env
 .env.example
-.idea/
+.idea
 .sass-cache
 .DS_STORE
