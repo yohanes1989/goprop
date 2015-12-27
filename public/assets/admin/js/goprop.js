@@ -24,6 +24,7 @@
                             $('#modal-wrapper .modal-body').html($realMeat);
 
                             goPropApp.init('#modal-wrapper .modal-body');
+                            $('.select-chosen', context).chosen();
                         }
                     }
                 );
@@ -112,6 +113,17 @@
                     $(obj).find('a, img').remove();
                     $(obj).find('input[name="remove_profile_picture"]').val(1);
                 });
+            });
+
+            // Initialize Datetimepicker for Bootstrap
+            $('.input-datetimepicker').datetimepicker({
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up:   'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down'
+                },
+                format: 'YYYY-MM-DD HH:mm'
             });
         }
     };

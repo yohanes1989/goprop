@@ -74,6 +74,28 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                 'uses' => 'AgentController@delete'
             ]);
         });
+
+        Route::group(['prefix' => '/viewing-schedules'], function(){
+            Route::get('/index', [
+                'as' => 'admin.viewing_schedule.index',
+                'uses' => 'ViewingScheduleController@index'
+            ]);
+
+            Route::any('/{id}/assign-to-agent', [
+                'as' => 'admin.viewing_schedule.assign_to_agent',
+                'uses' => 'ViewingScheduleController@assignToAgent'
+            ]);
+
+            Route::any('/{id}/quick-edit', [
+                'as' => 'admin.viewing_schedule.quick_edit',
+                'uses' => 'ViewingScheduleController@quickEdit'
+            ]);
+
+            Route::post('/{id}/delete', [
+                'as' => 'admin.viewing_schedule.delete',
+                'uses' => 'ViewingScheduleController@delete'
+            ]);
+        });
     });
 });
 
@@ -149,6 +171,21 @@ Route::group(['namespace' => 'Frontend'], function(){
             Route::post('send_message/{property_id?}', [
                 'as' => 'frontend.account.inbox.send_message',
                 'uses' => 'AccountController@postSendMessage'
+            ]);
+
+            Route::get('viewings', [
+                'as' => 'frontend.account.viewings',
+                'uses' => 'AccountController@getViewings'
+            ]);
+
+            Route::get('viewings/calendar/data', [
+                'as' => 'frontend.account.viewings.data',
+                'uses' => 'AccountController@getViewingsData'
+            ]);
+
+            Route::get('viewings/calendar/my-properties/data', [
+                'as' => 'frontend.account.viewings.my_properties.data',
+                'uses' => 'AccountController@getViewingsMyPropertiesData'
             ]);
         });
     });

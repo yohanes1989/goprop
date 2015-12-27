@@ -7,10 +7,12 @@ use GoProp\Http\Controllers\Controller;
 use GoProp\Models\Property;
 use GoProp\Models\Message;
 use GoProp\Models\User;
+use GoProp\Models\ViewingSchedule;
 use Illuminate\Support\Facades\Auth;
 use GoProp\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use GoProp\Facades\ProjectHelper;
 
 class AccountController extends Controller
 {
@@ -66,13 +68,29 @@ class AccountController extends Controller
         $user = Auth::user();
         $qb = $user->likedProperties();
         AddressHelper::addAddressQueryScope($qb->getQuery());
+
         $interested_properties = $qb->get();
+
+        $myPropertiesQb = $user->properties()->whereNotIn('status', [Property::STATUS_DRAFT]);
+        AddressHelper::addAddressQueryScope($myPropertiesQb->getQuery());
+        $my_properties = $myPropertiesQb->get();
+
+        $confirmedViewingSchedule = null;
+
+        if($property){
+            $confirmedViewingSchedule = ViewingSchedule::confirmed()
+                ->where('property_id', $property->id)
+                ->where('user_id', $user->id)
+                ->first();
+        }
 
         return view('frontend.account.inbox', [
             'interested_properties' => $interested_properties,
             'property' => $property,
             'conversation' => $user->getPropertyConversation($property),
-            'user' => $user
+            'user' => $user,
+            'confirmedViewingSchedule' => $confirmedViewingSchedule,
+            'my_properties' => $my_properties
         ]);
     }
 
@@ -91,7 +109,7 @@ class AccountController extends Controller
         if($conversation){
             $agent = $conversation->recipient;
         }else{
-            $agent = User::where('username', 'agent1')->firstOrFail();
+            $agent = ProjectHelper::getDefaultAgent();
 
             //Create new conversation
             $conversation = new Message();
@@ -111,6 +129,68 @@ class AccountController extends Controller
         $message->save();
 
         return redirect()->back()->with('messages', [trans('property.inbox.sent_message')]);
+    }
+
+    public function getViewings()
+    {
+        $user = Auth::user();
+
+        $viewingSchedules = ViewingSchedule::confirmed()
+            ->where('user_id', $user->id)
+            ->get();
+
+        return view('frontend.account.viewings', [
+            'viewingSchedules' => $viewingSchedules
+        ]);
+    }
+
+    public function getViewingsData(Request $request)
+    {
+        $user = Auth::user();
+
+        $viewingSchedules = $user->viewingSchedules()
+            ->confirmed()
+            ->where('viewing_from', '>=', \DateTime::createFromFormat('Y-m-d', $request->input('start')))
+            ->where('viewing_until', '<=', \DateTime::createFromFormat('Y-m-d', $request->input('end')))
+            ->get();
+
+        $return = [];
+
+        foreach($viewingSchedules as $viewingSchedule){
+            $return[] = [
+                'title' => $viewingSchedule->property->property_name,
+                'start' => $viewingSchedule->viewing_from->toIso8601String(),
+                'end' => $viewingSchedule->viewing_until->toIso8601String(),
+                'className' => 'bg-green'
+            ];
+        }
+
+        return response()->json($return);
+    }
+
+    public function getViewingsMyPropertiesData(Request $request)
+    {
+        $user = Auth::user();
+        $myProperties = $user->properties->lists('id');
+
+        $viewingSchedules = ViewingSchedule::confirmed()
+            ->whereIn('property_id', $myProperties->all())
+            ->where('viewing_from', '>=', \DateTime::createFromFormat('Y-m-d', $request->input('start')))
+            ->where('viewing_until', '<=', \DateTime::createFromFormat('Y-m-d', $request->input('end')))
+            ->get();
+
+        $return = [];
+
+        foreach($viewingSchedules as $viewingSchedule){
+            $return[] = [
+                'title' => $viewingSchedule->property->property_name,
+                'start' => $viewingSchedule->viewing_from->toIso8601String(),
+                'end' => $viewingSchedule->viewing_until->toIso8601String(),
+                'className' => 'bg-yellow'
+            ];
+        }
+
+        return response()->json($return);
     }
 
     protected function validator(array $data)

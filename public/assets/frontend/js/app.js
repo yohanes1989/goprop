@@ -374,8 +374,10 @@ var app = {
 
       //Tab auto active
       $('.custom-tabs', context).each(function(idx, obj){
-          $(obj).find('.nav-tabs li:first').addClass('active');
-          $(obj).find('.tab-pane:first').addClass('active');
+          if($(obj).find('.active').length < 1){
+              $(obj).find('.nav-tabs li:first').addClass('active');
+              $(obj).find('.tab-pane:first').addClass('active');
+          }
       });
 
       if($('#viewing-datetime-selector').length > 0){
@@ -391,10 +393,27 @@ var app = {
               format: 'YYYY-MM-DD',
               keepOpen: true,
               inline: true,
-              defaultDate: moment().add(1, 'day'),
+              defaultDate: $('#viewing-datetime-selector').data('default-date'),
               daysOfWeekDisabled: $('#viewing-datetime-selector').data('disabled-days').split(',')
           });
       }
+
+      $('#viewing-calendar').fullCalendar({
+          header: {
+              center: 'title',
+              left: 'prev',
+              right: 'next'
+          },
+          aspectRatio: 1,
+          eventSources: [
+              {
+                  url: global_vars.base_path + '/account/viewings/calendar/data'
+              },
+              {
+                  url: global_vars.base_path + '/account/viewings/calendar/my-properties/data'
+              }
+          ]
+      });
   },
     calculateCommission: function(price, package)
     {

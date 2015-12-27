@@ -46,6 +46,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('GoProp\Models\Property');
     }
 
+    public function viewingSchedules()
+    {
+        return $this->hasMany('GoProp\Models\ViewingSchedule');
+    }
+
     public function likedProperties()
     {
         return $this->belongsToMany('GoProp\Models\Property', 'liked_properties')

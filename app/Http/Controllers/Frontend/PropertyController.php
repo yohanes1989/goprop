@@ -720,6 +720,10 @@ class PropertyController extends Controller
         $user = Auth::user();
         $property = Property::findOrFail($id);
 
+        if($property->user->id == $user->id){
+            return redirect()->back()->with('messages', [trans('property.like.own_property')]);
+        }
+
         $user->likeProperty($property);
 
         return redirect()->back()->with('messages', [trans('property.like.like_message', ['property_name' => $property->property_name])]);
@@ -774,10 +778,18 @@ class PropertyController extends Controller
 
         $disabledDays = array_diff([0,1,2,3,4,5,6], $enabledDays);
 
+        $viewingSchedule = ViewingSchedule::where('user_id', $user->id)->where('property_id', $property->id)->first();
+
+        $defaultDate = $viewingSchedule?$viewingSchedule->viewing_from->toIso8601String():Carbon::tomorrow()->format('Y-m-d');
+        $defaultTime = $viewingSchedule?str_replace(':', '_', $viewingSchedule->viewing_from->format('H:i')):NULL;
+
         return view('frontend.property.schedule_viewings.mini_form', [
             'user' => $user,
             'property' => $property,
-            'disabledDays' => $disabledDays
+            'disabledDays' => $disabledDays,
+            'defaultDate' => $defaultDate,
+            'defaultTime' => $defaultTime,
+            'viewingSchedule' => $viewingSchedule
         ]);
     }
 
@@ -795,21 +807,52 @@ class PropertyController extends Controller
             ]
         ];
 
-        $viewingFrom = new \DateTime(strtotime($request->input('viewing_date').' '.$request->input('viewing_time')));
-        $viewingTo = new \DateTime(strtotime($request->input('viewing_date').' '.$request->input('viewing_time')));
-        $viewingTo->modify('+2 hours');
-
         $this->validate($request, $rules);
 
-        $viewingSchedule = new ViewingSchedule([
+        $viewingTime = str_replace('_', ':', $request->input('viewing_time'));
+
+        $viewingFrom = \DateTime::createFromFormat('Y-m-d H:i', $request->input('viewing_date').' '.$viewingTime);
+        $viewingTo = clone $viewingFrom;
+        $viewingTo->modify('+2 hours');
+
+        $viewingSchedule = ViewingSchedule::where('user_id', $user->id)->where('property_id', $property->id)->first();
+
+        if(!$viewingSchedule){
+            $viewingSchedule = new ViewingSchedule();
+            $viewingSchedule->user()->associate($user);
+            $viewingSchedule->property()->associate($property);
+            $reschedule = FALSE;
+        }else{
+            $reschedule = TRUE;
+        }
+
+        $viewingSchedule->fill([
             'viewing_from' => $viewingFrom->format('Y-m-d H:i:s'),
             'viewing_until' => $viewingTo->format('Y-m-d H:i:s')
         ]);
-        $viewingSchedule->user()->associate($user);
-        $viewingSchedule->property()->associate($property);
+
+        $viewingSchedule->status = ViewingSchedule::STATUS_PENDING;
         $viewingSchedule->save();
 
-        return redirect()->back()->with('messages', [trans('property.schedule_viewing.success_message')]);
+        $conversation = $user->getPropertyConversation($property);
+        if(!$conversation){
+            $agent = ProjectHelper::getDefaultAgent();
+
+            //Create new conversation
+            $conversation = new Message();
+            $conversation->sender()->associate($user);
+            $conversation->recipient()->associate($agent);
+            $conversation->referenced()->associate($property);
+            $conversation->save();
+        }
+
+        if($reschedule){
+            $message = trans('property.schedule_viewing.reschedule_success_message');
+        }else{
+            $message = trans('property.schedule_viewing.success_message');
+        }
+
+        return redirect()->back()->with('messages', [$message]);
     }
 
     public function getAddToComparison($id)

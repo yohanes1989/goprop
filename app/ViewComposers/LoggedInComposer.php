@@ -15,9 +15,7 @@ class LoggedInComposer
     public function compose(View $view)
     {
         $route = Request::route();
-        $urlSegments = explode('/', $route->getUri());
-        $prefix = $urlSegments[0];
 
-        $view->with('active_section', $prefix);
+        $view->with('active_section', $route->getUri());
     }
 }

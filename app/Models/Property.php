@@ -82,7 +82,7 @@ class Property extends Model
 
     public function likedBy()
     {
-        return $this->belongsToMany('GoProp\Models\User', 'liked_properties')->where('type', 'like');
+        return $this->belongsToMany('GoProp\Models\User', 'liked_properties');
     }
 
     public function messages()

@@ -14,6 +14,16 @@
                     <div class="inbox-content-wrapper">
                         <div class="row">
                             <div class="form-group col-sm-6">
+                                {!! Form::label('your_properties', trans('property.inbox.your_properties')) !!}
+                                <select id="your_properties" class="form-control select-go-to">
+                                    <option value="{{ route('frontend.account.inbox') }}">{{ trans('forms.please_select') }}</option>
+                                    @foreach($my_properties as $my_property)
+                                        <option {{ ($property && $my_property->id==$property->id)?'selected':'' }} value="{{ route('frontend.account.inbox', ['property_id' => $my_property->id]) }}">{{ $my_property->property_name.' ('.$my_property->city_name.', '.$my_property->subdistrict_name.')' }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group col-sm-6">
                                 {!! Form::label('properties_interested', trans('property.inbox.properties_interested')) !!}
                                 <select id="properties_interested" class="form-control select-go-to">
                                     <option value="{{ route('frontend.account.inbox') }}">{{ trans('forms.please_select') }}</option>
@@ -45,13 +55,14 @@
                                                 </header>
                                             </div>
                                         </div>
-                                        <!--
+
+                                        @if($confirmedViewingSchedule)
                                         <div class="col-xs-7 button-area">
                                             <h6 class="entry-date">
-                                                <a href="" class="btn btn-yellow"><img src="{{ asset('assets/frontend/images/icon-user-viewings.png') }}" /> <span>Viewing scheduled:</span> Sat, 26th Nov 2015 09.00</a>
+                                                <div class="btn btn-yellow"><img src="{{ asset('assets/frontend/images/icon-user-viewings.png') }}" /> <span>{{ trans('property.viewings.scheduled_label') }}:</span> {{ $confirmedViewingSchedule->viewing_from->format('D, d M Y  H:i') }}</div>
                                             </h6>
                                         </div>
-                                        -->
+                                        @endif
                                     </div>
                                     <div class="chat-middle">
                                         <div class="chat-middle-outer">

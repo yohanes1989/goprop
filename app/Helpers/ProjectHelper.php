@@ -5,6 +5,7 @@ namespace GoProp\Helpers;
 use GoProp\Models\Property;
 use Illuminate\Support\Facades\Cookie;
 use GoProp\Models\Order;
+use GoProp\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ProjectHelper
@@ -41,6 +42,12 @@ class ProjectHelper
     public function forgetGlobalCartOrder()
     {
         Cookie::forget('goprop_order_id');
+    }
+
+    public function getDefaultAgent()
+    {
+        $agent = User::where('username', 'agent1')->firstOrFail();
+        return $agent;
     }
 
     public function getExclusiveProperties($take)

@@ -60,8 +60,10 @@
                                         <div class="user-info">
                                             <ul class="list-unstyled">
                                                 @include('frontend.property.includes.shareTo', ['for' => $property->getViewFor()])
-                                                <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a href="{{ route(($property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'frontend.property.unlike':'frontend.property.like'), ['id' => $property->id]) }}"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
-                                                <li>
+                                                    @if($property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
+                                                    <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a href="{{ route(($property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'frontend.property.unlike':'frontend.property.like'), ['id' => $property->id]) }}"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
+                                                    @endif
+                                                    <li>
                                                     @if(!\GoProp\Facades\PropertyCompareHelper::isAddedToComparison($property))
                                                         <a href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
                                                     @else

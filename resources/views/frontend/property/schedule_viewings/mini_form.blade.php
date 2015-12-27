@@ -8,7 +8,7 @@
         </header>
         <div class="entry-content clearfix">
             <div class="col-sm-12">
-                <div id="viewing-datetime-selector" data-disabled-days="{{ implode(',', $disabledDays) }}">
+                <div id="viewing-datetime-selector" data-default-date="{{ $defaultDate }}" data-disabled-days="{{ implode(',', $disabledDays) }}">
                     <input type="text" class="form-control" name="viewing_date" />
                 </div>
 
@@ -27,14 +27,18 @@
                             {!! Form::label('viewing_time', trans('property.schedule_viewing.label')) !!} <sup class="text-danger">*</sup>
                         </div>
                         <div class="col-sm-6">
-                            {!! Form::select('viewing_time', \GoProp\Models\Property::getViewingTimeLabel(), null, ['class' => 'form-control', 'id' => 'viewing_time']) !!}
+                            {!! Form::select('viewing_time', \GoProp\Models\Property::getViewingTimeLabel(), [$defaultTime], ['class' => 'form-control', 'id' => 'viewing_time']) !!}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="entry-detail text-center">
-            {!! Form::button(trans('property.schedule_viewing.schedule_btn'), ['type' => 'submit', 'class' => 'btn btn-yellow']) !!}
+            @if(!$viewingSchedule)
+                {!! Form::button(trans('property.schedule_viewing.schedule_btn'), ['type' => 'submit', 'class' => 'btn btn-yellow']) !!}
+            @else
+                {!! Form::button(trans('property.viewings.change_date'), ['type' => 'submit', 'class' => 'btn btn-yellow']) !!}
+            @endif
         </div>
     </div>
     {!! Form::close() !!}

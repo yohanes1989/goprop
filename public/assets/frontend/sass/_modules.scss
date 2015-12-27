@@ -1616,6 +1616,46 @@ $font-primary: 'Lato', sans-serif;
   }
 }
 
+#viewing-calendar{
+  .fc-toolbar{
+    margin: 0;
+    background-color: #62707d;
+    color: #fff;
+
+    h2{
+      font-size: 1.1em;
+      line-height: 1em;
+      margin: 0.5em 0;
+    }
+
+    .fc-button{
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+
+      .fc-icon{
+        color: #fff;
+        @include single-text-shadow(none);
+      }
+    }
+  }
+
+  .fc-widget-header{
+    padding: 0.2em 0;
+    font-weight: normal;
+    text-transform: uppercase;
+    background: $color-blue-light;
+  }
+
+  .fc-day-number{
+    text-align: center;
+  }
+
+  .fc-event{
+    border: none;
+  }
+}
+
 #viewing-schedule-form{
   min-width: 320px;
 

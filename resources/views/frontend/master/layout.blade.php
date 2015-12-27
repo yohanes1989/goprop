@@ -24,6 +24,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/fancybox/jquery.fancybox.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/flexslider/flexslider.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/fullcalendar/fullcalendar.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/style.css') }}">
         @show
     </head>
@@ -164,6 +165,7 @@
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/bootstrap-slider/js/bootstrap-slider.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/fancybox/jquery.fancybox.pack.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/flexslider/jquery.flexslider-min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/frontend/vendor/fullcalendar/fullcalendar.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/accounting.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/js/app.js') }}"></script>
         @show

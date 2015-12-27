@@ -6,8 +6,14 @@
     </div>
     <div class="col-sm-6 account-property-detail">
         <ul class="list-unstyled">
-            <li><a href=""><img src="{{ asset('assets/frontend/images/icon-small-email.png') }}"></a></li>
-            <li><a href="{{ route('frontend.property.schedule_viewing', ['id' => $property->id]) }}" class="ajax_popup fancybox.ajax"><img src="{{ asset('assets/frontend/images/icon-small-date.png') }}"></a></li>
+            <li><a href="{{ route('frontend.account.inbox', ['property_id' => $property->id, 'new' => 1]) }}"><img src="{{ asset('assets/frontend/images/icon-small-email.png') }}"></a></li>
+            @if($property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
+            <li>
+                <a href="{{ route('frontend.property.schedule_viewing', ['id' => $property->id]) }}" class="ajax_popup fancybox.ajax">
+                    <img src="{{ asset('assets/frontend/images/icon-small-date.png') }}">
+                </a>
+            </li>
+            @endif
             @if($property->status == \GoProp\Models\Property::STATUS_DRAFT)
                 <li><a href="{{ route('frontend.property.edit', ['id' => $property->id]) }}"><img src="{{ asset('assets/frontend/images/icon-small-bookmark.png') }}"></a></li>
             @endif

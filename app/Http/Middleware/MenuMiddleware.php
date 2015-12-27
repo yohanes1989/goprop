@@ -27,6 +27,9 @@ class MenuMiddleware
                     $menu->raw('<h2 class="sidebar-header">Master</h2>');
                     $menu->add('Members', ['route' => ['admin.member.index']])->prepend('<i class="fa fa-user"></i> ');
                     $menu->add('Agents', ['route' => ['admin.agent.index']])->prepend('<i class="fa fa-users"></i> ');
+
+                    $menu->raw('<h2 class="sidebar-header">Operations</h2>');
+                    $menu->add('Viewing Schedules', ['route' => ['admin.viewing_schedule.index']])->prepend('<i class="fa fa-calendar"></i> ');
                     /*
                     $menu->add('Products', ['route' => ['admin.product.index']])->prepend('<i class="gi gi-tags"></i> ');
 

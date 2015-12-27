@@ -182,6 +182,7 @@ return [
         'like_message' => 'You just liked :property_name.',
         'unlike_message' => ':property_name is removed from your interest list.',
         'please_login' => 'Please login to like property.',
+        'own_property' => 'You can\'t like your own property.',
     ],
     'advanced_search_widget' => [
         'advanced_search' => 'Advanced Search'
@@ -220,6 +221,7 @@ return [
             'property_i_view' => 'Properties I\'m viewing',
         ],
         'success_message' => 'We have received your Booking request. Our agent will contact you.',
+        'reschedule_success_message' => 'We have received your reschedule request. Our agent will contact you.'
     ],
     'property_comparison' => [
         'compare_properties' => 'Compare Properties',
@@ -238,5 +240,12 @@ return [
         'conversation_started' => 'Conversation started :time',
         'no_result_message' => 'You haven\'t shown any interest in a property yet.<br />Search for property you\'re interested in to see it here.',
         'sent_message' => 'Your message is successfully sent to our agent.'
+    ],
+    'viewings' => [
+        'title' => 'Viewing Calendars',
+        'view_of_my_property' => 'View of my property',
+        'properties_i_view' => 'Properties I\'m viewing',
+        'scheduled_label' => 'Viewing scheduled',
+        'change_date' => 'Change date',
     ]
 ];
