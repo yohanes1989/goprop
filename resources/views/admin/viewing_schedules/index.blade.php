@@ -18,6 +18,7 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th>User</th>
+                        <th>Property</th>
                         <th>Agent</th>
                         <th>Date</th>
                         <th>Status</th>
@@ -32,6 +33,11 @@
                         <td><strong>{{ $viewingSchedule->user->profile->singleName }}</strong><br/>
                             {{ $viewingSchedule->user->username }}<br/>
                             {{ $viewingSchedule->user->email }}
+                        </td>
+                        <td>
+                            <strong>{{ $viewingSchedule->property->property_name }}</strong><br/>
+                            {{ \GoProp\Facades\AddressHelper::getAddressLabel($viewingSchedule->property->city, 'city') }}, {{ \GoProp\Facades\AddressHelper::getAddressLabel($viewingSchedule->property->subdistrict, 'subdistrict') }}<br/>
+                            {{ \GoProp\Facades\AddressHelper::getAddressLabel($viewingSchedule->property->province, 'province') }}
                         </td>
                         <td>
                             @if($viewingSchedule->agent)

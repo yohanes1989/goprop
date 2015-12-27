@@ -11,7 +11,7 @@ class ViewingScheduleController extends Controller
 {
     public function index()
     {
-        $qb = ViewingSchedule::with(['user', 'user.profile', 'agent', 'agent.profile']);
+        $qb = ViewingSchedule::with(['user', 'user.profile', 'agent', 'agent.profile', 'property']);
 
         $viewingSchedules = $qb->paginate(50);
 

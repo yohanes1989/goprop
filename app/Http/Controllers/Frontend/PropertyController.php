@@ -16,11 +16,10 @@ use GoProp\Models\Payment;
 use GoProp\Models\Property;
 use GoProp\Models\PropertyAttachment;
 use GoProp\Models\ViewingSchedule;
-use Illuminate\Support\Facades\Log;
+use GoProp\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Webpresso\MyShortCart\Facades\MyShortCart;
 
 class PropertyController extends Controller
