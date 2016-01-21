@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
+    const TYPE_OWNER_MESSAGE = 'owner_message';
+    const TYPE_USER_MESSAGE = 'user_message';
+
     protected $guarded = ['parent_id'];
 
     public $dates = ['read_at'];
@@ -40,5 +43,11 @@ class Message extends Model
     public function referenced()
     {
         return $this->morphTo();
+    }
+
+    //Accessor
+    public function getLastReplyAttribute()
+    {
+        return $this->replies?$this->replies->last():NULL;
     }
 }

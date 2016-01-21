@@ -9,6 +9,7 @@ use GoProp\Models\Profile;
 use GoProp\Models\User;
 use GoProp\Models\Subscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -126,5 +127,35 @@ class MemberController extends Controller
         $user->delete();
 
         return redirect($request->get('backUrl', route('admin.member.index')))->with('messages', [$user->username.' has been deleted.']);
+    }
+
+    public function findAutocomplete(Request $request)
+    {
+        $term = $request->get('term', '');
+
+        $return = [];
+
+        if(strlen($term) >= 2){
+            $qb = User::whereHas('profile', function($query) use ($term){
+                $query->where('first_name', 'LIKE', '%'.$term.'%')
+                    ->orWhere('last_name', 'LIKE', '%'.$term.'%')
+                    ->orWhere('email', 'LIKE', '%'.$term.'%');
+            });
+
+            $qb->whereHas('roles', function($query){
+                $query->where('slug', 'authenticated_user');
+            });
+
+            $results = $qb->get();
+
+            foreach($results as $result){
+                $return[] = [
+                    'label' => $result->profile->first_name.' '.$result->profile->last_name.' ('.$result->email.')',
+                    'value' => $result->email
+                ];
+            }
+        }
+
+        return response()->json($return);
     }
 }

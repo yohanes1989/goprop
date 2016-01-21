@@ -77,7 +77,7 @@ class Property extends Model
 
     public function packages()
     {
-        return $this->belongsToMany('GoProp\Models\Package');
+        return $this->belongsToMany('GoProp\Models\Package')->withPivot(['addons']);
     }
 
     public function likedBy()
@@ -97,6 +97,17 @@ class Property extends Model
     }
 
     //Methods
+    public function getPackageAddons()
+    {
+        $package = $this->packages?$this->packages->first():NULL;
+
+        if($package){
+            return explode('|', $package->pivot->addons);
+        }
+
+        return [];
+    }
+
     public function getPhotoThumbnail()
     {
         if($this->photos->count() > 0){
@@ -157,8 +168,6 @@ class Property extends Model
 
     public function savePhoto($photo, $type, $sort_order = 0)
     {
-        $fileName = $this->id.'_'.filter_var($photo->getClientOriginalName(), FILTER_SANITIZE_STRING);
-
         $propertyAttachment = new PropertyAttachment();
 
         if($type == 'photo'){
@@ -167,6 +176,13 @@ class Property extends Model
             $uploadPath = $propertyAttachment::$floorplanUploadPath;
         }
 
+        $prefix = $this->id.'_'.time();
+        $fileName = $prefix.'.'.$photo->getClientOriginalExtension();
+        $duplicateCount = 0;
+        while(Storage::disk('local')->exists($uploadPath.'/'.$fileName)){
+            $duplicateCount += 1;
+            $fileName = $prefix.($duplicateCount+1).'.'.$photo->getClientOriginalExtension();
+        }
         Storage::disk('local')->put($uploadPath.'/'.$fileName, File::get($photo));
 
         $propertyAttachment->fill([

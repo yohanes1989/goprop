@@ -2,6 +2,7 @@
 
 namespace GoProp\Http\Controllers\Admin;
 
+use GoProp\Facades\AgentHelper;
 use GoProp\Http\Controllers\Controller;
 use GoProp\Models\ViewingSchedule;
 use Illuminate\Http\Request;
@@ -25,13 +26,27 @@ class ViewingScheduleController extends Controller
         $viewingSchedule = ViewingSchedule::findOrFail($id);
 
         if($request->isMethod('POST')){
+            $conversation = $viewingSchedule->user->getPropertyConversation($viewingSchedule->property);
+
             if($request->has('agent')){
                 $agent = User::findOrFail($request->input('agent'));
 
                 $viewingSchedule->agent()->associate($agent);
+
+                if($conversation){
+                    $conversation->recipient()->associate($agent);
+                    $conversation->save();
+                }
+
                 $message = 'Viewing Schedule has been assigned to '.$agent->profile->singleName.'.';
             }else{
-                $viewingSchedule->agent_id = NULL;
+                $viewingSchedule->agent()->dissociate();
+
+                if($conversation){
+                    $conversation->recipient()->dissociate();
+                    $conversation->save();
+                }
+
                 $message = 'Viewing Schedule is detached from Agent.';
             }
 
@@ -40,7 +55,7 @@ class ViewingScheduleController extends Controller
             return redirect($request->get('backUrl', route('admin.viewing_schedule.index')))->with('messages', [$message]);
         }
 
-        $agentOptions = $this->getAgentOptions();
+        $agentOptions = AgentHelper::getAgentOptions();
 
         return view('admin.viewing_schedules.assign_to_agent', [
             'viewingSchedule' => $viewingSchedule,
@@ -54,8 +69,8 @@ class ViewingScheduleController extends Controller
 
         if($request->isMethod('POST')){
             $rules = [
-                'viewing_from' => 'required|date_format:Y-m-d H:i',
-                'viewing_until' => 'required|date_format:Y-m-d H:i',
+                'viewing_from' => 'required|date_format:Y-m-d H:i|after:now',
+                'viewing_until' => 'required|date_format:Y-m-d H:i|after:now',
                 'status' => 'required|in:'.implode(',', array_keys(ViewingSchedule::getStatusLabel()))
             ];
 
@@ -81,18 +96,5 @@ class ViewingScheduleController extends Controller
         $viewingSchedule->delete();
 
         return redirect($request->get('backUrl', route('admin.viewing_schedule.index')))->with('messages', ['Viewing Schedule has been deleted.']);
-    }
-
-    public function getAgentOptions()
-    {
-        $qb = User::query();
-        $qb->selectRaw($qb->getQuery()->from.'.id, CONCAT(first_name, " ", last_name) AS full_name')->leftJoin('profiles AS P', 'P.user_id', '=', $qb->getQuery()->from.'.id');
-        $qb->whereHas('roles', function($query){
-            $query->where('slug', 'agent');
-        });
-
-        $agentOptions = $qb->lists('full_name', 'id')->all();
-
-        return $agentOptions;
     }
 }

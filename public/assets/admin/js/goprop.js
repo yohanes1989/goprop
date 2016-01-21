@@ -125,6 +125,55 @@
                 },
                 format: 'YYYY-MM-DD HH:mm'
             });
+
+            //Scroll
+            $('.scrollDiv',context).each(function(idx, obj){
+                $(obj).slimScroll({
+                    height: $(obj).data('scrollHeight'),
+                    color: '#000000',
+                    size: '3px',
+                    touchScrollStep: 100,
+                    distance: '0',
+                    start: 'bottom'
+                });
+            });
+
+            //Dependant field
+            $('*[data-field-dependent]', context).hide();
+
+            $('*[data-field-dependent]', context).each(function(idx, obj){
+                var $dependentParentField = $('[name="'+$(obj).data('field-dependent').split('|')[0]+'"]');
+                var $dependentValue = $(obj).data('field-dependent').split('|')[1];
+
+                $dependentParentField.on('change', function(e){
+                    if($(this).val() == $dependentValue){
+                        $(obj).show();
+                    }else{
+                        $(obj).hide();
+                    }
+                });
+                $dependentParentField.change();
+            });
+
+            //Autocomplete
+            $('input[type="text"][data-autocomplete]', context).each(function(idx, obj){
+                $(obj).wrap('<div class="ui-front"></div>')
+                $(obj).after('<i class="fa fa-spinner fa-spin" style="display: none;"></i>');
+
+                $(obj).autocomplete({
+                    source: $(obj).data('autocomplete'),
+                    minLength: 2,
+                    select: function(event, ui){
+                        $(obj).val(ui.item.email);
+                    },
+                    search: function(){
+                        $(obj).next().show();
+                    },
+                    response: function(){
+                        $(obj).next().hide();
+                    }
+                });
+            });
         }
     };
 

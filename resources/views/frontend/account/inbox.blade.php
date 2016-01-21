@@ -6,7 +6,7 @@
             <div class="col-sm-12 col-md-10 register-form-wrapper">
                 <header class="header-area">
                     <h3 class="entry-title">{{ trans('property.inbox.title') }}</h3>
-                    @if($property && $property->messages->count() < 1)
+                    @if($property && !$conversation)
                     <div class="entry-button"><a href="{{ route('frontend.account.inbox', ['property_id' => $property->id, 'new' => TRUE]) }}"><img src="{{ asset('assets/frontend/images/icon-inbox-new.png') }}" /> Add Messages</a></div>
                     @endif
                 </header>
@@ -34,8 +34,7 @@
                             </div>
                         </div>
 
-                        @if($interested_properties->count() > 0)
-                        <div class="chat-content-wrapper">
+                        <div id="chat-content-wrapper">
                             @if($property)
                                 @if($conversation || \Illuminate\Support\Facades\Request::get('new'))
                                 <div class="chat-inner-wrapper">
@@ -46,7 +45,7 @@
                                                     <img src="{{ asset('assets/frontend/images/user-icon.png') }}" alt="">
                                                 </div>
                                                 <header class="entry-header">
-                                                    @if(!$conversation)
+                                                    @if(!$conversation || !$conversation->recipient)
                                                         <h5 class="entry-title">GoProp Agent</h5>
                                                     @else
                                                         <h5 class="entry-title">{{ $conversation->recipient->profile->singleName }}</h5>
@@ -66,19 +65,11 @@
                                     </div>
                                     <div class="chat-middle">
                                         <div class="chat-middle-outer">
-                                            <div class="chat-middle-content">
+                                            <div class="chat-middle-content" id="chatLineHolder">
                                                 @if($conversation)
                                                 <div class="text-center">
                                                     <small>{{ trans('property.inbox.conversation_started', ['time' => $conversation->created_at->format('d M Y H:i')]) }}</small>
                                                 </div>
-
-                                                @foreach($conversation->replies as $reply)
-                                                    <div class="chat-row {{ $reply->sender->id == $user->id?'chat-self':'chat-reply' }}">
-                                                        <div class="chat-date">{{ $reply->created_at->format('d M Y H:i') }}</div>
-                                                        <div class="chat-message">{{ $reply->message }}</div>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                @endforeach
                                                 @endif
                                             </div>
                                         </div>
@@ -90,7 +81,7 @@
                                             </h4>
                                         </header>
                                         <div class="entry-content">
-                                            {!! Form::open(['method' => 'POST', 'route' => ['frontend.account.inbox.send_message', 'property_id' => $property->id]]) !!}
+                                            {!! Form::open(['method' => 'POST', 'id' => 'chat-form', 'route' => ['frontend.account.inbox.send_message', 'property_id' => $property->id], 'data-property_id' => $property->id]) !!}
                                                 {!! Form::textarea('message', null, ['class' => 'form-control', 'rows' => 4]) !!}
                                                 {!! Form::submit(trans('property.inbox.send_message'), ['class' => 'btn btn-yellow']) !!}
                                             {!! Form::close() !!}
@@ -104,11 +95,6 @@
                                 <h3 class="text-center unbold color-gray">{{ trans('property.inbox.please_select_property') }}</h3>
                             @endif
                         </div>
-                        @else
-                            <div class="text-center">
-                                <small>{!! trans('property.inbox.no_result_message') !!}</small>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </div>

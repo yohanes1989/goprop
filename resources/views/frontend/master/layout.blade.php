@@ -154,7 +154,8 @@
         <script>
             var global_vars = {
                 'base_path': '{{ url('/') }}',
-                'currency': 'IDR'
+                'currency': 'IDR',
+                'time': '{{ date('Y-m-d H:i:s') }}'
             };
         </script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/jquery/jquery-1.11.1.min.js') }}"></script>

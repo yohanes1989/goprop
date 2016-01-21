@@ -8,6 +8,8 @@ class Package extends Model
 {
     protected $guarded = [];
 
+    private $_paidFeatures;
+
     //Relations
     public function category()
     {
@@ -29,6 +31,15 @@ class Package extends Model
     {
         $features = $this->features;
         return $features->contains('code', 'exclusive-agency-contract');
+    }
+
+    public function getPaidFeaturesAttribute()
+    {
+        if(!isset($this->_paidFeatures)){
+            $this->_paidFeatures = $this->features()->where('price', '>', 0)->get();
+        }
+
+        return $this->_paidFeatures;
     }
 
     //Methods

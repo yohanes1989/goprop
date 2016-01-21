@@ -104,31 +104,60 @@ class AccountController extends Controller
 
         $property = Property::find($property_id);
         $user = Auth::user();
+        $agent = ProjectHelper::getDefaultAgent();
 
         $conversation = $user->getPropertyConversation($property);
         if($conversation){
             $agent = $conversation->recipient;
         }else{
-            $agent = ProjectHelper::getDefaultAgent();
-
-            //Create new conversation
-            $conversation = new Message();
-            $conversation->sender()->associate($user);
-            $conversation->recipient()->associate($agent);
-            $conversation->referenced()->associate($property);
-            $conversation->save();
+            $conversation = $user->createPropertyConversation($property, $agent);
         }
 
         $message = new Message([
             'message' => $request->input('message')
         ]);
         $message->sender()->associate($user);
-        $message->recipient()->associate($agent);
+        if($agent){
+            $message->recipient()->associate($agent);
+        }
         $message->referenced()->associate($property);
         $message->parentMessage()->associate($conversation);
         $message->save();
 
+        if($request->ajax()){
+            $return = [
+                'message' => [
+                    'id' => $message->id,
+                    'text' => $message->message
+                ]
+            ];
+
+            return response()->json($return);
+        }
+
         return redirect()->back()->with('messages', [trans('property.inbox.sent_message')]);
+    }
+
+    public function getReplies(Request $request, $property_id)
+    {
+        $user = Auth::user();
+        $property = Property::findOrFail($property_id);
+
+        $conversation = $user->getPropertyConversation($property);
+        $replies = $conversation->replies()->where('id', '>', $request->get('lastID'))->get();
+
+        $return['chats'] = [];
+
+        foreach($replies as $reply) {
+            $return['chats'][] = [
+                'id' => $reply->id,
+                'class' => ($reply->sender_id == $conversation->sender_id)?'chat-self':'chat-reply',
+                'text' => $reply->message,
+                'time' => $reply->created_at->format('d M Y H:i')
+            ];
+        }
+
+        return response()->json($return);
     }
 
     public function getViewings()

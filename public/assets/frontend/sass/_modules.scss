@@ -1473,7 +1473,7 @@ $font-primary: 'Lato', sans-serif;
 			}
 		}
 		.inbox-content-wrapper {
-			.chat-content-wrapper {
+			#chat-content-wrapper {
 				margin-top: 50px;
 				.chat-inner-wrapper {
 					height: 600px;
@@ -1537,6 +1537,7 @@ $font-primary: 'Lato', sans-serif;
                     @include border-radius(5px);
                     border: 1px solid $color-grey-light;
                     margin: 0.5em 0;
+                    clear: both;
 
                     .chat-date{
                       font-size: 0.8em;

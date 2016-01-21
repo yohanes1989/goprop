@@ -837,12 +837,7 @@ class PropertyController extends Controller
         if(!$conversation){
             $agent = ProjectHelper::getDefaultAgent();
 
-            //Create new conversation
-            $conversation = new Message();
-            $conversation->sender()->associate($user);
-            $conversation->recipient()->associate($agent);
-            $conversation->referenced()->associate($property);
-            $conversation->save();
+            $user->createPropertyConversation($property, $agent);
         }
 
         if($reschedule){

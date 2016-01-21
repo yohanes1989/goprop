@@ -60,7 +60,7 @@
                                         <div class="user-info">
                                             <ul class="list-unstyled">
                                                 @include('frontend.property.includes.shareTo', ['for' => $property->getViewFor()])
-                                                    @if($property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
+                                                    @if(\Illuminate\Support\Facades\Auth::check() && $property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
                                                     <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a href="{{ route(($property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'frontend.property.unlike':'frontend.property.like'), ['id' => $property->id]) }}"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
                                                     @endif
                                                     <li>

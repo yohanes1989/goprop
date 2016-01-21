@@ -5,13 +5,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
         'auth' => 'Auth\AuthController'
     ]);
 
-    Route::group(['prefix' => '/', 'middleware' => ['admin.auth', 'menu', 'acl'], 'is' => 'administrator'], function(){
+    Route::group(['prefix' => '/', 'middleware' => ['admin.auth', 'menu', 'acl']], function(){
         Route::get('/', [
             'as' => 'admin.dashboard',
             'uses' => 'HomeController@dashboard'
         ]);
 
-        Route::group(['prefix' => '/members'], function(){
+        //Admin
+        Route::group(['prefix' => '/members', 'is' => 'administrator'], function(){
             Route::get('/index', [
                 'as' => 'admin.member.index',
                 'uses' => 'MemberController@index'
@@ -43,7 +44,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             ]);
         });
 
-        Route::group(['prefix' => '/agents'], function(){
+        Route::group(['prefix' => '/agents', 'is' => 'administrator'], function(){
             Route::get('/index', [
                 'as' => 'admin.agent.index',
                 'uses' => 'AgentController@index'
@@ -75,7 +76,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             ]);
         });
 
-        Route::group(['prefix' => '/viewing-schedules'], function(){
+        Route::group(['prefix' => '/viewing-schedules', 'is' => 'administrator'], function(){
             Route::get('/index', [
                 'as' => 'admin.viewing_schedule.index',
                 'uses' => 'ViewingScheduleController@index'
@@ -96,6 +97,95 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                 'uses' => 'ViewingScheduleController@delete'
             ]);
         });
+
+        Route::group(['prefix' => '/customer-inquiry', 'is' => 'administrator|agent'], function(){
+            Route::get('/{type}/index', [
+                'as' => 'admin.customer_inquiry.index',
+                'uses' => 'CustomerInquiryController@index'
+            ]);
+
+            Route::any('/{id}/assign-to-agent', [
+                'as' => 'admin.customer_inquiry.assign_to_agent',
+                'uses' => 'CustomerInquiryController@assignToAgent'
+            ]);
+
+            Route::any('/{id}/conversation', [
+                'as' => 'admin.customer_inquiry.conversation',
+                'uses' => 'CustomerInquiryController@conversation'
+            ]);
+        });
+
+        //Agent
+        Route::group(['prefix' => '/my-viewing-schedules', 'is' => 'agent'], function(){
+            Route::get('/index', [
+                'as' => 'agent.viewing_schedule.index',
+                'uses' => 'Agent\ViewingScheduleController@index'
+            ]);
+
+            Route::any('/{id}/quick-edit', [
+                'as' => 'agent.viewing_schedule.quick_edit',
+                'uses' => 'Agent\ViewingScheduleController@quickEdit'
+            ]);
+        });
+
+        //Properties
+        Route::group(['prefix' => '/properties', 'is' => 'administrator'], function(){
+            Route::get('/index', [
+                'as' => 'admin.property.index',
+                'uses' => 'PropertyController@index'
+            ]);
+
+            Route::get('/create', [
+                'as' => 'admin.property.create',
+                'uses' => 'PropertyController@create'
+            ]);
+
+            Route::post('/store', [
+                'as' => 'admin.property.store',
+                'uses' => 'PropertyController@store'
+            ]);
+
+            Route::get('/{id}/edit', [
+                'as' => 'admin.property.edit',
+                'uses' => 'PropertyController@edit'
+            ]);
+
+            Route::post('/{id}/update', [
+                'as' => 'admin.property.update',
+                'uses' => 'PropertyController@update'
+            ]);
+
+            Route::get('/{id}/media', [
+                'as' => 'admin.property.media',
+                'uses' => 'PropertyController@media'
+            ]);
+
+            Route::post('/{id}/media/upload/{type}', [
+                'as' => 'admin.property.media.upload',
+                'uses' => 'PropertyController@photosUpload'
+            ]);
+
+            Route::post('/{id}/media/delete/{attachment_id}', [
+                'as' => 'admin.property.media.delete',
+                'uses' => 'PropertyController@photosDelete'
+            ]);
+
+            Route::post('/{id}/delete', [
+                'as' => 'admin.property.delete',
+                'uses' => 'PropertyController@delete'
+            ]);
+        });
+
+        //Others
+        Route::get('/members/find/autocomplete', [
+            'as' => 'admin.member.find.auto_complete',
+            'uses' => 'MemberController@findAutocomplete'
+        ]);
+
+        Route::get('/packages/{id}/features/{all?}', [
+            'as' => 'admin.package.features',
+            'uses' => 'PackageController@features'
+        ]);
     });
 });
 
@@ -168,9 +258,14 @@ Route::group(['namespace' => 'Frontend'], function(){
                 'uses' => 'AccountController@getInbox'
             ]);
 
-            Route::post('send_message/{property_id?}', [
+            Route::post('message/send/{property_id?}', [
                 'as' => 'frontend.account.inbox.send_message',
                 'uses' => 'AccountController@postSendMessage'
+            ]);
+
+            Route::get('message/replies/{property_id}', [
+                'as' => 'frontend.account.inbox.get_replies',
+                'uses' => 'AccountController@getReplies'
             ]);
 
             Route::get('viewings', [

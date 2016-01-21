@@ -46,8 +46,8 @@ class ProjectHelper
 
     public function getDefaultAgent()
     {
-        $agent = User::where('username', 'agent1')->firstOrFail();
-        return $agent;
+        //$agent = User::where('username', 'agent1')->firstOrFail();
+        return NULL;
     }
 
     public function getExclusiveProperties($take)

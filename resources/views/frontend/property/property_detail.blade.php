@@ -71,7 +71,14 @@
                                     {!! Form::label('land_size', trans('forms.fields.property.land_size')) !!}
                                 </div>
                                 <div class="col-xs-12">
-                                    {!! Form::text('land_size', null, ['class' => 'form-control', 'id' => 'land_size']) !!}
+                                    <div class="row">
+                                        <div class="col-xs-10">
+                                            {!! Form::text('land_size', null, ['class' => 'form-control', 'id' => 'land_size']) !!}
+                                        </div>
+                                        <div class="col-xs-2">
+                                            m<sup>2</sup>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group clearfix">
@@ -79,7 +86,14 @@
                                     {!! Form::label('building_size', trans('forms.fields.property.building_size')) !!}
                                 </div>
                                 <div class="col-xs-12">
-                                    {!! Form::text('building_size', null, ['class' => 'form-control', 'id' => 'building_size']) !!}
+                                    <div class="row">
+                                        <div class="col-xs-10">
+                                            {!! Form::text('building_size', null, ['class' => 'form-control', 'id' => 'building_size']) !!}
+                                        </div>
+                                        <div class="col-xs-2">
+                                            m<sup>2</sup>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -5,9 +5,7 @@ namespace GoProp\Models;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Kodeine\Acl\Traits\HasRole;
 
@@ -78,12 +76,31 @@ class User extends Model implements AuthenticatableContract,
     public function getPropertyConversation($property)
     {
         if($property){
-            $conversation = $property->messages()->whereNull('parent_id')->first();
+            $conversation = $property->messages()->where('sender_id', $this->id)->whereNull('parent_id')->first();
 
             return $conversation;
         }
 
         return FALSE;
+    }
+
+    public function createPropertyConversation($property, $agent = NULL)
+    {
+        //Create new conversation
+        $conversation = new Message();
+        if($property->user_id == $this->id){
+            $conversation->type = Message::TYPE_OWNER_MESSAGE;
+        }else{
+            $conversation->type = Message::TYPE_USER_MESSAGE;
+        }
+        $conversation->sender()->associate($this);
+        $conversation->referenced()->associate($property);
+        if($agent){
+            $conversation->recipient()->associate($agent);
+        }
+        $conversation->save();
+
+        return $conversation;
     }
 
     //Statics

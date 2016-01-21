@@ -15,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->singleton('project_helper', 'GoProp\Helpers\ProjectHelper');
+        $this->app->singleton('agent_helper', 'GoProp\Helpers\AgentHelper');
         $this->app->singleton('address_helper', 'GoProp\Helpers\AddressHelper');
         $this->app->singleton('property_compare_helper', 'GoProp\Helpers\PropertyCompareHelper');
 

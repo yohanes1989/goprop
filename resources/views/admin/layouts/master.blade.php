@@ -18,6 +18,7 @@
     <!-- END Icons -->
 
     <!-- Stylesheets -->
+    @section('styles')
     <!-- Bootstrap is included in its original form, unaltered -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/bootstrap.css') }}">
 
@@ -39,6 +40,7 @@
 
     <!-- Modernizr (Browser feature detection library) & Respond.js (Enable responsive CSS code on browsers that don't support it, eg IE8) -->
     <script src="{{ asset('assets/admin/js/vendor/modernizr-respond.min.js') }}"></script>
+    @show
 </head>
 <!-- In the PHP version you can set the following options from the config file -->
 <!--
@@ -213,10 +215,12 @@
 <!-- Scroll to top link, check main.js - scrollToTop() -->
 <a href="javascript:void(0)" id="to-top"><i class="fa fa-angle-up"></i></a>
 
+@section('bottom_scripts')
 <!-- Bootstrap.js, Jquery plugins and custom Javascript code -->
 <script>
     var global_vars = {
-        'base_path': '{{ url('/') }}'
+        'base_path': '{{ url('/') }}',
+        'admin_path': '{{ url('/backend/') }}'
     };
 </script>
 
@@ -226,5 +230,6 @@
 <script src="{{ asset('assets/admin/js/plugins.js') }}"></script>
 <script src="{{ asset('assets/admin/js/main.js') }}"></script>
 <script src="{{ asset('assets/admin/js/goprop.js') }}"></script>
+@show
 </body>
 </html>

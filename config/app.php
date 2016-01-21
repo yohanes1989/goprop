@@ -207,7 +207,6 @@ return [
         'Menu'      => Lavary\Menu\Facade::class,
         'Purified'  => Mews\Purifier\Facades\Purifier::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'ProjectHelper' => GoProp\Facades\ProjectHelper::class,
         'MyShortCart' => Webpresso\MyShortCart\Facades\MyShortCart::class
     ],
 

@@ -111,6 +111,11 @@ var app = {
           window.open($(this).attr('href'), "_blank", "toolbar=no, scrollbars=no, resizable=no, top=200, left=200, width=640, height=300");
       });
 
+      //Alert
+      $('[data-confirm]', context).on('click', function(e){
+          return confirm($(e.target).data('confirm'));
+      });
+
       // Javascript for Address options
       $('.form-address-selector-province', context).on('change', function(){
           $('.form-address-selector-city option:eq(0)', context).attr('selected', 'selected');
@@ -135,11 +140,6 @@ var app = {
                   }
               }
           });
-      });
-
-      //Alert
-      $('[data-confirm]', context).on('click', function(e){
-          return confirm($(e.target).data('confirm'));
       });
 
       $('.form-address-selector-city', context).on('change', function(){
@@ -365,11 +365,6 @@ var app = {
               smoothHeight: true,
               sync: "#propertyDetailThumb-Slider"
           });
-
-          //Chat Box
-          if($('.chat-inner-wrapper', context).length > 0){
-              $('.chat-middle', context).scrollTop($('.chat-middle', context).prop('scrollHeight'));
-          }
       });
 
       //Tab auto active
@@ -414,6 +409,51 @@ var app = {
               }
           ]
       });
+
+      if($('#chat-form', context).length > 0){
+          var $chatForm = $('#chat-form', context);
+          $chatForm.submit(function(){
+              var text = $chatForm.find('textarea').val();
+
+              if(text.length == 0){
+                  return false;
+              }
+
+              // Assigning a temporary ID to the chat:
+              var tempID = 't'+Math.round(Math.random()*1000000),
+                  params = {
+                      id            : tempID,
+                      text        : text.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
+                      class: 'chat-self'
+                  };
+
+              // Using our addChatLine method to add the chat
+              // to the screen immediately, without waiting for
+              // the AJAX request to complete:
+              app.chat.addChatLine($.extend({},params));
+
+              $.ajax(
+                  $chatForm.attr('action'),
+                  {
+                      data: $chatForm.serialize(),
+                      method: 'POST',
+                      success: function(data){
+                          $chatForm.find('textarea').val('');
+                          $('#chat-content-wrapper').find('.chat-row[data-chat_id="'+tempID+'"]').remove();
+
+                          params['id'] = data.message.id;
+                          app.chat.addChatLine($.extend({},params));
+                      }
+                  }
+              );
+
+              return false;
+          });
+
+          (function getChatsTimeoutFunction(){
+              app.chat.getChats(getChatsTimeoutFunction, $chatForm.data('property_id'));
+          })();
+      }
   },
     calculateCommission: function(price, package)
     {
@@ -452,6 +492,109 @@ var app = {
     calculateSaving: function(propertyValue)
     {
         return propertyValue * 0.015;
+    },
+    chat: {
+        data: {
+            lastID: 0,
+            noActivity: 0
+        },
+        addChatLine : function(params){
+            // All times are displayed in the user's timezone
+            if(!params.time) {
+                params.time = moment().format('DD MMM YYYY HH:mm');
+            }
+
+            var markup = app.chat.render(params),
+                exists = $('#chatLineHolder .chat-row[data-chat_id="'+params.id+'"]');
+
+            if(exists.length){
+                exists.remove();
+            }
+
+            // If this isn't a temporary chat:
+            if(params.id.toString().charAt(0) != 't'){
+                var previous = $('#chatLineHolder .chat-row').last();
+                if(previous.length){
+                    previous.after(markup);
+                }
+                else{
+                    $('#chatLineHolder').append(markup);
+                }
+            }
+            else{
+                $('#chatLineHolder').append(markup);
+            }
+
+            $('.chat-middle', '#chat-content-wrapper').scrollTop($('.chat-middle', '#chat-content-wrapper').prop('scrollHeight'));
+        },
+        // The render method generates the HTML markup
+        // that is needed by the other methods:
+
+        render : function(params){
+            var arr = [
+                '<div data-chat_id="'+params.id+'" class="chat-row '+params.class+'">',
+                '<div class="chat-date">'+params.time+'</div>',
+                '<div class="chat-message">'+params.text+'</div>',
+                '<div class="clearfix"></div>'+
+                '</div>'];
+
+            // A single array join is faster than
+            // multiple concatenations
+
+            return arr.join('');
+
+        },
+        getChats : function(callback, property_id){
+            $.ajax(
+                global_vars.base_path + '/account/message/replies/' + property_id,
+                {
+                    data: {
+                        lastID: app.chat.data.lastID
+                    },
+                    success: function(data){
+                        for(var i=0;i < data.chats.length;i++){
+                            app.chat.addChatLine(data.chats[i]);
+                        }
+
+                        if(data.chats.length){
+                            app.chat.data.noActivity = 0;
+                            app.chat.data.lastID = data.chats[i-1].id;
+                        }
+                        else{
+                            // If no chats were received, increment
+                            // the noActivity counter.
+
+                            app.chat.data.noActivity++;
+                        }
+
+                        if(!app.chat.data.lastID){
+
+                        }
+
+                        // Setting a timeout for the next request,
+                        // depending on the chat activity:
+
+                        var nextRequest = 1000;
+
+                        // 2 seconds
+                        if(app.chat.data.noActivity > 3){
+                            nextRequest = 2000;
+                        }
+
+                        if(app.chat.data.noActivity > 10){
+                            nextRequest = 5000;
+                        }
+
+                        // 15 seconds
+                        if(app.chat.data.noActivity > 20){
+                            nextRequest = 15000;
+                        }
+
+                        setTimeout(callback, nextRequest);
+                    }
+                }
+            );
+        }
     }
 };
 
