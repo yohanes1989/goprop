@@ -12,6 +12,7 @@ use GoProp\Models\Order;
 use GoProp\Models\OrderItem;
 use GoProp\Models\Package;
 use GoProp\Models\PackageCategory;
+use GoProp\Models\Page;
 use GoProp\Models\Payment;
 use GoProp\Models\Property;
 use GoProp\Models\PropertyAttachment;
@@ -20,6 +21,7 @@ use GoProp\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use Webpresso\MyShortCart\Facades\MyShortCart;
 
 class PropertyController extends Controller
@@ -73,7 +75,7 @@ class PropertyController extends Controller
         $for = $request->input('search.for', 'sell');
 
         $priceDefaultFrom = 10000000;
-        $priceDefaultTo = 2000000000;
+        $priceDefaultTo = 100000000000;
 
         $qb = Property::active();
         AddressHelper::addAddressQueryScope($qb);
@@ -82,6 +84,18 @@ class PropertyController extends Controller
             $qb->where('for_sell', 1);
         }elseif($request->input('search.for') == 'rent'){
             $qb->where('for_rent', 1);
+        }
+
+        if($request->has('search.keyword')){
+            $qb->where(function($query) use ($request){
+                $query
+                    ->orWhere('address', 'LIKE', '%'.$request->input('search.keyword').'%')
+                    ->orWhere('description', 'LIKE', '%'.$request->input('search.keyword').'%')
+                    ->orWhere('property_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                    ->orWhere('province_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                    ->orWhere('city_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                    ->orWhere('subdistrict_name', 'LIKE', '%'.$request->input('search.keyword').'%');
+            });
         }
 
         $citySearch = '';
@@ -161,6 +175,13 @@ class PropertyController extends Controller
                     $sortColumn = $for.'_'.$sortKeys[0];
                 }
             }else{
+                //By exclusive if newest or oldest
+                $qb->selectRaw('properties.*, IF(Pac.slug = \'exclusive\', 1, 0) as is_exclusive');
+                $qb->leftJoin('package_property AS PP', 'PP.property_id', '=', 'properties.id')
+                    ->leftJoin('packages AS Pac', 'PP.package_id', '=', 'Pac.id');
+
+                $qb->orderBy('is_exclusive', 'DESC');
+
                 $sortColumn = 'checkout_at';
             }
 
@@ -372,8 +393,11 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
+        $page = Page::where('identifier', 'presentation-is-key')->first();
+
         return view('frontend.property.property_photos', [
-            'model' => $property
+            'model' => $property,
+            'page' => $page
         ]);
     }
 
@@ -788,7 +812,9 @@ class PropertyController extends Controller
             'disabledDays' => $disabledDays,
             'defaultDate' => $defaultDate,
             'defaultTime' => $defaultTime,
-            'viewingSchedule' => $viewingSchedule
+            'viewingSchedule' => $viewingSchedule,
+            'viewOnWeekdays' => $viewOnWeekdays,
+            'viewOnWeekends' => $viewOnWeekends,
         ]);
     }
 

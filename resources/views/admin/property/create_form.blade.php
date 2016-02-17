@@ -81,6 +81,20 @@
             {!! Form::select('bathrooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getBathroomsLabel(), null, ['class' => 'form-control', 'id' => 'bathrooms']) !!}
         </div>
     </div>
+
+    <div class="form-group">
+        {!! Form::label('furnishing', 'Furnishing *', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::select('furnishing', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getFurnishingLabel(), null, ['class' => 'form-control', 'id' => 'furnishing']) !!}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('short_note', 'Short Note', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::textarea('short_note', null, ['class' => 'form-control', 'rows' => 3, 'id' => 'short_note']) !!}
+        </div>
+    </div>
 </div>
 
 <div class="col-md-4">

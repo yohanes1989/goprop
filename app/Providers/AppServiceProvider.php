@@ -22,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('frontend.account.logged_in.layout', 'GoProp\ViewComposers\LoggedInComposer');
 
         view()->composer('frontend.property.compare_bar', 'GoProp\ViewComposers\PropertyComposer');
+
+        view()->composer('frontend.master.layout_with_slider', 'GoProp\ViewComposers\MainBannerComposer');
     }
 
     /**

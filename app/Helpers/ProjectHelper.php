@@ -139,6 +139,11 @@ class ProjectHelper
         return 'GoProp';
     }
 
+    public function formatTitle($title)
+    {
+        return $title.' - '.$this->getSiteName();
+    }
+
     public function getSocialShareLink($type, $options)
     {
         $return = '';

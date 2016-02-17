@@ -34,7 +34,10 @@ return array(
         storage_path('app/photos'),
         storage_path('app/floorplans'),
         storage_path('app/profile_pictures'),
+        storage_path('app/testimonials'),
         storage_path('app/images'),
+        public_path('assets/frontend/images/posts'),
+        public_path('assets/frontend/images/main_banners'),
     ),
 
     /*

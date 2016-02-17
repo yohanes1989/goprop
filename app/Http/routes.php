@@ -176,6 +176,206 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             ]);
         });
 
+        //Pages
+        Route::group(['prefix' => '/pages', 'is' => 'administrator'], function(){
+            Route::get('/index', [
+                'as' => 'admin.page.index',
+                'uses' => 'PageController@index'
+            ]);
+
+            Route::get('/{lang}/create', [
+                'as' => 'admin.page.create',
+                'uses' => 'PageController@create'
+            ]);
+
+            Route::post('/{lang}/store', [
+                'as' => 'admin.page.store',
+                'uses' => 'PageController@store'
+            ]);
+
+            Route::get('/{lang}/{id}/edit', [
+                'as' => 'admin.page.edit',
+                'uses' => 'PageController@edit'
+            ]);
+
+            Route::post('/{lang}/{id}/update', [
+                'as' => 'admin.page.update',
+                'uses' => 'PageController@update'
+            ]);
+
+            Route::post('/{id}/delete', [
+                'as' => 'admin.page.delete',
+                'uses' => 'PageController@delete'
+            ]);
+        });
+
+        //Testimonials
+        Route::group(['prefix' => '/testimonials', 'is' => 'administrator'], function(){
+            Route::get('/index', [
+                'as' => 'admin.testimonial.index',
+                'uses' => 'TestimonialController@index'
+            ]);
+
+            Route::get('/{lang}/create', [
+                'as' => 'admin.testimonial.create',
+                'uses' => 'TestimonialController@create'
+            ]);
+
+            Route::post('/{lang}/store', [
+                'as' => 'admin.testimonial.store',
+                'uses' => 'TestimonialController@store'
+            ]);
+
+            Route::get('/{lang}/{id}/edit', [
+                'as' => 'admin.testimonial.edit',
+                'uses' => 'TestimonialController@edit'
+            ]);
+
+            Route::post('/{lang}/{id}/update', [
+                'as' => 'admin.testimonial.update',
+                'uses' => 'TestimonialController@update'
+            ]);
+
+            Route::post('/{id}/delete', [
+                'as' => 'admin.testimonial.delete',
+                'uses' => 'TestimonialController@delete'
+            ]);
+        });
+
+        //Main Banners
+        Route::group(['prefix' => '/main-banners', 'is' => 'administrator'], function(){
+            Route::get('/index', [
+                'as' => 'admin.main_banner.index',
+                'uses' => 'MainBannerController@index'
+            ]);
+
+            Route::get('/{lang}/create', [
+                'as' => 'admin.main_banner.create',
+                'uses' => 'MainBannerController@create'
+            ]);
+
+            Route::post('/{lang}/store', [
+                'as' => 'admin.main_banner.store',
+                'uses' => 'MainBannerController@store'
+            ]);
+
+            Route::get('/{lang}/{id}/edit', [
+                'as' => 'admin.main_banner.edit',
+                'uses' => 'MainBannerController@edit'
+            ]);
+
+            Route::post('/{lang}/{id}/update', [
+                'as' => 'admin.main_banner.update',
+                'uses' => 'MainBannerController@update'
+            ]);
+
+            Route::post('/{id}/delete', [
+                'as' => 'admin.main_banner.delete',
+                'uses' => 'MainBannerController@delete'
+            ]);
+        });
+
+        Route::group(['prefix' => 'blog', 'namespace' => 'Post', 'is' => 'administrator'], function(){
+            //Category
+            Route::group(['prefix' => '/categories'], function(){
+                Route::get('/index', [
+                    'as' => 'admin.post.category.index',
+                    'uses' => 'CategoryController@index'
+                ]);
+
+                Route::get('/{lang}/create', [
+                    'as' => 'admin.post.category.create',
+                    'uses' => 'CategoryController@create'
+                ]);
+
+                Route::post('/{lang}/store', [
+                    'as' => 'admin.post.category.store',
+                    'uses' => 'CategoryController@store'
+                ]);
+
+                Route::get('/{lang}/{id}/edit', [
+                    'as' => 'admin.post.category.edit',
+                    'uses' => 'CategoryController@edit'
+                ]);
+
+                Route::post('/{lang}/{id}/update', [
+                    'as' => 'admin.post.category.update',
+                    'uses' => 'CategoryController@update'
+                ]);
+
+                Route::post('/{id}/delete', [
+                    'as' => 'admin.post.category.delete',
+                    'uses' => 'CategoryController@delete'
+                ]);
+            });
+
+            //Tag
+            Route::group(['prefix' => '/tags'], function(){
+                Route::get('/index', [
+                    'as' => 'admin.post.tag.index',
+                    'uses' => 'TagController@index'
+                ]);
+
+                Route::get('/{lang}/create', [
+                    'as' => 'admin.post.tag.create',
+                    'uses' => 'TagController@create'
+                ]);
+
+                Route::post('/{lang}/store', [
+                    'as' => 'admin.post.tag.store',
+                    'uses' => 'TagController@store'
+                ]);
+
+                Route::get('/{lang}/{id}/edit', [
+                    'as' => 'admin.post.tag.edit',
+                    'uses' => 'TagController@edit'
+                ]);
+
+                Route::post('/{lang}/{id}/update', [
+                    'as' => 'admin.post.tag.update',
+                    'uses' => 'TagController@update'
+                ]);
+
+                Route::post('/{id}/delete', [
+                    'as' => 'admin.post.tag.delete',
+                    'uses' => 'TagController@delete'
+                ]);
+            });
+
+            //Post
+            Route::group(['prefix' => '/posts'], function(){
+                Route::get('/index', [
+                    'as' => 'admin.post.index',
+                    'uses' => 'PostController@index'
+                ]);
+
+                Route::get('/{lang}/create', [
+                    'as' => 'admin.post.create',
+                    'uses' => 'PostController@create'
+                ]);
+
+                Route::post('/{lang}/store', [
+                    'as' => 'admin.post.store',
+                    'uses' => 'PostController@store'
+                ]);
+
+                Route::get('/{lang}/{id}/edit', [
+                    'as' => 'admin.post.edit',
+                    'uses' => 'PostController@edit'
+                ]);
+
+                Route::post('/{lang}/{id}/update', [
+                    'as' => 'admin.post.update',
+                    'uses' => 'PostController@update'
+                ]);
+
+                Route::post('/{id}/delete', [
+                    'as' => 'admin.post.delete',
+                    'uses' => 'PostController@delete'
+                ]);
+            });
+        });
+
         //Others
         Route::get('/members/find/autocomplete', [
             'as' => 'admin.member.find.auto_complete',
@@ -189,7 +389,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
     });
 });
 
-Route::group(['namespace' => 'Frontend'], function(){
+Route::group([
+    'namespace' => 'Frontend',
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localizationRedirect']
+], function(){
     //Account
     Route::group(['prefix' => '/account'], function(){
         Route::get('/register', [
@@ -458,6 +662,32 @@ Route::group(['namespace' => 'Frontend'], function(){
         'as' => 'frontend.page.home',
         'uses' => 'PageController@home'
     ]);
+
+    Route::any('contact', [
+        'as' => 'frontend.page.contact',
+        'uses' => 'ContactController@contact'
+    ]);
+
+    Route::get('resources', [
+        'as' => 'frontend.page.resources',
+        'uses' => 'PageController@resources'
+    ]);
+
+    Route::get('resources/category/{category}', [
+        'as' => 'frontend.page.resources.category',
+        'uses' => 'PageController@resources'
+    ]);
+
+    Route::get('resources/{slug}', [
+        'as' => 'frontend.page.resources.post',
+        'uses' => 'PageController@resourcePost'
+    ]);
+
+    Route::get('{identifier}', [
+        'as' => 'frontend.page.static_page',
+        'uses' => 'PageController@staticPage'
+    ]);
+
 
     Route::get('/property-terms-conditions', [
         'as' => 'frontend.page.property_terms_conditions',

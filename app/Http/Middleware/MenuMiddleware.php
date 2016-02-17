@@ -47,6 +47,14 @@ class MenuMiddleware
                         $menu->raw('<h2 class="sidebar-header">Master</h2>');
                         $menu->add('Members', ['route' => ['admin.member.index']])->prepend('<i class="fa fa-user"></i> ');
                         $menu->add('Agents', ['route' => ['admin.agent.index']])->prepend('<i class="fa fa-users"></i> ');
+                        $menu->add('Pages', ['route' => ['admin.page.index']])->prepend('<i class="fa fa-file-o"></i> ');
+                        $menu->add('Main Banners', ['route' => ['admin.main_banner.index']])->prepend('<i class="gi gi-picture"></i> ');
+                        $menu->add('Testimonials', ['route' => ['admin.testimonial.index']])->prepend('<i class="fa fa-comment"></i> ');
+                        $menu->add('Blogs', ['route' => ['admin.post.index']])->prepend('<i class="fa fa-pencil"></i> ')
+                            ->link->attr(['class' => 'menu-link']);
+                        $menu->blogs->add('Posts', ['route' => ['admin.post.index']]);
+                        $menu->blogs->add('Categories', ['route' => ['admin.post.category.index']]);
+                        //$menu->blogs->add('Tags', ['route' => ['admin.tag.index']]);
 
                         $menu->raw('<h2 class="sidebar-header">Operations</h2>');
                         $menu->add('Properties', ['route' => ['admin.property.index']])->prepend('<i class="gi gi-home"></i> ');

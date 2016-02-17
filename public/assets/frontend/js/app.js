@@ -17,7 +17,6 @@ var app = {
       $('#testimonial-carousel', context).owlCarousel({
           autoplay:true,
           autoplayTimeout:3000,
-          smartSpeed: 500,
           items: 1,
           loop: true
       });
@@ -25,7 +24,6 @@ var app = {
       $('#exclusiveProperty-list', context).owlCarousel({
           autoplay:true,
           autoplayTimeout:3000,
-          smartSpeed: 500,
           items: 3,
           loop: true,
           nav:true,

@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'id',
 
     /*
     |--------------------------------------------------------------------------
@@ -152,7 +152,9 @@ return [
         GoProp\Providers\AuthServiceProvider::class,
         GoProp\Providers\EventServiceProvider::class,
         GoProp\Providers\RouteServiceProvider::class,
-        Webpresso\MyShortCart\MyShortCartServiceProvider::class
+        Webpresso\MyShortCart\MyShortCartServiceProvider::class,
+        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
+        Dimsav\Translatable\TranslatableServiceProvider::class,
     ],
 
     /*
@@ -207,7 +209,9 @@ return [
         'Menu'      => Lavary\Menu\Facade::class,
         'Purified'  => Mews\Purifier\Facades\Purifier::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'MyShortCart' => Webpresso\MyShortCart\Facades\MyShortCart::class
+        'MyShortCart' => Webpresso\MyShortCart\Facades\MyShortCart::class,
+        'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'ProjectHelper' => \GoProp\Facades\ProjectHelper::class
     ],
 
     'default_title' => 'GoProp',
@@ -216,5 +220,7 @@ return [
     'default_latitude' => '-6.229519',
     'default_longitude' => '106.805748',
 
-    'contact_destination' => ['marketing@goprop.co.id', 'development@webpresso.co.id'],
+    'contact_from_email' => env('FROM_EMAIL'),
+    'contact_from_name' => env('FROM_NAME'),
+    'contact_destination' => explode(',', env('CONTACT_EMAILS')),
 ];

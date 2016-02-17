@@ -73,6 +73,14 @@
                 {!! Form::select('rooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getBedroomsLabel(), null, ['class' => 'form-control', 'id' => 'bedrooms']) !!}
             </div>
         </div>
+        <div class="form-group clearfix">
+            <div class="col-xs-12">
+                {!! Form::label('furnishing', trans('forms.fields.property.furnishing')) !!} <sup class="text-danger">*</sup>
+            </div>
+            <div class="col-xs-12">
+                {!! Form::select('furnishing', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getFurnishingLabel(), null, ['class' => 'form-control', 'id' => 'furnishing']) !!}
+            </div>
+        </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group clearfix">
@@ -99,6 +107,15 @@
             </div>
             <div class="col-xs-12">
                 {!! Form::select('bathrooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getBathroomsLabel(), null, ['class' => 'form-control', 'id' => 'bathrooms']) !!}
+            </div>
+        </div>
+
+        <div class="form-group clearfix">
+            <div class="col-xs-12">
+                {!! Form::label('short_note', trans('forms.fields.property.short_note')) !!}
+            </div>
+            <div class="col-xs-12">
+                {!! Form::textarea('short_note', null, ['class' => 'form-control', 'rows' => '2', 'id' => 'short_note']) !!}
             </div>
         </div>
     </div>

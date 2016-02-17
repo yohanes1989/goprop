@@ -37,7 +37,7 @@ class Property extends Model
     protected $fillable = ['property_name', 'province', 'city', 'subdistrict', 'address', 'postal_code',
         'property_type_id', 'parking', 'garage_size', 'rooms', 'bathrooms', 'for_sell', 'sell_price',
         'for_rent', 'rent_price', 'rent_price_type', 'land_size', 'building_size', 'floors', 'certificate', 'description',
-        'virtual_tour_url', 'latitude', 'longitude', 'status', 'checkout_at'];
+        'virtual_tour_url', 'latitude', 'longitude', 'status', 'checkout_at', 'furnishing', 'short_note'];
 
     //Relations
     public function user()
@@ -314,7 +314,7 @@ class Property extends Model
     public static function getBedroomsLabel($option=null)
     {
         $array = [];
-        for($i = 1; $i <= 10; $i += 1){
+        for($i = 0; $i <= 10; $i += 1){
             $array[$i] = trans_choice('forms.fields.property.room_count', $i);
         }
 
@@ -363,6 +363,8 @@ class Property extends Model
     public static function getViewingTimeLabel($option=null)
     {
         $array = [
+            '07_00' => '07:00',
+            '08_00' => '08:00',
             '09_00' => '09:00',
             '10_00' => '10:00',
             '11_00' => '11:00',
@@ -374,6 +376,7 @@ class Property extends Model
             '17_00' => '17:00',
             '18_00' => '18:00',
             '19_00' => '19:00',
+            '20_00' => '20:00',
         ];
 
         if(empty($option)){

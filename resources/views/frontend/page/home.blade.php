@@ -2,10 +2,6 @@
 
 @section('page_class', 'index-page')
 
-@section('slideshow_content')
-    <img src="{{ asset('assets/frontend/images/banner-1.jpg') }}" class="img-responsive" alt="">
-@endsection
-
 @section('bottom_scripts')
     <script>
         var CommissionRules = function CommissionRules(){
@@ -23,185 +19,25 @@
 @endsection
 
 @section('content')
+    @if($serviceSection)
     <section class="service-columns">
         <div class="container">
-            <div class="col-sm-4 box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/save-money.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Save Money</h3>
-                    <div class="entry-desc">Cheaper commission</div>
-                </header>
-                <div class="entry-content">
-                    <a href="" class="btn btn-yellow">Find out more&hellip;</a>
-                </div>
-            </div>
-            <div class="col-sm-4 box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/sell-online.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Sell Online</h3>
-                    <div class="entry-desc">More eyes on your property</div>
-                </header>
-                <div class="entry-content">
-                    <a href="" class="btn btn-yellow">Get started&hellip;</a>
-                </div>
-            </div>
-            <div class="col-sm-4 box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/need-help.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Need Help</h3>
-                    <div class="entry-desc">We provide many services</div>
-                </header>
-                <div class="entry-content">
-                    <a href="" class="btn btn-yellow">Contact us&hellip;</a>
-                </div>
-            </div>
+            {!! $serviceSection->content !!}
         </div>
-    </section><!-- end of service-columns -->
+    </section>
+    @endif
 
     @include('frontend.includes.call_request_home')
 
-    <section class="intro-columns">
-        <div class="container">
-            <div class="col-xs-1"></div>
-            <div class="col-xs-10">
-                <header class="header-area text-center">
-                    <h2 class="entry-title text-uppercase">Advertise your property online<br> with trusted partner</h2>
-                </header>
-                <div class="entry-content text-center">
-                    <p>GoProp offers you a whole new way of selling or renting your property. Our team of property experts provides you everything you need to ensure your property is handled in the best way straight from the beginning up to the end. Not only that, our online services also allows you to get the best value out of your property with less hassle and less money than the conventional way.</p>
-                    <p>We made this possible by cutting all the operational costs and moving most of the works to automated online based. One example is our mobile apps, which makes it easier for you to track your property sale and receive instant notifications directly into your phone.</p>
-                </div>
-            </div>
-            <div class="col-xs-1"></div>
-        </div>
-    </section><!-- end of intro-columns -->
-
-    <section class="intro-columns">
-        <div class="container">
-            <div class="col-xs-12">
-                <header class="header-area text-center">
-                    <h2 class="entry-title text-uppercase">Hop we can help sell your property easily</h2>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/save-money.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Choose your package</h3>
-                    <div class="entry-desc">We'll prepare everything you need, from floor plan to professional photos</div>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/get-listed.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Get Listed</h3>
-                    <div class="entry-desc">Your property will be advertised on the biggest national property portals such as rumah.com, rumah123.com, lamudi.com, etc.</div>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/screening-buyers.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Screening Potential Buyers</h3>
-                    <div class="entry-desc">We will screen potential buyers, arrange viewings and gather feedback for you</div>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/negotiation.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Negotiation</h3>
-                    <div class="entry-desc">We'll help you get the best price your property</div>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/property-sold.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Property Sold</h3>
-                    <div class="entry-desc">Our team will guide and oversee your property sale up to completion</div>
-                </header>
-            </div>
-            <div class="col-xs-12">
-                <div class="entry-content text-center">
-                    <a href="" class="btn btn-yellow">Learn more</a>
-                </div>
-            </div>
-        </div>
-    </section><!-- end of intro-columns -->
-
-    <section class="intro-columns">
-        <div class="container">
-            <div class="col-xs-12">
-                <header class="header-area text-center">
-                    <h2 class="entry-title text-uppercase">Why choose GoProp?</h2>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/save-more-money.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Save More Money</h3>
-                    <div class="entry-desc">We take less commission and cheaper fee than traditional property agents</div>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/aio-online-tools.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">All In One Online Tools</h3>
-                    <div class="entry-desc">Our site and mobile apps are simple to use and give you all to the details you need at the touch of your fingers</div>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/quick-sale.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Quick Sale</h3>
-                    <div class="entry-desc">Our online networks help you sell property faster than others</div>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/pro-photography.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Professional Photography</h3>
-                    <div class="entry-desc">Presentation is everything. And with our professional photography service, your property will look more attractive to potential buyers</div>
-                </header>
-            </div>
-            <div class="col-sm-5ths box-child">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/frontend/images/big-reach.png') }}">
-                </div>
-                <header class="entry-header">
-                    <h3 class="entry-title">Bigger Reach</h3>
-                    <div class="entry-desc">By advertising our property on the biggest national property will be seen by milions potential buyers</div>
-                </header>
-            </div>
-        </div>
-    </section><!-- end of intro-columns -->
+    @if($overviewSection)
+        {!! $overviewSection->content !!}
+    @endif
 
     <section class="property-table-columns">
         <div class="container">
             <div class="col-xs-12">
                 <header class="header-area text-center">
-                    <h2 class="entry-title text-uppercase">What do you need?</h2>
+                    <h2 class="entry-title text-uppercase">{{ trans('general.home_packages.title') }}</h2>
                 </header>
             </div>
             <div class="col-xs-12">
@@ -358,36 +194,40 @@
 
     @include('frontend.includes.price_saving_home')
 
+    @if($testimonials->count() > 0)
     <section class="testimonial-columns">
         <div class="container">
             <header class="header-area text-center">
-                <h2 class="entry-title text-uppercase">What Our Clients Say</h2>
+                <h2 class="entry-title text-uppercase">{{ trans('general.home_testimonials.title') }}</h2>
             </header>
             <div class="col-xs-1"></div>
             <div class="col-xs-10">
                 <div id="testimonial-carousel">
-                    <?php for ($i=0; $i < 4; $i++) { ?>
+                    @foreach($testimonials as $testimonial)
                     <div class="testimonial-item">
                         <div class="col-xs-2">
-                            <img src="{{ asset('assets/frontend/images/avatar.jpg') }}" alt="" class="img-circle">
+                            @if($testimonial->image)
+                            <img src="{{ url('images/profile_picture/'.$testimonial->image) }}" alt="" class="img-circle">
+                            @endif
                         </div>
                         <div class="col-xs-10">
                             <div class="col-xs-1"></div>
                             <div class="col-xs-10">
                                 <div class="testimonial-content">
-                                    <p>After a particularly bad experience with our previous agent when we sold our first home, we wanted something completely different when we decided to sell our second house. We're so glad we found GoProp, the process is much faster, simpler, and well organized! The mobile app really helps speed up the process of arranging viewings schedule and keeping us up to date with everything going on with our property.</p>
+                                    <p>{{ $testimonial->content }}</p>
                                 </div>
-                                <div class="testimonial-author">Adrian and Lisa, DKI Jakarta, Property sold within 10 days on GoProp</div>
+                                <div class="testimonial-author">{{ $testimonial->title }}</div>
                             </div>
                             <div class="col-xs-1"></div>
                         </div>
                     </div>
-                    <?php } ?>
+                    @endforeach
                 </div>
             </div>
             <div class="col-xs-1"></div>
         </div>
     </section>
+    @endif
 
     @include('frontend.includes.home_exclusive_properties')
 

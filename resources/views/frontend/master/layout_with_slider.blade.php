@@ -2,13 +2,11 @@
 
 @section('main_wrapper')
     <div class="@yield('page_class', 'general-page general-page-slider')">
+        @if($main_banner)
         <section class="slideshow-columns">
-            @yield('slideshow_content')
+            <img src="{{ asset('assets/frontend/'.\GoProp\Models\MainBannerTranslation::$photosUploadPath.'/'.$main_banner->image) }}" class="img-responsive" alt="">
         </section>
-
-        <div class="container">
-            @include('frontend.master.messages')
-        </div>
+        @endif
 
         @yield('content')
     </div>

@@ -20,6 +20,8 @@ return [
     'viewing_schedule_option' => [
         'weekdays' => 'Weekdays',
         'weekend' => 'Weekend',
+        'viewable_weekdays_text' => 'This property is only viewable on Weekdays',
+        'viewable_weekend_text' => 'This property is only viewable on Weekend',
     ],
     'parking' => [
         'garage' => 'Garage',
@@ -28,7 +30,7 @@ return [
     ],
     'furnishing' => [
         'furnished' => 'Furnished',
-        'part_furnished' => 'Part Furnished',
+        'part_furnished' => 'Semi Furnished',
         'unfurnished' => 'Unfurnished',
     ],
     'certificate' => [
@@ -191,7 +193,7 @@ return [
         'estimated_property_price' => 'Your Estimated Property Sale Price',
         'adjust_price' => 'Adjust the slider to match your property value',
         'you_save' => 'You can save',
-        'terms' => 'When you sell your property with GoProp',
+        'terms' => 'When you sell your property with GoProp.<br/>Based on traditional agent commission of 2.5%.',
         'other_agent_term' => 'When you sell your property with traditional property agent',
         'other_agent_commission' => 'Other Agents Commission',
         'calculate_btn' => 'Calculate!',

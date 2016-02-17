@@ -8,6 +8,8 @@
     {!! Form::open(['route' => 'frontend.account.login.process', 'method' => 'POST', 'class' => 'userform-columns']) !!}
     <div class="container">
         <div class="col-xs-12">
+            @include('frontend.master.messages')
+
             <div class="header-area clearfix">
                 <h3 class="entry-title">{{ trans('account.login.page_title') }}</h3>
                 <div class="entry-register"><a href="{{ route('frontend.account.register') }}" class="btn btn-grey">{{ trans('account.login.register_btn') }}</a></div>

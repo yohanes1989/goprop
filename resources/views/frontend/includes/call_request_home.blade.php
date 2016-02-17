@@ -2,7 +2,7 @@
     <div class="container">
         <div class="col-xs-12">
             <header class="entry-header text-center">
-                <h2 class="entry-title">{{ trans('contact.call_us_text', ['phone' => '0815 1917 2767']) }}</h2>
+                <h2 class="entry-title">{{ trans('contact.call_us_text', ['phone' => '+62 878 8733 2268']) }}</h2>
             </header>
             {!! Form::open(['method' => 'POST', 'route' => 'contact.request_call', 'class' => 'ajax-form form form-inline text-center']) !!}
 

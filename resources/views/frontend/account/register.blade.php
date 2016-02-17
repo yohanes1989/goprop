@@ -8,6 +8,8 @@
     <section class="userform-columns">
         <div class="container">
             <div class="col-xs-12">
+                @include('frontend.master.messages')
+
                 <div class="header-area clearfix">
                     <h3 class="entry-title">{{ trans('account.register.page_title') }}</h3>
                     <div class="entry-register"><a href="{{ route('frontend.account.login') }}" class="btn btn-grey">{{ trans('account.register.login_btn') }}</a></div>
@@ -103,7 +105,7 @@
                             </div>
                             <div class="form-group clearfix">
                                 <div class="col-sm-4">
-                                    {!! Form::label('profile_home_phone_number', trans('forms.fields.home_phone_number')) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('profile_home_phone_number', trans('forms.fields.home_phone_number')) !!}
                                 </div>
                                 <div class="col-sm-8">
                                     {!! Form::text('profile[home_phone_number]', null, ['class' => 'form-control', 'id' => 'profile_home_phone_number']) !!}
@@ -115,7 +117,7 @@
                         <div class="row">
                             <div class="form-group clearfix">
                                 <div class="col-sm-4">
-                                    {!! Form::label('profile_address', trans('forms.fields.address')) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('profile_address', trans('forms.fields.address')) !!}
                                 </div>
                                 <div class="col-sm-8">
                                     {!! Form::textarea('profile[address]', null, ['class' => 'form-control', 'rows' => 3, 'id' => 'profile_address']) !!}
@@ -124,7 +126,7 @@
 
                             <div class="form-group clearfix">
                                 <div class="col-sm-4">
-                                    {!! Form::label('profile_province', trans('forms.fields.province')) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('profile_province', trans('forms.fields.province')) !!}
                                 </div>
                                 <div class="col-sm-8">
                                     {!! Form::select('profile[province]', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getProvinces(true), null, ['class' => 'form-control form-address-selector-province', 'id' => 'profile_province']) !!}
@@ -133,7 +135,7 @@
 
                             <div class="form-group clearfix">
                                 <div class="col-sm-4">
-                                    {!! Form::label('profile_city', trans('forms.fields.city')) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('profile_city', trans('forms.fields.city')) !!}
                                 </div>
                                 <div class="col-sm-8">
                                     {!! Form::select('profile[city]', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getCities(old('profile.province'), true), null, ['class' => 'form-control form-address-selector-city', 'id' => 'profile_city']) !!}
@@ -142,7 +144,7 @@
 
                             <div class="form-group clearfix">
                                 <div class="col-sm-4">
-                                    {!! Form::label('profile_subdistrict', trans('forms.fields.subdistrict')) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('profile_subdistrict', trans('forms.fields.subdistrict')) !!}
                                 </div>
                                 <div class="col-sm-8">
                                     {!! Form::select('profile[subdistrict]', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getSubdistricts(old('profile.city'), true), null, ['class' => 'form-control form-address-selector-subdistrict', 'id' => 'profile_subdistrict']) !!}
@@ -151,7 +153,7 @@
 
                             <div class="form-group clearfix">
                                 <div class="col-sm-4">
-                                    {!! Form::label('profile_postal_code', trans('forms.fields.postal_code')) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('profile_postal_code', trans('forms.fields.postal_code')) !!}
                                 </div>
                                 <div class="col-sm-8">
                                     {!! Form::text('profile[postal_code]', null, ['class' => 'form-control', 'id' => 'profile_postal_code']) !!}
@@ -170,7 +172,7 @@
                         <div class="row">
                             <div class="form-group clearfix">
                                 <div class="col-sm-4">
-                                    {!! Form::label('extended_profile_property_sell', trans('extended_profile.property_to_sell_label')) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('extended_profile_property_sell', trans('extended_profile.property_to_sell_label')) !!}
                                 </div>
                                 <div class="col-sm-8">
                                     {!! Form::select('profile[extendedProfile][property_to_sell]', ['' => trans('forms.please_select')] + \GoProp\Models\ExtendedProfile::getPropertySellLabel(), null, ['class' => 'form-control', 'id' => 'extended_profile_property_sell']) !!}
@@ -182,7 +184,7 @@
                         <div class="row">
                             <div class="form-group clearfix">
                                 <div class="col-sm-4">
-                                    {!! Form::label('extended_profile_property_let', trans('extended_profile.property_to_rent_label')) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('extended_profile_property_let', trans('extended_profile.property_to_rent_label')) !!}
                                 </div>
                                 <div class="col-sm-8">
                                     {!! Form::select('profile[extendedProfile][property_to_let]', ['' => trans('forms.please_select')] + \GoProp\Models\ExtendedProfile::getPropertyLetLabel(), null, ['class' => 'form-control', 'id' => 'extended_profile_property_let']) !!}

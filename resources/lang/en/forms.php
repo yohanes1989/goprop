@@ -31,6 +31,7 @@ return [
         'city' => 'City',
         'subdistrict' => 'Subdistrict',
         'area' => 'Area',
+        'keyword' => 'Keyword',
         'profile_picture' => 'Profile Picture',
         'profile_picture_button' => 'Upload your profile picture',
         'profile_picture_note' => 'Upload an profile picture to represent you on GoProp. GoProp will use default Gravatar picture if you don\'t upload one here. Maximum file size 500KB, ideal dimensions 250x250 pixels',
@@ -43,6 +44,7 @@ return [
             'property_type' => 'Property Type',
             'bedrooms' => 'Bedrooms',
             'rooms' => 'Rooms',
+            'furnishing' => 'Furnishing',
             'parking' => 'Parking',
             'bathrooms' => 'Bathrooms / W.Cs',
             'are_you_selling' => 'Are you selling your property?',
@@ -56,8 +58,9 @@ return [
             'floors' => 'Floors',
             'certificate' => 'Certificate',
             'virtual_tour_url' => 'Virtual Tour URL',
-            'bedroom_count' => '{1} :count Bedroom|[2,Inf] :count Bedrooms',
-            'room_count' => '{1}:count Room|[2,Inf]:count Rooms',
+            'short_note' => 'Short Note',
+            'bedroom_count' => '{0}:count Bedroom / Studio|{1}:count Bedroom|[2,Inf] :count Bedrooms',
+            'room_count' => '{0}:count Room / Studio|{1}:count Room|[2,Inf]:count Rooms',
             'bathroom_count' => '{1}:count Bathroom|[2,Inf]:count Bathrooms'
         ],
         'payments' => [

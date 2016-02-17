@@ -4,7 +4,7 @@
     </div>
 @else
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LaravelLocalization::getCurrentLocale() }}">
     <head>
         <meta charset="UTF-8">
         <title>@yield('page_title', 'Go Prop')</title>
@@ -25,6 +25,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/flexslider/flexslider.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/fullcalendar/fullcalendar.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/flag-icon.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/style.css') }}">
         @show
     </head>
@@ -58,22 +59,22 @@
                         @endif
 
                         <ul class="list-inline">
-                            <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                            <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                            <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="https://www.facebook.com/goprop.co.id" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://www.instagram.com/gopropid" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                            <li><a hreflang="id" href="{{ LaravelLocalization::getLocalizedURL('id') }}"><span class="flag-icon flag-icon-id"></span></a></li>
+                            <li><a hreflang="en" href="{{ LaravelLocalization::getLocalizedURL('en') }}"><span class="flag-icon flag-icon-gb"></span></a></li>
                         </ul>
                     </div>
                     <div class="main-menu-wrapper">
                         <nav id="main-nav">
                             <ul>
-                                <li><a href="get-started.php">Get Started</a></li>
+                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'get-started']) }}">Get Started</a></li>
                                 <li><a href="{{ route('frontend.property.create') }}">Upload Property</a></li>
                                 <li><a href="{{ route('frontend.property.search') }}" data-replace-href="{{ route('frontend.property.simple_search') }}" class="ajax_popup fancybox.ajax">Property Search</a></li>
-                                <li><a href="">How It Works</a></li>
-                                <li><a href="resources.php">Resources</a></li>
-                                <li><a href="about.php">About</a></li>
-                                <li><a href="contact.php">Contact</a></li>
+                                <!--<li><a href="">How It Works</a></li>-->
+                                <li><a href="{{ route('frontend.page.resources') }}">Resources</a></li>
+                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'about-goprop']) }}">About</a></li>
+                                <li><a href="{{ route('frontend.page.contact') }}">Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -97,8 +98,8 @@
                     <div class="footer-child col-sm-3">
                         <div class="footer-content">
                             <ul class="list-unstyled">
-                                <li><a href="">Get Started</a></li>
-                                <li><a href="">Upload Property</a></li>
+                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'get-started']) }}">Get Started</a></li>
+                                <li><a href="{{ route('frontend.property.create') }}">Upload Property</a></li>
                                 <li><a href="{{ route('frontend.property.search') }}">Property Search</a>
                                     <!--
                                     <ul class="list-unstyled">
@@ -113,10 +114,9 @@
                     <div class="footer-child col-sm-3">
                         <div class="footer-content">
                             <ul class="list-unstyled">
-                                <li><a href="">How It Works</a></li>
                                 <li><a href="">Resources</a></li>
-                                <li><a href="">About</a></li>
-                                <li><a href="">Contact</a></li>
+                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'about-goprop']) }}">About</a></li>
+                                <li><a href="{{ route('frontend.page.contact') }}">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -131,10 +131,8 @@
                                 </ul>
                                 -->
                                 <ul class="list-inline social-links">
-                                    <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="https://www.facebook.com/goprop.co.id" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://www.instagram.com/gopropid" target="_blank"><i class="fa fa-instagram"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -144,7 +142,7 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="col-xs-12">
-                        <small>Copyright 2015 www.goprop.co.id</small>
+                        <small>Copyright {{ date('Y') }} www.goprop.co.id</small>
                     </div>
                 </div>
             </div>

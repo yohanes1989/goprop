@@ -18,14 +18,18 @@
                 </div>
             </div>
             <div class="col-sm-3">
+                {!! Form::label('keyword', trans('forms.fields.keyword')) !!}
+                {!! Form::text('search[keyword]',  null, ['class' => 'form-control', 'id' => 'keyword']) !!}
+            </div>
+            <div class="col-sm-2">
                 {!! Form::label('province', trans('forms.fields.province')) !!}
                 {!! Form::select('search[province]', ['' => trans('forms.fields.all_provinces')] + \GoProp\Facades\AddressHelper::getProvinces(true), null, ['data-default-label' => trans('forms.fields.all_cities'), 'class' => 'form-control form-address-selector-province', 'id' => 'province']) !!}
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 {!! Form::label('city', trans('forms.fields.city')) !!}
                 {!! Form::select('search[city]', ['' => trans('forms.fields.all_cities')] + \GoProp\Facades\AddressHelper::getCities(\Illuminate\Support\Facades\Request::get('province'), true), null, ['data-default-label' => trans('forms.fields.all_areas'), 'class' => 'form-control form-address-selector-city', 'id' => 'city']) !!}
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 {!! Form::label('subdistrict', trans('forms.fields.area')) !!}
                 {!! Form::select('search[subdistrict]', ['' => trans('forms.fields.all_areas')] + \GoProp\Facades\AddressHelper::getSubdistricts(\Illuminate\Support\Facades\Request::get('city'), true), null, ['class' => 'form-control form-address-selector-subdistrict', 'id' => 'subdistrict']) !!}
             </div>

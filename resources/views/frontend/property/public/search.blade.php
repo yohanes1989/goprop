@@ -37,12 +37,15 @@
                             {!! Form::select('search[for]', \GoProp\Models\Property::getForLabel(), [\Illuminate\Support\Facades\Request::input('search.for')], ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-sm-3">
+                            {!! Form::text('search[keyword]',  \Illuminate\Support\Facades\Request::input('search.keyword'), ['class' => 'form-control', 'placeholder' => trans('forms.fields.keyword'), 'id' => 'keyword']) !!}
+                        </div>
+                        <div class="form-group col-sm-2">
                             {!! Form::select('search[province]', ['' => trans('forms.fields.all_provinces')] + \GoProp\Facades\AddressHelper::getProvinces(true), [\Illuminate\Support\Facades\Request::input('search.province')], ['data-default-label' => trans('forms.fields.all_cities'), 'class' => 'form-control form-address-selector-province', 'id' => 'province']) !!}
                         </div>
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-2">
                             {!! Form::select('search[city]', ['' => trans('forms.fields.all_cities')] + \GoProp\Facades\AddressHelper::getCities(\Illuminate\Support\Facades\Request::input('search.province'), true), [\Illuminate\Support\Facades\Request::input('search.city')], ['data-default-label' => trans('forms.fields.all_areas'), 'class' => 'form-control form-address-selector-city', 'id' => 'city']) !!}
                         </div>
-                        <div class="form-group col-sm-3">
+                        <div class="form-group col-sm-2">
                             {!! Form::select('search[subdistrict]', ['' => trans('forms.fields.all_areas')] + \GoProp\Facades\AddressHelper::getSubdistricts(\Illuminate\Support\Facades\Request::input('search.city'), true), [\Illuminate\Support\Facades\Request::input('search.subdistrict')], ['class' => 'form-control form-address-selector-subdistrict', 'id' => 'subdistrict']) !!}
                         </div>
                         <div class="clearfix"></div>
@@ -54,7 +57,7 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <div>{{ trans('property.index.price_range') }}: <strong>IDR <span id="price-from">{{ $priceDefaultFrom }}</span> - IDR <span id="price-to">{{ $priceDefaultTo }}</span></strong></div>
-                            <input type="text" id="inputPriceRange" name="search[price]" value="" data-slider-min="10000000" data-slider-max="2000000000"
+                            <input type="text" id="inputPriceRange" name="search[price]" value="" data-slider-min="10000000" data-slider-max="100000000000"
                                    data-slider-step="500000" data-slider-value="[{{ $priceDefaultFrom }},{{ $priceDefaultTo }}]" />
                         </div>
                     </div>

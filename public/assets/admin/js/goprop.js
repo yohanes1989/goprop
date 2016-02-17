@@ -30,6 +30,14 @@
                 );
             });
 
+            $('.remove-image', context).click(function(e){
+                e.preventDefault();
+
+                $(this).parent().find('img').remove();
+                $(this).parent().find('input').val('1');
+                $(this).remove();
+            });
+
             $('.btn-confirm', context).click(function(e){
                 return confirm('Are you sure to do this action?');
             });

@@ -36,5 +36,8 @@ class Kernel extends HttpKernel
         'property_cart_order' => \GoProp\Http\Middleware\PropertyCartOrder::class,
         'property_editable' => \GoProp\Http\Middleware\PropertyEditable::class,
         'likeable' => \GoProp\Http\Middleware\Likeable::class,
+        'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+        'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+        'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
     ];
 }

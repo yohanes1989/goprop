@@ -31,6 +31,18 @@
                         </div>
                     </div>
                 </div>
+
+                @if(!$viewOnWeekdays || !$viewOnWeekends)
+                <div class="form-group clearfix text-center">
+                    @if($viewOnWeekends)
+                    <p>{{ trans('property.viewing_schedule_option.viewable_weekend_text') }}</p>
+                    @endif
+
+                    @if($viewOnWeekdays)
+                        <p>{{ trans('property.viewing_schedule_option.viewable_weekdays_text') }}</p>
+                    @endif
+                </div>
+                @endif
             </div>
         </div>
         <div class="entry-detail text-center">

@@ -227,6 +227,7 @@
 <script src="{{ asset('assets/admin/js/vendor/jquery-1.11.1.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/vendor/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/vendor/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/admin/js/vendor/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('assets/admin/js/plugins.js') }}"></script>
 <script src="{{ asset('assets/admin/js/main.js') }}"></script>
 <script src="{{ asset('assets/admin/js/goprop.js') }}"></script>

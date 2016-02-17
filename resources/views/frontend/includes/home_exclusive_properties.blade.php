@@ -11,7 +11,7 @@
                         $exclusiveProperties = \GoProp\Facades\ProjectHelper::getExclusiveProperties(5);
                         ?>
                         @foreach($exclusiveProperties as $exclusiveProperty)
-                            <div class="exclusiveProperty-item">
+                            <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->exclusive_type }}">
                                 <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id, 'for' => $exclusiveProperty->exclusive_type]) }}">
                                 @if($exclusiveProperty->photos->count() > 0)
                                     <img src="{{ url('images/exclusive_thumbnail/'.$exclusiveProperty->photos->first()->filename) }}" />

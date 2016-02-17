@@ -609,7 +609,19 @@ $font-primary: 'Lato', sans-serif;
 				}
 			}
 		}
-	}		
+	}
+
+  .exclusiveProperty-item.exclusiveProperty-sell{
+    a{
+      .exclusiveProperty-overlay{
+        .exclusiveProperty-detail{
+          .entry-sale{
+            background-color: rgba(255,0,0,0.7);
+          }
+        }
+      }
+    }
+  }
 }
 
 // Property Search

@@ -34,6 +34,7 @@ class PropertyFormRequest extends Request
             $propertyTypeAllowedValues = implode(',', PropertyType::lists('id')->all());
             $rentPriceTypeAllowedValues = implode(',', array_keys(Property::getRentTypeLabel()));
             $viewingSchedulesAllowedValues = implode(',', array_keys(Property::getViewingScheduleOptionLabel()));
+            $propertyFurnishingAllowedValues = implode(',', array_keys(Property::getFurnishingLabel()));
 
             $rules['property_name'] = 'required';
             $rules['province'] = 'required';
@@ -46,6 +47,7 @@ class PropertyFormRequest extends Request
             $rules['garage_size'] = 'required_if:parking,garage';
             $rules['rooms'] = 'required';
             $rules['bathrooms'] = 'required';
+            $rules['furnishing'] = 'required|in:'.$propertyFurnishingAllowedValues;
             $rules['for_sell'] = 'required|in:0,1';
             $rules['sell_price'] = 'required_if:for_sell,1';
             $rules['sell_viewing_schedule'] = 'required_if:for_sell,1';

@@ -36,6 +36,11 @@ return [
         'submit_btn' => 'Send',
         'back_to_login_btn' => 'Back to Login page'
     ],
+    'reset' => [
+        'page_title' => 'Reset your Password',
+        'body_copy' => 'Please enter your new password.',
+        'submit_btn' => 'Reset',
+    ],
     'register' => [
         'page_title' => 'Register with Go Prop',
         'login_btn' => 'Already have an account? Login here',
