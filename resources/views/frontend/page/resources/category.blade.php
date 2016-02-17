@@ -2,8 +2,6 @@
 
 @section('page_title', ProjectHelper::formatTitle($title))
 
-@section('page_class', 'general-page')
-
 @section('content')
     <section class="article-columns">
         <div class="container">

@@ -2,8 +2,6 @@
 
 @section('page_title', ProjectHelper::formatTitle($content->title))
 
-@section('page_class', 'general-page')
-
 @section('content')
     @if($content)
         {!! $content->content !!}
