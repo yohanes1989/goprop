@@ -18,7 +18,9 @@
                         </div>
                         <div class="pull-right user-info">
                             <ul>
+                                @if(\Illuminate\Support\Facades\Auth::check())
                                 <li class="{{ $liked?'checked':'' }}"><a data-toggle="tooltip" title="{{ $liked?trans('property.buttons.unlike'):trans('property.buttons.like') }}" href="{{ route('frontend.property.toggle_like', ['id' => $property->id]) }}" class="toggle-like"><i class="fa {{ $liked?'fa-heart':'fa-heart-o' }}"></i></a></li>
+                                @endif
                                 <li>
                                     @if(!\GoProp\Facades\PropertyCompareHelper::isAddedToComparison($property))
                                     <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_compare') }}" href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>

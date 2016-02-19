@@ -532,7 +532,7 @@ Route::group([
         ]);
 
         Route::get('/{id}/toggle_like', [
-            'as' => 'frontend.property.unlike',
+            'as' => 'frontend.property.toggle_like',
             'uses' => 'PropertyController@getUnlikeProperty'
         ]);
 
