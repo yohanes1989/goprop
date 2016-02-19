@@ -129,12 +129,14 @@ class AuthController extends Controller
         $extendedProfile = new ExtendedProfile($data['profile']['extendedProfile']);
         $profile->extendedProfile()->save($extendedProfile);
 
-        $subscriptions = [];
-        foreach($data['subscriptions'] as $subscriptionSlug){
-            $subscriptions[] = Subscription::findBySlug($subscriptionSlug)->id;
-        }
+        if(isset($data['subscriptions'])){
+            $subscriptions = [];
+            foreach($data['subscriptions'] as $subscriptionSlug){
+                $subscriptions[] = Subscription::findBySlug($subscriptionSlug)->id;
+            }
 
-        $user->subscriptions()->sync($subscriptions);
+            $user->subscriptions()->sync($subscriptions);
+        }
 
         return $user;
     }
