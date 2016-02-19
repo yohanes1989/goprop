@@ -11,7 +11,7 @@
             </div>
             <div class="row">
                 <div class="register-form-wrapper">
-                    {!! Form::model($model, ['route' => 'frontend.property.create.process']) !!}
+                    {!! Form::model($model, ['route' => 'frontend.property.create.process', 'id' => 'property-form']) !!}
                     @include('frontend.property.create_form')
                     {!! Form::close() !!}
                 </div>

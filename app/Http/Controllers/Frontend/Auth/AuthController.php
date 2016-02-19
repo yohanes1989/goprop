@@ -8,6 +8,7 @@ use GoProp\Models\Profile;
 use GoProp\Models\Subscription;
 use GoProp\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Proengsoft\JsValidation\Facades\JsValidatorFacade;
 use Validator;
 use Illuminate\Http\Request;
 use GoProp\Http\Controllers\Controller;
@@ -33,7 +34,10 @@ class AuthController extends Controller
 
         $user = new User();
 
+        $jsValidator = JsValidatorFacade::make($this->getRules([]));
+
         return view('frontend.account.register', [
+            'validator' => $jsValidator,
             'model' => $user,
             'subscriptions' => $subscriptions
         ]);
@@ -68,7 +72,7 @@ class AuthController extends Controller
         return view('frontend.account.login');
     }
 
-    protected function validator(array $data)
+    protected function getRules(array $data)
     {
         $allowedSubscriptions = Subscription::lists('slug')->all();
 
@@ -91,9 +95,18 @@ class AuthController extends Controller
             'profile.extendedProfile.referral_source' => 'required',
         ];
 
-        foreach($data['subscriptions'] as $idx=>$submittedSubscription){
-            $rules['subscriptions.'.$idx] = 'in:'.implode(',', $allowedSubscriptions);
+        if(isset($data['subscriptions'])){
+            foreach($data['subscriptions'] as $idx=>$submittedSubscription){
+                $rules['subscriptions.'.$idx] = 'in:'.implode(',', $allowedSubscriptions);
+            }
         }
+
+        return $rules;
+    }
+
+    protected function validator(array $data)
+    {
+        $rules = $this->getRules($data);
 
         return Validator::make($data, $rules);
     }

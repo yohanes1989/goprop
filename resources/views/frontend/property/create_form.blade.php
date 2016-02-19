@@ -233,3 +233,9 @@
         </div>
     </div>
 </div>
+
+@section('bottom_scripts')
+    @parent
+
+    {!! $validator->selector('#property-form') !!}
+@stop

@@ -22,6 +22,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Proengsoft\JsValidation\Facades\JsValidatorFacade;
 use Webpresso\MyShortCart\Facades\MyShortCart;
 
 class PropertyController extends Controller
@@ -289,8 +290,13 @@ class PropertyController extends Controller
     {
         $property = new Property();
 
+        $formRequest = new PropertyFormRequest();
+
+        $validator = JsValidatorFacade::make($formRequest->getCreateRules($property));
+
         return view('frontend.property.create', [
-            'model' => $property
+            'model' => $property,
+            'validator' => $validator
         ]);
     }
 
@@ -314,8 +320,12 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
+        $formRequest = new PropertyFormRequest();
+        $validator = JsValidatorFacade::make($formRequest->getCreateRules($property));
+
         return view('frontend.property.edit', [
-            'model' => $property
+            'model' => $property,
+            'validator' => $validator
         ]);
     }
 
@@ -337,10 +347,12 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
-        //dd(old());
+        $formRequest = new PropertyFormRequest();
+        $validator = JsValidatorFacade::make($formRequest->getDetailRules($property));
 
         return view('frontend.property.property_detail', [
-            'model' => $property
+            'model' => $property,
+            'validator' => $validator
         ]);
     }
 

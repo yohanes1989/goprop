@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="col-xs-12 register-form-wrapper">
-                {!! Form::model($model, ['route' => 'frontend.account.register.process', 'method' => 'POST', 'files' => true]) !!}
+                {!! Form::model($model, ['route' => 'frontend.account.register.process', 'method' => 'POST', 'files' => true, 'id' => 'register-form']) !!}
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="row">
@@ -264,3 +264,9 @@
 
     <div class="clearfix"></div>
 @endsection
+
+@section('bottom_scripts')
+    @parent
+
+    {!! $validator->selector('#register-form') !!}
+@stop

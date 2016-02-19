@@ -63,7 +63,7 @@
             </div>
             <div class="row">
                 <div class="register-form-wrapper">
-                    {!! Form::model($model, ['route' => ['frontend.property.details.process', 'id' => $model->id]]) !!}
+                    {!! Form::model($model, ['route' => ['frontend.property.details.process', 'id' => $model->id], 'id' => 'property-form']) !!}
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group clearfix">
@@ -231,3 +231,9 @@
         <div class="col-sm-2"></div>
     </div>
 @endsection
+
+@section('bottom_scripts')
+    @parent
+
+    {!! $validator->selector('#property-form') !!}
+@stop
