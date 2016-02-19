@@ -7,9 +7,6 @@
 @endsection
 
 @section('content')
-    <?php
-        $canAssign = \Illuminate\Support\Facades\Auth::user()->is('administrator');
-    ?>
     <div class="block">
         <div class="block-title">
             <h4>Customer Inquiry</h4>
@@ -55,13 +52,7 @@
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
-                                @if($canAssign)
-                                <a href="{{ route('admin.customer_inquiry.assign_to_agent', ['id' => $conversation->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="open-modal btn btn-default" data-original-title="Assign To Agent"><i class="fa fa-users"></i></a>
-                                @endif
-
-                                @if($conversation->recipient_id)
-                                        <a href="{{ route('admin.customer_inquiry.conversation', ['id' => $conversation->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Open Conversation"><i class="fa fa-comment"></i></a>
-                                @endif
+                                <a href="{{ route('admin.customer_inquiry.conversation', ['id' => $conversation->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Open Conversation"><i class="fa fa-comment"></i></a>
                             </div>
                         </td>
                     </tr>

@@ -47,4 +47,27 @@ class Package extends Model
     {
         return $this->features->where('id', $feature->id)->first();
     }
+
+    public function getCommission($price)
+    {
+        $commission = 0;
+        $commissionRules = unserialize($this->commission);
+        foreach($commissionRules as $idx=>$commissionRule){
+            $explodedRules = explode('-', $idx);
+            $from = trim($explodedRules[0]);
+            $to = (trim($explodedRules[1])=='~')?$price+999999:trim($explodedRules[1]);
+
+            if($price >= $from && $price <= $to){
+                $commission = $commissionRule;
+                break;
+            }
+        }
+
+        if(strpos($commission, '%') !== FALSE){
+            $percentage = str_replace('%', '', $commission);
+            $commission = $price * $percentage/100;
+        }
+
+        return $commission;
+    }
 }

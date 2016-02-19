@@ -17,7 +17,8 @@
         "mcamara/laravel-localization": "1.0.*",
         "intervention/image": "^2.3",
         "intervention/imagecache": "^2.3",
-        "dimsav/laravel-translatable": "^5.4"
+        "dimsav/laravel-translatable": "^5.4",
+        "proengsoft/laravel-jsvalidation": "~1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -49,7 +50,8 @@
             "php artisan clear-compiled"
         ],
         "post-update-cmd": [
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan vendor:publish --provider=\"Proengsoft\\JsValidation\\JsValidationServiceProvider\" --tag=public --force"
         ],
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""

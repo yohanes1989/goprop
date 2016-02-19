@@ -39,6 +39,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('GoProp\Models\Subscription');
     }
 
+    public function handledProperty()
+    {
+        return $this->hasMany('GoProp\Models\Property', 'agent_id');
+    }
+
     public function properties()
     {
         return $this->hasMany('GoProp\Models\Property');
@@ -86,6 +91,16 @@ class User extends Model implements AuthenticatableContract,
 
     public function createPropertyConversation($property, $agent = NULL)
     {
+        if(!$property->relationLoaded('agent')){
+            $property->load('agent');
+        }
+
+        if(!$agent){
+            if($property->agent){
+                $agent = $property->agent;
+            }
+        }
+
         //Create new conversation
         $conversation = new Message();
         if($property->user_id == $this->id){

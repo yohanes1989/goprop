@@ -132,6 +132,8 @@
     <!-- The basic File Upload plugin -->
     <script src="{{ asset('assets/frontend/vendor/jquery-file-upload/js/jquery.fileupload.js') }}"></script>
 
+    <script src="{{ asset('assets/frontend/vendor/html5sortable/html.sortable.min.js') }}"></script>
+
     <script>
         /*jslint unparam: true */
         /*global window, $ */
@@ -160,6 +162,7 @@
                 done: function (e, data) {
                     for(var i=0; i<data.result.length; i+=1){
                         $('#upload-tasks').append(data.result[i]);
+                        $('#upload-tasks').sortable('reload');
                     }
                 },
                 fail: function(e, data){
@@ -177,6 +180,30 @@
                 }
             }).prop('disabled', !$.support.fileInput)
                     .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+            $('#upload-tasks').sortable().bind('sortstop', function(e, ui){
+                var $photos = [];
+
+                $('#upload-tasks .uploaded-item').each(function(idx, obj){
+                    $photos.push($(obj).data('attachment_id'));
+                });
+                $.ajax(
+                    '{{ route('frontend.property.photos.reorder', ['id' => $model->id, 'type' => 'photo']) }}',
+                        {
+                            data: {
+                                'photos': $photos,
+                                '_token': $('#fileupload-form input[name="_token"]').val()
+                            },
+                            method: 'post',
+                            success: function(data){
+
+                            },
+                            error: function(xhr){
+                                alert('Reorder error. Please try again.');
+                            }
+                        }
+                );
+            });
         });
 
         function addPhotoDelete($button)

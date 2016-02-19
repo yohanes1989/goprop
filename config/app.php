@@ -155,6 +155,7 @@ return [
         Webpresso\MyShortCart\MyShortCartServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         Dimsav\Translatable\TranslatableServiceProvider::class,
+        Proengsoft\JsValidation\JsValidationServiceProvider::class,
     ],
 
     /*
@@ -211,7 +212,8 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'MyShortCart' => Webpresso\MyShortCart\Facades\MyShortCart::class,
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
-        'ProjectHelper' => \GoProp\Facades\ProjectHelper::class
+        'ProjectHelper' => \GoProp\Facades\ProjectHelper::class,
+        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
     ],
 
     'default_title' => 'GoProp',

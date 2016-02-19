@@ -27,20 +27,36 @@ class Property extends Model
     const FURNISHING_PART_FURNISHED = 'part_furnished';
     const FURNISHING_UNFURNISHED = 'unfurnished';
 
+    const ORIENTATION_NORTH = 'north';
+    const ORIENTATION_NORTH_EAST = 'north_east';
+    const ORIENTATION_EAST = 'east';
+    const ORIENTATION_SOUTH_EAST = 'south_east';
+    const ORIENTATION_SOUTH = 'south';
+    const ORIENTATION_SOUTH_WEST = 'south_west';
+    const ORIENTATION_WEST = 'west';
+    const ORIENTATION_NORTH_WEST = 'north_west';
+
     const CERTIFICATE_STRATA_TITLE = 'strata_title';
     const CERTIFICATE_HGB = 'hgb';
     const CERTIFICATE_HM = 'hm';
 
     public static $residentialSlugs = ['house', 'apartment', 'townhouse'];
 
+    public static $availableElectricity = [450, 900, 1300, 2200, 3500, 4400, 4500, 6600, 7600, 7700, 8000, 9000, 10000, 10600, 11000, 12700, 13200, 13300, 13900, 16500, 17600, 19000, 22000, 23000, 24000, 30500, 38100, 41500, 47500, 53000, 61000, 66000, 76000, 82500, 85000, 95000];
+
     protected $dates = ['deleted_at', 'checkout_at'];
     protected $fillable = ['property_name', 'province', 'city', 'subdistrict', 'address', 'postal_code',
-        'property_type_id', 'parking', 'garage_size', 'rooms', 'bathrooms', 'for_sell', 'sell_price',
-        'for_rent', 'rent_price', 'rent_price_type', 'land_size', 'building_size', 'floors', 'certificate', 'description',
+        'property_type_id', 'parking', 'garage_size', 'carport_size', 'rooms', 'bathrooms', 'maid_rooms', 'maid_bathrooms', 'for_sell', 'sell_price',
+        'for_rent', 'rent_price', 'rent_price_type', 'land_size', 'land_dimension', 'building_size', 'building_dimension', 'floors', 'orientation', 'phone_lines', 'electricity', 'certificate', 'description',
         'virtual_tour_url', 'latitude', 'longitude', 'status', 'checkout_at', 'furnishing', 'short_note'];
 
     //Relations
     public function user()
+    {
+        return $this->belongsTo('GoProp\Models\User');
+    }
+
+    public function agent()
     {
         return $this->belongsTo('GoProp\Models\User');
     }
@@ -52,12 +68,12 @@ class Property extends Model
 
     public function photos()
     {
-        return $this->hasMany('GoProp\Models\PropertyAttachment')->where('type', 'photo');
+        return $this->hasMany('GoProp\Models\PropertyAttachment')->where('type', 'photo')->orderBy('sort_order', 'ASC');
     }
 
     public function floorplans()
     {
-        return $this->hasMany('GoProp\Models\PropertyAttachment')->where('type', 'floorplan');
+        return $this->hasMany('GoProp\Models\PropertyAttachment')->where('type', 'floorplan')->orderBy('sort_order', 'ASC');
     }
 
     public function attachments()
@@ -90,10 +106,114 @@ class Property extends Model
         return $this->morphMany('GoProp\Models\Message', 'referenced')->orderBy('created_at', 'ASC');
     }
 
+    public function conversations()
+    {
+        return $this->messages()->whereNull('parent_id');
+    }
+
+    public function viewingSchedules()
+    {
+        return $this->hasMany('GoProp\Models\ViewingSchedule');
+    }
+
+    //Accessors
+    public function getLandDimensionAttribute()
+    {
+        if($this->attributes['land_dimension']){
+            $explodes = explode('x', $this->attributes['land_dimension']);
+
+            $return = [
+                'length' => isset($explodes[0])?$explodes[0]:0,
+                'width' => isset($explodes[1])?$explodes[1]:0,
+            ];
+        }else{
+            $return = $this->attributes['land_dimension'];
+        }
+
+        return $return;
+    }
+
+    public function getLandDimensionWithUnitAttribute()
+    {
+        $dimensions = $this->land_dimension?$this->land_dimension:[];
+        $return = '';
+
+        $count = 0;
+        foreach($dimensions as $dimension){
+            $return .= (($count!=0)?' x ':'').$dimension.'m';
+
+            $count += 1;
+        }
+
+        return $return;
+    }
+
+    public function getBuildingDimensionAttribute()
+    {
+        if($this->attributes['building_dimension']){
+            $explodes = explode('x', $this->attributes['building_dimension']);
+
+            $return = [
+                'length' => isset($explodes[0])?$explodes[0]:0,
+                'width' => isset($explodes[1])?$explodes[1]:0,
+            ];
+        }else{
+            $return = $this->attributes['building_dimension'];
+        }
+
+        return $return;
+    }
+
+    public function getBuildingDimensionWithUnitAttribute()
+    {
+        $dimensions = $this->building_dimension?$this->building_dimension:[];
+        $return = '';
+
+        $count = 0;
+        foreach($dimensions as $dimension){
+            $return .= (($count!=0)?' x ':'').$dimension.'m';
+
+            $count += 1;
+        }
+
+        return $return;
+    }
+
+    //Mutators
+    public function setLandDimensionAttribute($values)
+    {
+        $empty = true;
+
+        if(is_array($values)){
+            foreach($values as $value){
+                if(!empty($value)){
+                    $empty = false;
+                }
+            }
+        }
+
+        $this->attributes['land_dimension'] = !$empty?implode('x', $values):NULL;
+    }
+
+    public function setBuildingDimensionAttribute($values)
+    {
+        $empty = true;
+
+        if(is_array($values)){
+            foreach($values as $value){
+                if(!empty($value)){
+                    $empty = false;
+                }
+            }
+        }
+
+        $this->attributes['building_dimension'] = !$empty?implode('x', $values):NULL;
+    }
+
     //Scopes
     public function scopeActive($query)
     {
-        $query->where('status', self::STATUS_ACTIVE);
+        $query->where($this->getTable().'.status', self::STATUS_ACTIVE);
     }
 
     //Methods
@@ -311,6 +431,54 @@ class Property extends Model
         return (isset($array[$option]))?$array[$option]:$array;
     }
 
+    public static function getOrientationLabel($option=null)
+    {
+        $array = [
+            self::ORIENTATION_NORTH => trans('property.orientation.'.self::ORIENTATION_NORTH),
+            self::ORIENTATION_NORTH_EAST => trans('property.orientation.'.self::ORIENTATION_NORTH_EAST),
+            self::ORIENTATION_EAST => trans('property.orientation.'.self::ORIENTATION_EAST),
+            self::ORIENTATION_SOUTH_EAST=> trans('property.orientation.'.self::ORIENTATION_SOUTH_EAST),
+            self::ORIENTATION_SOUTH=> trans('property.orientation.'.self::ORIENTATION_SOUTH),
+            self::ORIENTATION_SOUTH_WEST => trans('property.orientation.'.self::ORIENTATION_SOUTH_WEST),
+            self::ORIENTATION_WEST => trans('property.orientation.'.self::ORIENTATION_WEST),
+            self::ORIENTATION_NORTH_WEST => trans('property.orientation.'.self::ORIENTATION_NORTH_WEST),
+        ];
+
+        if(empty($option)){
+            return $array;
+        }
+
+        return (isset($array[$option]))?$array[$option]:$array;
+    }
+
+    public static function getPhoneLinesLabel($option=null)
+    {
+        $array = [];
+        for($i = 0; $i <= 10; $i += 1){
+            $array[$i] = trans_choice('forms.fields.property.phone_line_count', $i);
+        }
+
+        if(empty($option)){
+            return $array;
+        }
+
+        return (isset($array[$option]))?$array[$option]:$array;
+    }
+
+    public static function getElectricityLabel($option=null)
+    {
+        $array = [];
+        foreach(self::$availableElectricity as $electricity){
+            $array[$electricity] = trans('forms.fields.property.watt', ['electricity' => $electricity]);
+        }
+
+        if(empty($option)){
+            return $array;
+        }
+
+        return (isset($array[$option]))?$array[$option]:$array;
+    }
+
     public static function getBedroomsLabel($option=null)
     {
         $array = [];
@@ -325,11 +493,53 @@ class Property extends Model
         return (isset($array[$option]))?$array[$option]:$array;
     }
 
+    public static function getCarsLabel($option=null)
+    {
+        $array = [];
+        for($i = 0; $i <= 10; $i += 1){
+            $array[$i] = trans_choice('forms.fields.property.car_count', $i);
+        }
+
+        if(empty($option)){
+            return $array;
+        }
+
+        return (isset($array[$option]))?$array[$option]:$array;
+    }
+
+    public static function getMaidBedroomsLabel($option=null)
+    {
+        $array = [];
+        for($i = 0; $i <= 5; $i += 1){
+            $array[$i] = trans_choice('forms.fields.property.maid_bedroom_count', $i);
+        }
+
+        if(empty($option)){
+            return $array;
+        }
+
+        return (isset($array[$option]))?$array[$option]:$array;
+    }
+
     public static function getBathroomsLabel($option=null)
     {
         $array = [];
         for($i = 1; $i <= 5; $i += 1){
             $array[$i] = trans_choice('forms.fields.property.bathroom_count', $i);
+        }
+
+        if(empty($option)){
+            return $array;
+        }
+
+        return (isset($array[$option]))?$array[$option]:$array;
+    }
+
+    public static function getMaidBathroomsLabel($option=null)
+    {
+        $array = [];
+        for($i = 1; $i <= 5; $i += 1){
+            $array[$i] = trans_choice('forms.fields.property.maid_bathroom_count', $i);
         }
 
         if(empty($option)){

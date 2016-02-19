@@ -26,7 +26,7 @@
                             @include('admin.property.upload_photo', ['property' => $property, 'photo' => $photo])
                         @endforeach
                     </div>
-                    {!! Form::model($property, array('route' => ['admin.property.media.upload', 'id' => $property->id, 'type' => 'photo'], 'class' => 'upload-form form-horizontal','files'=>true)) !!}
+                    {!! Form::model($property, array('route' => ['admin.property.media.upload', 'id' => $property->id, 'type' => 'photo'], 'class' => 'upload-form form-horizontal', 'data-type' => 'photo', 'files'=>true)) !!}
                     <div class="form-group">
                         {!! Form::file('files[]', ['class' => 'form-file', 'multiple' => true]) !!}
                     </div>
@@ -46,7 +46,7 @@
                             @include('admin.property.upload_photo', ['property' => $property, 'photo' => $photo])
                         @endforeach
                     </div>
-                    {!! Form::model($property, array('route' => ['admin.property.media.upload', 'id' => $property->id, 'type' => 'floorplan'], 'class' => 'upload-form form-horizontal','files'=>true)) !!}
+                    {!! Form::model($property, array('route' => ['admin.property.media.upload', 'id' => $property->id, 'type' => 'floorplan'], 'class' => 'upload-form form-horizontal', 'data-type' => 'floorplan', 'files'=>true)) !!}
                     <div class="form-group">
                         {!! Form::file('files[]', ['class' => 'form-file', 'multiple' => true]) !!}
                     </div>
@@ -73,6 +73,8 @@
     <script src="{{ asset('assets/frontend/vendor/jquery-file-upload/js/jquery.iframe-transport.js') }}"></script>
     <!-- The basic File Upload plugin -->
     <script src="{{ asset('assets/frontend/vendor/jquery-file-upload/js/jquery.fileupload.js') }}"></script>
+
+    <script src="{{ asset('assets/frontend/vendor/html5sortable/html.sortable.min.js') }}"></script>
 
     <script>
         /*jslint unparam: true */
@@ -103,6 +105,7 @@
                     done: function (e, data) {
                         for(var i=0; i<data.result.length; i+=1){
                             $(obj).parent().find('.uploaded').append(data.result[i]);
+                            $(obj).parent().find('.uploaded').sortable('reload');
                         }
                     },
                     fail: function(e, data){
@@ -120,6 +123,32 @@
                     }
                 }).prop('disabled', !$.support.fileInput)
                         .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+                $(obj).parent().find('.uploaded').sortable().bind('sortstop', function(e, ui){
+                    var $photos = [];
+
+                    $(obj).parent().find('.uploaded .uploaded-item').each(function(idx, obj){
+                        $photos.push($(obj).data('attachment_id'));
+                    });
+                    $.ajax(
+                        '{{ route('admin.property.media.reorder', ['id' => $property->id]) }}',
+                        {
+                            data: {
+                                'type': $(obj).data('type'),
+                                'photos': $photos,
+                                '_token': $(obj).find('input[name="_token"]').val()
+                            },
+                            method: 'post',
+                            success: function(data){
+
+                            },
+                            error: function(xhr){
+                                console.log(xhr);
+                                alert('Reorder error. Please try again.');
+                            }
+                        }
+                    );
+                });
             });
         });
 

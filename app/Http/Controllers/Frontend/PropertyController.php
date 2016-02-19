@@ -28,16 +28,16 @@ class PropertyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['postAddToCart', 'getCompare', 'getAddToComparison', 'getRemoveFromComparison', 'getLikeProperty', 'getUnlikeProperty', 'getSearch', 'getSimpleSearch', 'getView']]);
-        $this->middleware('property_owner', ['except' => ['index', 'getCompare', 'getAddToComparison', 'getRemoveFromComparison', 'getScheduleViewing', 'postScheduleViewing', 'getLikeProperty', 'getUnlikeProperty', 'getSearch', 'getSimpleSearch', 'getView', 'getCreate', 'postCreate', 'postAddToCart']]);
-        $this->middleware('likeable', ['only' => ['getLikeProperty', 'getUnlikeProperty']]);
+        $this->middleware('auth', ['except' => ['postAddToCart', 'getCompare', 'getAddToComparison', 'getRemoveFromComparison', 'getLikeProperty', 'getUnlikeProperty', 'getToggleLikeProperty', 'getSearch', 'getSimpleSearch', 'getView']]);
+        $this->middleware('property_owner', ['except' => ['index', 'getCompare', 'getAddToComparison', 'getRemoveFromComparison', 'getScheduleViewing', 'postScheduleViewing', 'getLikeProperty', 'getUnlikeProperty', 'getToggleLikeProperty', 'getSearch', 'getSimpleSearch', 'getView', 'getCreate', 'postCreate', 'postAddToCart']]);
+        $this->middleware('likeable', ['only' => ['getLikeProperty', 'getUnlikeProperty', 'getToggleLikeProperty']]);
         $this->middleware('property_editable', ['only' => [
             'getEdit', 'postEdit',
             'getPropertyDetails', 'postPropertyDetails',
             'getPropertyMap', 'postPropertyMap',
             'getPropertyPhotos', 'postPropertyPhotos',
             'getPropertyFloorplans', 'postPropertyFloorplans',
-            'postPropertyPhotosUpload', 'postPropertyPhotosDelete']]);
+            'postPropertyPhotosUpload', 'postPropertyPhotosDelete', 'postPropertyPhotosReorder']]);
         $this->middleware('property_cart_order', ['only' => ['getPropertyOrderReview', 'postPropertyOrderReview']]);
     }
 
@@ -337,6 +337,8 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
+        //dd(old());
+
         return view('frontend.property.property_detail', [
             'model' => $property
         ]);
@@ -379,7 +381,15 @@ class PropertyController extends Controller
     public function postPropertyMap(PropertyFormRequest $request, $id)
     {
         $property = Property::findOrFail($id);
-        $property->fill($request->all());
+        $data = $request->all();
+
+        //If not point map, set latitude & longitude to 0
+        if($request->input('point_map') != 1){
+            $data['latitude'] = NULL;
+            $data['longitude'] = NULL;
+        }
+
+        $property->fill($data);
         $property->save();
 
         if($request->input('action') == 'save_information'){
@@ -434,6 +444,14 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
+        if($type == 'photo'){
+            $photos = $property->photos;
+        }elseif($type == 'floorplan'){
+            $photos = $property->floorplans;
+        }
+        $lastPhoto = $photos->last();
+        $nextOrder = $lastPhoto?$lastPhoto->sort_order+1:1;
+
         $max = 500;
         if($type == 'floorplan'){
             $max = 1024;
@@ -452,8 +470,9 @@ class PropertyController extends Controller
         $uploadedPhotos = [];
 
         foreach($request->file('files') as $idx=>$file){
-            $uploadedPhoto = $property->savePhoto($file, $type, $idx);
+            $uploadedPhoto = $property->savePhoto($file, $type, $nextOrder);
             $uploadedPhotos[] = view('frontend.property.upload_photo', ['model' => $property, 'photo' => $uploadedPhoto])->render();
+            $nextOrder += 1;
         }
 
         return response()->json($uploadedPhotos);
@@ -477,6 +496,31 @@ class PropertyController extends Controller
         }elseif($propertyAttachment->type == 'floorplan'){
             return redirect()->route('frontend.property.floorplans', ['id' => $property->id])->with('messages', [trans('property.messages.floorplan_delete_successful')]);
         }
+    }
+
+    public function postPropertyPhotosReorder(Request $request, $id, $type)
+    {
+        $property = Property::findOrFail($id);
+        $allowedAttachments = $property->attachments()->lists('id')->all();
+
+        $count = 1;
+
+        $ordered = [];
+
+        foreach($request->input('photos', []) as $photo){
+            if(in_array($photo, $allowedAttachments)){
+                $attachment = PropertyAttachment::findOrFail($photo);
+                $attachment->update([
+                    'sort_order' => $count
+                ]);
+
+                $ordered[] = $attachment->id;
+
+                $count += 1;
+            }
+        }
+
+        return response()->json($ordered);
     }
 
     public function getPropertyPackages($id)
@@ -762,6 +806,22 @@ class PropertyController extends Controller
         return redirect()->back()->with('messages', [trans('property.like.unlike_message', ['property_name' => $property->property_name])]);
     }
 
+    public function getToggleLikeProperty($id)
+    {
+        $user = Auth::user();
+        $property = Property::findOrFail($id);
+
+        if($property->isLikedBy($user)){
+            $user->unlikeProperty($property);
+            $liked = false;
+        }else{
+            $user->likeProperty($property);
+            $liked = true;
+        }
+
+        return '<li class="'.($liked?'checked':'').'"><a data-toggle="tooltip" title="'.($liked?trans('property.buttons.unlike'):trans('property.buttons.like')).'" href="'.route('frontend.property.toggle_like', ['id' => $property->id]).'" class="toggle-like"><i class="fa '.($liked?'fa-heart':'fa-heart-o').'"></i></a></li>';
+    }
+
     public function getScheduleViewing($id)
     {
         $user = Auth::user();
@@ -822,6 +882,7 @@ class PropertyController extends Controller
     {
         $user = Auth::user();
         $property = Property::findOrFail($id);
+        $property->load('agent');
 
         $allowedTime = array_keys(Property::getViewingTimeLabel());
         $rules = [
@@ -842,10 +903,21 @@ class PropertyController extends Controller
 
         $viewingSchedule = ViewingSchedule::where('user_id', $user->id)->where('property_id', $property->id)->first();
 
+        if($property->agent){
+            $agent = $property->agent;
+        }else{
+            $agent = ProjectHelper::getDefaultAgent();
+        }
+
         if(!$viewingSchedule){
             $viewingSchedule = new ViewingSchedule();
             $viewingSchedule->user()->associate($user);
             $viewingSchedule->property()->associate($property);
+
+            if($agent){
+                $viewingSchedule->agent()->associate($agent);
+            }
+
             $reschedule = FALSE;
         }else{
             $reschedule = TRUE;
@@ -861,8 +933,6 @@ class PropertyController extends Controller
 
         $conversation = $user->getPropertyConversation($property);
         if(!$conversation){
-            $agent = ProjectHelper::getDefaultAgent();
-
             $user->createPropertyConversation($property, $agent);
         }
 

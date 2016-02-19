@@ -57,6 +57,7 @@ return [
         'page_title' => 'Map of <span>:title<span>',
         'body_copy' => 'If the marker is not placed in the right location of your property, simply drag the map so the marker is pointing to the correct location.',
         'search_map' => 'Search map',
+        'point_map_question' => 'Select property location on Google Map'
     ],
     'photos' => [
         'page_title' => 'Photos of <span>:title<span>',
@@ -85,9 +86,19 @@ return [
         'townhouse' => 'Townhouse',
         'commercial' => 'Commercial',
         'factory' => 'Factory',
-        'office' => 'Office',
+        'land' => 'Land',
         'warehouse' => 'Warehouse',
-        'working-space' => 'Working Space',
+        'working-space' => 'Working Space / Office Space',
+    ],
+    'orientation' => [
+        'north' => 'North',
+        'north_east' => 'North East',
+        'east' => 'East',
+        'south_east' => 'South East',
+        'south' => 'South',
+        'south_west' => 'South West',
+        'west' => 'West',
+        'north_west' => 'North West',
     ],
     'messages' => [
         'save_successful' => 'Your information is successfully saved.',
@@ -138,9 +149,12 @@ return [
         ]
     ],
     'order_review' => [
-        'page_title' => 'Your package',
+        'page_title' => 'Order Review',
+        'your_package' => 'Your package',
         'addons' => 'Your addons',
         'total_cost' => 'Total Cost',
+        'upfront_fee' => 'Upfront Fee',
+        'agent_commission' => 'Agent Commission upon completion',
         'payment_methods' => 'Payment Methods',
         'agree_tc' => 'I agree to the',
         'terms_conditions' => 'terms & conditions'
@@ -231,6 +245,8 @@ return [
         'add_message' => ':name is added to comparison.',
         'remove_message' => ':name is removed from comparison.',
         'compare_btn' => 'Compare',
+        'tooltip_compare' => 'Add to Comparison',
+        'tooltip_uncompare' => 'Remove from Comparison',
     ],
     'inbox' => [
         'title' => 'Inbox',
@@ -241,7 +257,8 @@ return [
         'please_add_message' => 'No message. Please add a message to start a conversation with our agent.',
         'conversation_started' => 'Conversation started :time',
         'no_result_message' => 'You haven\'t shown any interest in a property yet.<br />Search for property you\'re interested in to see it here.',
-        'sent_message' => 'Your message is successfully sent to our agent.'
+        'sent_message' => 'Your message is successfully sent to our agent.',
+        'property_questions' => 'Property Questions',
     ],
     'viewings' => [
         'title' => 'Viewing Calendars',
@@ -249,5 +266,12 @@ return [
         'properties_i_view' => 'Properties I\'m viewing',
         'scheduled_label' => 'Viewing scheduled',
         'change_date' => 'Change date',
+    ],
+    'buttons' => [
+        'talk_to_agent' => 'Talk to Our Agent',
+        'schedule_viewing' => 'Schedule Viewing',
+        'edit_property' => 'Edit Property',
+        'like' => 'Like',
+        'unlike' => 'Unlike'
     ]
 ];

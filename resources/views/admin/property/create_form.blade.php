@@ -41,7 +41,7 @@
 
 <div class="col-md-4">
     <div class="form-group">
-        {!! Form::label('property_name', 'Property Name *', array('class'=>'col-md-4 control-label')) !!}
+        {!! Form::label('property_name', 'Listing Title *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::text('property_name', null, array('class'=>'form-control', 'id' => 'property_name', 'placeholder'=>'Property Name')) !!}
         </div>
@@ -62,20 +62,6 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('parking', 'Parking *', array('class'=>'col-md-4 control-label')) !!}
-        <div class="col-md-8">
-            {!! Form::select('parking', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getParkingOptionLabel(), null, ['class' => 'form-control', 'id' => 'parking']) !!}
-        </div>
-    </div>
-
-    <div data-field-dependent="parking|garage" class="form-group">
-        {!! Form::label('garage_size', 'Garage Size', array('class'=>'col-md-4 control-label')) !!}
-        <div class="col-md-8">
-            {!! Form::text('garage_size', null, array('class'=>'form-control', 'id' => 'garage_size','placeholder'=>'Garage Size')) !!}
-        </div>
-    </div>
-
-    <div class="form-group">
         {!! Form::label('bathrooms', 'Bathrooms *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::select('bathrooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getBathroomsLabel(), null, ['class' => 'form-control', 'id' => 'bathrooms']) !!}
@@ -83,9 +69,36 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('maid_rooms', 'Maid Bedrooms', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::select('maid_rooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getMaidBedroomsLabel(), null, ['class' => 'form-control', 'id' => 'maid_rooms']) !!}
+        </div>
+    </div>
+    <div class="form-group">
+        {!! Form::label('maid_bathrooms', 'Maid Bathrooms', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::select('maid_bathrooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getMaidBathroomsLabel(), null, ['class' => 'form-control', 'id' => 'maid_bathrooms']) !!}
+        </div>
+    </div>
+
+    <div class="form-group">
         {!! Form::label('furnishing', 'Furnishing *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::select('furnishing', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getFurnishingLabel(), null, ['class' => 'form-control', 'id' => 'furnishing']) !!}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('carport_size', 'Carport Size', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::select('carport_size', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getCarsLabel(), null, ['class' => 'form-control', 'id' => 'garage_size']) !!}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('garage_size', 'Garage Size', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::select('garage_size', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getCarsLabel(), null, ['class' => 'form-control', 'id' => 'garage_size']) !!}
         </div>
     </div>
 
@@ -135,7 +148,7 @@
         <div class="col-md-8">
             @foreach(\GoProp\Models\Property::getViewingScheduleOptionLabel() as $viewingOptionIdx => $viewingOption)
                 <label class="checkbox-inline">
-                    {!! Form::checkbox('rent_viewing_schedule[]', $viewingOptionIdx, (strpos($property->sell_viewing_schedule, $viewingOptionIdx) !== false)) !!} {{ $viewingOption }}
+                    {!! Form::checkbox('rent_viewing_schedule[]', $viewingOptionIdx, (strpos($property->rent_viewing_schedule, $viewingOptionIdx) !== false)) !!} {{ $viewingOption }}
                 </label>
             @endforeach
         </div>
@@ -155,19 +168,52 @@
         <h4 class="sub-header">Description</h4>
 
         <div class="form-group">
+            {!! Form::label('description', 'Listing Description *', ['class' => 'control-label col-md-3']) !!}
+            <div class="col-md-9">
+                {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 5, 'id' => 'description']) !!}
+            </div>
+        </div>
+
+        <div class="form-group">
             {!! Form::label('land_size', 'Land Size', ['class' => 'control-label col-md-3']) !!}
             <div class="col-md-8">
-                {!! Form::text('land_size', null, ['class' => 'form-control', 'id' => 'land_size']) !!}
+                {!! Form::text('land_size', old('land_size', intval($property->land_size)?$property->land_size:''), ['class' => 'form-control', 'id' => 'land_size']) !!}
             </div>
             <div class="col-md-1">m<sup>2</sup></div>
         </div>
 
         <div class="form-group">
+            {!! Form::label('land_dimension', 'Land Dimension', ['class' => 'control-label col-md-3']) !!}
+            <div class="col-md-2">
+                {!! Form::text('land_dimension[length]', null, ['class' => 'form-control', 'placeholder' => 'Length', 'id' => 'land_dimension_length']) !!}
+            </div>
+            <div class="col-md-1 text-center">
+                x
+            </div>
+            <div class="col-md-2">
+                {!! Form::text('land_dimension[width]', null, ['class' => 'form-control', 'placeholder' => 'Width', 'id' => 'land_dimension_width']) !!}
+            </div>
+        </div>
+
+        <div class="form-group">
             {!! Form::label('building_size', 'Building Size', ['class' => 'control-label col-md-3']) !!}
             <div class="col-md-8">
-                {!! Form::text('building_size', null, ['class' => 'form-control', 'id' => 'building_size']) !!}
+                {!! Form::text('building_size', old('building_size', intval($property->building_size)?$property->building_size:''), ['class' => 'form-control', 'id' => 'building_size']) !!}
             </div>
             <div class="col-md-1">m<sup>2</sup></div>
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('building_dimension', 'Building Dimension', ['class' => 'control-label col-md-3']) !!}
+            <div class="col-md-2">
+                {!! Form::text('building_dimension[length]', null, ['class' => 'form-control', 'placeholder' => 'Length', 'id' => 'building_dimension_length']) !!}
+            </div>
+            <div class="col-md-1 text-center">
+                x
+            </div>
+            <div class="col-md-2">
+                {!! Form::text('building_dimension[width]', null, ['class' => 'form-control', 'placeholder' => 'Width', 'id' => 'building_dimension_width']) !!}
+            </div>
         </div>
 
         <div class="form-group">
@@ -178,16 +224,30 @@
         </div>
 
         <div class="form-group">
-            {!! Form::label('certificate', 'Certificate', ['class' => 'control-label col-md-3']) !!}
+            {!! Form::label('phone_lines', 'Phone Lines', ['class' => 'control-label col-md-3']) !!}
             <div class="col-md-9">
-                {!! Form::select('certificate', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getCertificateLabel(), null, ['class' => 'form-control', 'id' => 'certificate']) !!}
+                {!! Form::select('phone_lines', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getPhoneLinesLabel(), null, ['class' => 'form-control', 'id' => 'phone_lines']) !!}
             </div>
         </div>
 
         <div class="form-group">
-            {!! Form::label('description', 'Short Description *', ['class' => 'control-label col-md-3']) !!}
+            {!! Form::label('electricity', 'Electricity', ['class' => 'control-label col-md-3']) !!}
             <div class="col-md-9">
-                {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 5, 'id' => 'description']) !!}
+                {!! Form::select('electricity', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getElectricityLabel(), null, ['class' => 'form-control', 'id' => 'electricity']) !!}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('orientation', 'Orientation', ['class' => 'control-label col-md-3']) !!}
+            <div class="col-md-9">
+                {!! Form::select('orientation', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getOrientationLabel(), null, ['class' => 'form-control', 'id' => 'orientation']) !!}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('certificate', 'Certificate', ['class' => 'control-label col-md-3']) !!}
+            <div class="col-md-9">
+                {!! Form::select('certificate', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getCertificateLabel(), null, ['class' => 'form-control', 'id' => 'certificate']) !!}
             </div>
         </div>
 
@@ -203,6 +263,9 @@
         <h4 class="sub-header">Maps</h4>
 
         <div class="form-group">
+            <label>{!! Form::checkbox('point_map', 1, old('point_map', ($property->latitude && $property->longitude)), ['id' => 'point-map-checkbox']) !!} Pin location on Google Map</label>
+
+            <div id="google-map-wrapper">
             <div class="gmaps-form-area">
                 <div class="gmaps-form-search">
                     <input type="text" id="map_address" name="map_address" class="form-control" placeholder="{{ trans('property.map.search_map') }}" />
@@ -213,6 +276,7 @@
             </div>
             {!! Form::hidden('latitude', null, ['id' => 'latitude']) !!}
             {!! Form::hidden('longitude', null, ['id' => 'longitude']) !!}
+            </div>
         </div>
     </div>
 </div>
@@ -276,15 +340,18 @@
                 );
             });
 
-            // Javascript for Google Maps with Search Field
-            map = new GMaps({
-                div: '#map',
-                lat: {{ $defaultLatitude }},
-                lng: {{ $defaultLongitude }},
-                zoom: 17,
-                dragend: function(e) {
-                    $('#latitude').val(this.getCenter().lat());
-                    $('#longitude').val(this.getCenter().lng());
+            $('#google-map-wrapper').hide();
+
+            if($('#point-map-checkbox').is(':checked')){
+                openMap();
+            }
+
+            $('#point-map-checkbox').on('click', function(){
+                if($(this).is(':checked')){
+                    openMap();
+                }else{
+                    $('#google-map-wrapper').hide();
+                    $('#point-map-hidden').val(0);
                 }
             });
 
@@ -307,5 +374,22 @@
                 }
             });
         });
+
+        function openMap()
+        {
+            $('#google-map-wrapper').show();
+
+            // Javascript for Google Maps with Search Field
+            map = new GMaps({
+                div: '#map',
+                lat: {{ $defaultLatitude }},
+                lng: {{ $defaultLongitude }},
+                zoom: 17,
+                dragend: function(e) {
+                    $('#latitude').val(this.getCenter().lat());
+                    $('#longitude').val(this.getCenter().lng());
+                }
+            });
+        }
     </script>
 @endsection

@@ -455,9 +455,6 @@ ol.faq-list {
 	@include box-shadow(none);
 }
 .tooltip.top {
-	&.top {
-		margin-top: -42px;
-	}
 	.tooltip-arrow {
 		border-top-color: $color-yellow;
 	}
@@ -467,6 +464,12 @@ ol.faq-list {
 		color: $color-black;
 		padding: 8px 12px;
 	}
+}
+
+.slider{
+  .tooltip.top {
+    margin-top: -42px;
+  }
 }
 
 // Custom Radio Button
@@ -543,6 +546,8 @@ ol.faq-list {
   margin: 0 0 1em;
   padding: 10px;
   background: $color-grey-light;
+  font-size: 1.1em;
+  line-height: 1.5em;
 
   ul{
     margin: 0;
@@ -624,4 +629,11 @@ ol.faq-list {
       }
     }
   }
+}
+
+.sortable-placeholder{
+  float: left;
+  width: 100px;
+  height: 100px;
+  border: 1px solid $color-grey-light;
 }

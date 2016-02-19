@@ -16,6 +16,7 @@ class PropertyType extends Model implements SluggableInterface
     protected $sluggable = [
         'build_from' => 'name',
         'save_to'    => 'slug',
+        'on_update' => TRUE
     ];
 
     //Relations
@@ -34,7 +35,7 @@ class PropertyType extends Model implements SluggableInterface
     {
         $options = [];
 
-        $parents = self::whereNull('parent_id')->get();
+        $parents = self::whereNull('parent_id')->orderBy('sort_order', 'ASC')->get();
 
         foreach($parents as $child){
             $options += self::processOption($child);

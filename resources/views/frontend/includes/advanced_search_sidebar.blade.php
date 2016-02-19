@@ -22,7 +22,7 @@
                     {!! Form::select('search[type]', ['' => trans('forms.fields.all_types')] + \GoProp\Models\PropertyType::getOptions(), [\Illuminate\Support\Facades\Request::input('search.type')], ['class' => 'form-control', 'id' => 'property_type']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::select('search[rooms]', ['' => trans('forms.fields.min_rooms')] + \GoProp\Models\Property::getBedroomsLabel(), [\Illuminate\Support\Facades\Request::input('search.room')], ['class' => 'form-control', 'id' => 'rooms']) !!}
+                    {!! Form::select('search[rooms]', ['' => trans('forms.fields.min_rooms')] + \GoProp\Models\Property::getBedroomsLabel(), \Illuminate\Support\Facades\Request::input('search.room', null), ['class' => 'form-control', 'id' => 'rooms']) !!}
                 </div>
                 <div class="form-group">
                     <div>{{ trans('property.index.price_range') }}: <strong>IDR <span id="price-from">10000000</span> - IDR <span id="price-to">5000000000</span></strong></div>

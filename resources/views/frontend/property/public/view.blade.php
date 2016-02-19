@@ -18,12 +18,12 @@
                         </div>
                         <div class="pull-right user-info">
                             <ul>
-                                <li class="{{ $liked?'checked':'' }}"><a href="{{ route(($liked?'frontend.property.unlike':'frontend.property.like'), ['id' => $property->id]) }}"><i class="fa {{ $liked?'fa-heart':'fa-heart-o' }}"></i></a></li>
+                                <li class="{{ $liked?'checked':'' }}"><a data-toggle="tooltip" title="{{ $liked?trans('property.buttons.unlike'):trans('property.buttons.like') }}" href="{{ route('frontend.property.toggle_like', ['id' => $property->id]) }}" class="toggle-like"><i class="fa {{ $liked?'fa-heart':'fa-heart-o' }}"></i></a></li>
                                 <li>
                                     @if(!\GoProp\Facades\PropertyCompareHelper::isAddedToComparison($property))
-                                    <a href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
+                                    <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_compare') }}" href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
                                     @else
-                                    <a href="{{ route('frontend.property.compare.remove', ['id' => $property->id]) }}"><i class="fa fa-minus"></i></a>
+                                    <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_uncompare') }}" href="{{ route('frontend.property.compare.remove', ['id' => $property->id]) }}"><i class="fa fa-minus"></i></a>
                                     @endif
                                 </li>
                             </ul>
@@ -89,24 +89,52 @@
                                                 {{ \GoProp\Facades\ProjectHelper::formatNumber($property->getPrice($for), true) }}
                                                 {{ ($for == 'rent')?' ('.trans('property.rent_price_type.'.$property->rent_price_type).')':'' }}</p>
                                             @if(!empty(intval($property->land_size)))
-                                            <p><strong>{{ trans('forms.fields.property.land_size') }}:</strong> {{ $property->land_size }}</p>
+                                            <p><strong>{{ trans('forms.fields.property.land_size') }}:</strong> {{ $property->land_size+0 }} m<sup>2</sup></p>
+                                            @endif
+
+                                            @if($property->land_dimension)
+                                                <p><strong>{{ trans('forms.fields.property.land_dimension') }}:</strong> {{ $property->landDimensionWithUnit }}</p>
                                             @endif
 
                                             @if(!empty(intval($property->building_size)))
-                                            <p><strong>{{ trans('forms.fields.property.building_size') }}:</strong> {{ $property->building_size }}</p>
+                                            <p><strong>{{ trans('forms.fields.property.building_size') }}:</strong> {{ $property->building_size+0 }} m<sup>2</sup></p>
+                                            @endif
+
+                                            @if($property->building_dimension)
+                                                <p><strong>{{ trans('forms.fields.property.building_dimension') }}:</strong> {{ $property->buildingDimensionWithUnit }}</p>
                                             @endif
                                         </div>
                                         <div class="col-sm-4">
                                             <p><strong>{{ trans('forms.fields.property.bedrooms') }}:</strong> {{ $property->rooms }}</p>
+                                            @if($property->maid_rooms)
+                                                <p><strong>{{ trans('forms.fields.property.maid_bedrooms') }}:</strong> {{ $property->maid_rooms }}</p>
+                                            @endif
                                             <p><strong>{{ trans('forms.fields.property.bathrooms') }}:</strong> {{ $property->bathrooms }}</p>
-                                            <p><strong>{{ trans('forms.fields.property.parking') }}:</strong> {{ trans('property.parking.'.$property->parking) }}</p>
-                                            @if($property->parking == 'garage')
+                                            @if($property->maid_bathrooms)
+                                                <p><strong>{{ trans('forms.fields.property.maid_bathrooms') }}:</strong> {{ $property->maid_bathrooms }}</p>
+                                            @endif
+                                            @if($property->carport_size)
+                                                <p><strong>{{ trans('forms.fields.property.carport_size') }}:</strong> {{ $property->carport_size }}</p>
+                                            @endif
+                                            @if($property->garage_size)
                                                 <p><strong>{{ trans('forms.fields.property.garage_size') }}:</strong> {{ $property->garage_size }}</p>
                                             @endif
                                         </div>
                                         <div class="col-sm-4">
                                             @if(!empty(intval($property->floors)))
-                                            <p><strong>{{ trans('forms.fields.property.floors') }}:</strong> {{ $property->floors }}</p>
+                                            <p><strong>{{ trans('forms.fields.property.floors') }}:</strong> {{ $property->floors+0 }}</p>
+                                            @endif
+
+                                            @if($property->phone_lines)
+                                                <p><strong>{{ trans('forms.fields.property.phone_lines') }}:</strong> {{ trans_choice('forms.fields.property.phone_line_count', $property->phone_lines) }}</p>
+                                            @endif
+
+                                            @if($property->electricity)
+                                                <p><strong>{{ trans('forms.fields.property.electricity') }}:</strong> {{ trans('forms.fields.property.watt', ['electricity' => $property->electricity]) }}</p>
+                                            @endif
+
+                                            @if($property->orientation)
+                                                <p><strong>{{ trans('forms.fields.property.orientation') }}:</strong> {{ \GoProp\Models\Property::getOrientationLabel($property->orientation) }}</p>
                                             @endif
 
                                             @if(!empty($property->certificate))

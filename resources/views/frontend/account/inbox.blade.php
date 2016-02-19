@@ -49,7 +49,10 @@
                                                         <h5 class="entry-title">GoProp Agent</h5>
                                                     @else
                                                         <h5 class="entry-title">{{ $conversation->recipient->profile->singleName }}</h5>
-                                                        <h6 class="entry-desc">{{ $conversation->recipient->profile->occupation }}</h6>
+                                                        <p class="entry-desc">
+                                                            <a href="tel:{{ $conversation->recipient->profile->mobile_phone_number }}"><i class="fa fa-mobile"></i> {{ $conversation->recipient->profile->mobile_phone_number }}</a><br/>
+                                                            {{ $conversation->recipient->profile->occupation }}
+                                                        </p>
                                                     @endif
                                                 </header>
                                             </div>
@@ -77,7 +80,7 @@
                                     <div class="chat-bottom">
                                         <header class="entry-header">
                                             <h4 class="entry-title">
-                                                <img src="{{ asset('assets/frontend/images/icon-comments.png') }}" /> Property Questions
+                                                <img src="{{ asset('assets/frontend/images/icon-comments.png') }}" /> {{ trans('property.inbox.property_questions') }}
                                             </h4>
                                         </header>
                                         <div class="entry-content">

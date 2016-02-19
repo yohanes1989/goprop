@@ -9,14 +9,16 @@ use GoProp\Models\PackageCategory;
 use GoProp\Models\Property;
 use GoProp\Models\PropertyAttachment;
 use GoProp\Models\User;
+use GoProp\Models\ViewingSchedule;
 use Illuminate\Http\Request;
 use GoProp\Facades\AddressHelper;
+use GoProp\Facades\AgentHelper;
 
 class PropertyController extends Controller
 {
     public function index()
     {
-        $qb = Property::whereNotNull('checkout_at')->orderBy('checkout_at', 'DESC');
+        $qb = Property::with(['agent'])->whereNotNull('checkout_at')->orderBy('checkout_at', 'DESC');
         AddressHelper::addAddressQueryScope($qb);
 
         $properties = $qb->paginate(50);
@@ -64,7 +66,14 @@ class PropertyController extends Controller
         $owner = User::where('email', $request->get('owner'))->firstOrFail();
 
         $property->user()->associate($owner);
-        $property->fill($request->all());
+
+        $data = $request->all();
+        if($request->input('point_map') != 1){
+            $data['latitude'] = NULL;
+            $data['longitude'] = NULL;
+        }
+
+        $property->fill($data);
         $property->checkout_at = Carbon::now();
         $property->processViewingSchedule($request->all());
         $property->save();
@@ -110,7 +119,15 @@ class PropertyController extends Controller
         $owner = User::where('email', $request->get('owner'))->firstOrFail();
 
         $property->user()->associate($owner);
-        $property->fill($request->all());
+
+        $data = $request->all();
+        if($request->input('point_map') != 1){
+            $data['latitude'] = NULL;
+            $data['longitude'] = NULL;
+        }
+
+        $property->fill($data);
+
         $property->processViewingSchedule($request->all());
         $property->save();
 
@@ -189,5 +206,84 @@ class PropertyController extends Controller
         }elseif($propertyAttachment->type == 'floorplan'){
             return redirect()->back()->with('messages', ['Floorplan has been deleted']);
         }
+    }
+
+    public function photosReorder(Request $request, $id)
+    {
+        $property = Property::findOrFail($id);
+        $allowedAttachments = $property->attachments()->lists('id')->all();
+
+        $count = 1;
+
+        $ordered = [];
+
+        foreach($request->input('photos', []) as $photo){
+            if(in_array($photo, $allowedAttachments)){
+                $attachment = PropertyAttachment::findOrFail($photo);
+                $attachment->update([
+                    'sort_order' => $count
+                ]);
+
+                $ordered[] = $attachment->id;
+
+                $count += 1;
+            }
+        }
+
+        return response()->json($ordered);
+    }
+
+    public function assignToAgent(Request $request, $id)
+    {
+        $property = Property::findOrFail($id);
+
+        if($request->isMethod('POST')){
+            //Get remaining schedules for this property
+            $viewingSchedules = $property->viewingSchedules()->where('viewing_from', '>', Carbon::now())->get();
+            $conversations = $property->conversations;
+
+            if($request->has('agent')){
+                $agent = User::findOrFail($request->input('agent'));
+
+                $property->agent()->associate($agent);
+
+                foreach($viewingSchedules as $viewingSchedule){
+                    $viewingSchedule->agent()->associate($agent);
+                    $viewingSchedule->save();
+                }
+
+                foreach($conversations as $conversation){
+                    $conversation->recipient()->associate($agent);
+                    $conversation->save();
+                }
+
+                $message = 'Property, Viewing Schedules and Conversation have been assigned to '.$agent->profile->singleName.'.';
+            }else{
+                $property->agent()->dissociate();
+
+                foreach($viewingSchedules as $viewingSchedule){
+                    $viewingSchedule->agent()->dissociate();
+                    $viewingSchedule->save();
+                }
+
+                foreach($conversations as $conversation){
+                    $conversation->recipient()->dissociate();
+                    $conversation->save();
+                }
+
+                $message = 'Property, Viewing Schedules and Conversation have been detached from Agent.';
+            }
+
+            $property->save();
+
+            return redirect($request->get('backUrl', route('admin.property.index')))->with('messages', [$message]);
+        }
+
+        $agentOptions = AgentHelper::getAgentOptions();
+
+        return view('admin.property.assign_to_agent', [
+            'property' => $property,
+            'agentOptions' => $agentOptions
+        ]);
     }
 }

@@ -71,18 +71,14 @@ class CustomerInquiryController extends Controller
     {
         $conversation = Message::findOrFail($id);
 
-        if(!$conversation->recipient_id){
-            return redirect()->back()->with('errors', ['Please assign an agent to respond.']);
-        }
+        $user = Auth::user();
 
         if(Auth::user()->is('agent')){
-            $user = Auth::user();
-
             if($user->id != $conversation->recipient_id){
                 abort(403, 'Unauthorized action.');
             }
         }elseif(Auth::user()->is('administrator')){
-            $user = $conversation->recipient;
+
         }
 
         if($request->isMethod('POST')){

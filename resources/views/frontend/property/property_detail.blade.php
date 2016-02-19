@@ -68,12 +68,12 @@
                         <div class="col-sm-6">
                             <div class="form-group clearfix">
                                 <div class="col-xs-12">
-                                    {!! Form::label('land_size', trans('forms.fields.property.land_size')) !!}
+                                    {!! Form::label('building_size', trans('forms.fields.property.building_size')) !!} @if($model->type->slug != 'land')<sup class="text-danger">*</sup>@endif
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-10">
-                                            {!! Form::text('land_size', null, ['class' => 'form-control', 'id' => 'land_size']) !!}
+                                            {!! Form::text('building_size', old('building_size', intval($model->building_size)?$model->building_size:''), ['class' => 'form-control', 'id' => 'building_size']) !!}
                                         </div>
                                         <div class="col-xs-2">
                                             m<sup>2</sup>
@@ -81,19 +81,67 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group clearfix">
                                 <div class="col-xs-12">
-                                    {!! Form::label('building_size', trans('forms.fields.property.building_size')) !!}
+                                    {!! Form::label('building_dimension', trans('forms.fields.property.building_dimension')) !!} @if($model->type->slug != 'land')<sup class="text-danger">*</sup>@endif
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="dimension-row">
+                                        <div class="field">
+                                            {!! Form::text('building_dimension[length]', null, ['class' => 'form-control', 'id' => 'building_dimension_length', 'placeholder' => trans('forms.fields.property.length')]) !!}
+                                        </div>
+                                        <div class="separator">x</div>
+                                        <div class="field">
+                                            {!! Form::text('building_dimension[width]', null, ['class' => 'form-control', 'id' => 'building_dimension_width', 'placeholder' => trans('forms.fields.property.width')]) !!}
+                                        </div>
+                                    </div>
+
+                                    <p class="help-block">{{ trans('forms.fields.property.unit_meter_help') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <div class="col-xs-12">
+                                    {!! Form::label('land_size', trans('forms.fields.property.land_size')) !!} @if($model->type->slug == 'land')<sup class="text-danger">*</sup>@endif
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-10">
-                                            {!! Form::text('building_size', null, ['class' => 'form-control', 'id' => 'building_size']) !!}
+                                            {!! Form::text('land_size', old('land_size', intval($model->land_size)?$model->land_size:''), ['class' => 'form-control', 'id' => 'land_size']) !!}
                                         </div>
                                         <div class="col-xs-2">
                                             m<sup>2</sup>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <div class="col-xs-12">
+                                    {!! Form::label('land_dimension', trans('forms.fields.property.land_dimension')) !!} @if($model->type->slug == 'land')<sup class="text-danger">*</sup>@endif
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="dimension-row">
+                                        <div class="field">
+                                            {!! Form::text('land_dimension[length]', null, ['class' => 'form-control', 'id' => 'land_dimension_length', 'placeholder' => trans('forms.fields.property.length')]) !!}
+                                        </div>
+                                        <div class="separator">x</div>
+                                        <div class="field">
+                                            {!! Form::text('land_dimension[width]', null, ['class' => 'form-control', 'id' => 'land_dimension_width', 'placeholder' => trans('forms.fields.property.width')]) !!}
+                                        </div>
+                                    </div>
+
+                                    <p class="help-block">{{ trans('forms.fields.property.unit_meter_help') }}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <div class="col-xs-12">
+                                    {!! Form::label('certificate', trans('forms.fields.property.certificate')) !!}
+                                </div>
+                                <div class="col-xs-12">
+                                    {!! Form::select('certificate', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getCertificateLabel(), null, ['class' => 'form-control', 'id' => 'certificate']) !!}
                                 </div>
                             </div>
                         </div>
@@ -108,10 +156,26 @@
                             </div>
                             <div class="form-group clearfix">
                                 <div class="col-xs-12">
-                                    {!! Form::label('certificate', trans('forms.fields.property.certificate')) !!}
+                                    {!! Form::label('phone_lines', trans('forms.fields.property.phone_lines')) !!}
                                 </div>
                                 <div class="col-xs-12">
-                                    {!! Form::select('certificate', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getCertificateLabel(), null, ['class' => 'form-control', 'id' => 'certificate']) !!}
+                                    {!! Form::select('phone_lines', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getPhoneLinesLabel(), null, ['class' => 'form-control', 'id' => 'phone_lines']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="col-xs-12">
+                                    {!! Form::label('electricity', trans('forms.fields.property.electricity')) !!}
+                                </div>
+                                <div class="col-xs-12">
+                                    {!! Form::select('electricity', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getElectricityLabel(), null, ['class' => 'form-control', 'id' => 'electricity']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="col-xs-12">
+                                    {!! Form::label('orientation', trans('forms.fields.property.orientation')) !!}
+                                </div>
+                                <div class="col-xs-12">
+                                    {!! Form::select('orientation', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getOrientationLabel(), null, ['class' => 'form-control', 'id' => 'orientation']) !!}
                                 </div>
                             </div>
                         </div>
@@ -126,7 +190,7 @@
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group clearfix">
-                            {!! Form::label('description', trans('forms.fields.summary')) !!} <sup class="text-danger">*</sup>
+                            {!! Form::label('description', trans('forms.fields.property.description')) !!} <sup class="text-danger">*</sup>
                             <div class="textarea-group">
                                 <div class="textarea-count"><span>300</span> {{ trans('forms.fields.words_remaining') }}</div>
                                 {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 8, 'max' => 300]) !!}

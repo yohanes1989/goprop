@@ -2,6 +2,7 @@
 
 namespace GoProp\Providers;
 
+use GoProp\Validator\CustomValidator;
 use Illuminate\Support\ServiceProvider;
 use GoProp\Facades\PropertyCompareHelper;
 
@@ -14,6 +15,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app['validator']->resolver(function($translator, $data, $rules, $messages)
+        {
+            return new CustomValidator($translator, $data, $rules, $messages);
+        });
+
         $this->app->singleton('project_helper', 'GoProp\Helpers\ProjectHelper');
         $this->app->singleton('agent_helper', 'GoProp\Helpers\AgentHelper');
         $this->app->singleton('address_helper', 'GoProp\Helpers\AddressHelper');

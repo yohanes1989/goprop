@@ -75,38 +75,54 @@
         </div>
         <div class="form-group clearfix">
             <div class="col-xs-12">
-                {!! Form::label('furnishing', trans('forms.fields.property.furnishing')) !!} <sup class="text-danger">*</sup>
+                {!! Form::label('bathrooms', trans('forms.fields.property.bathrooms')) !!} <sup class="text-danger">*</sup>
             </div>
             <div class="col-xs-12">
-                {!! Form::select('furnishing', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getFurnishingLabel(), null, ['class' => 'form-control', 'id' => 'furnishing']) !!}
+                {!! Form::select('bathrooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getBathroomsLabel(), null, ['class' => 'form-control', 'id' => 'bathrooms']) !!}
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <div class="col-xs-12">
+                {!! Form::label('maid_rooms', trans('forms.fields.property.maid_bedrooms')) !!}
+            </div>
+            <div class="col-xs-12">
+                {!! Form::select('maid_rooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getMaidBedroomsLabel(), null, ['class' => 'form-control', 'id' => 'maid_rooms']) !!}
+            </div>
+        </div>
+        <div class="form-group clearfix">
+            <div class="col-xs-12">
+                {!! Form::label('maid_bathrooms', trans('forms.fields.property.maid_bathrooms')) !!}
+            </div>
+            <div class="col-xs-12">
+                {!! Form::select('maid_bathrooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getMaidBathroomsLabel(), null, ['class' => 'form-control', 'id' => 'maid_bathrooms']) !!}
             </div>
         </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group clearfix">
             <div class="col-xs-12">
-                {!! Form::label('parking', trans('forms.fields.property.parking')) !!} <sup class="text-danger">*</sup>
+                {!! Form::label('furnishing', trans('forms.fields.property.furnishing')) !!} <sup class="text-danger">*</sup>
             </div>
             <div class="col-xs-12">
-                {!! Form::select('parking', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getParkingOptionLabel(), null, ['class' => 'form-control', 'id' => 'parking']) !!}
-            </div>
-        </div>
-
-        <div data-field-dependent="parking|garage" class="form-group clearfix">
-            <div class="col-xs-12">
-                {!! Form::label('garage_size', trans('forms.fields.property.garage_size')) !!}
-            </div>
-            <div class="col-xs-12">
-                {!! Form::text('garage_size', null, ['class' => 'form-control', 'id' => 'garage_size']) !!}
+                {!! Form::select('furnishing', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getFurnishingLabel(), null, ['class' => 'form-control', 'id' => 'furnishing']) !!}
             </div>
         </div>
 
         <div class="form-group clearfix">
             <div class="col-xs-12">
-                {!! Form::label('bathrooms', trans('forms.fields.property.bathrooms')) !!} <sup class="text-danger">*</sup>
+                {!! Form::label('carport_size', trans('forms.fields.property.carport_size')) !!}
             </div>
             <div class="col-xs-12">
-                {!! Form::select('bathrooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getBathroomsLabel(), null, ['class' => 'form-control', 'id' => 'bathrooms']) !!}
+                {!! Form::select('carport_size', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getCarsLabel(), null, ['class' => 'form-control', 'id' => 'garage_size']) !!}
+            </div>
+        </div>
+
+        <div class="form-group clearfix">
+            <div class="col-xs-12">
+                {!! Form::label('garage_size', trans('forms.fields.property.garage_size')) !!}
+            </div>
+            <div class="col-xs-12">
+                {!! Form::select('garage_size', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getCarsLabel(), null, ['class' => 'form-control', 'id' => 'garage_size']) !!}
             </div>
         </div>
 

@@ -9,7 +9,7 @@
 
                         <div class="user-info">
                             <ul class="list-unstyled">
-                                <li><a href="{{ route('frontend.property.compare.remove', ['id' => $propertyInComparison->id]) }}"><i class="fa fa-minus"></i></a></li>
+                                <li><a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_uncompare') }}" href="{{ route('frontend.property.compare.remove', ['id' => $propertyInComparison->id]) }}"><i class="fa fa-minus"></i></a></li>
                             </ul>
                         </div>
                     </div>

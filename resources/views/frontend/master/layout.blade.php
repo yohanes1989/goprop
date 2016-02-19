@@ -160,6 +160,7 @@
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/moment/min/moment.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/owl.carousel.2.0.0-beta.2.4/owl.carousel.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/bootstrap-slider/js/bootstrap-slider.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/fancybox/jquery.fancybox.pack.js') }}"></script>

@@ -53,7 +53,7 @@
                             {!! Form::select('search[type]', ['' => trans('forms.fields.all_types')] + \GoProp\Models\PropertyType::getOptions(), [\Illuminate\Support\Facades\Request::input('search.type')], ['class' => 'form-control', 'id' => 'property_type']) !!}
                         </div>
                         <div class="form-group col-sm-3">
-                            {!! Form::select('search[rooms]', ['' => trans('forms.fields.min_rooms')] + \GoProp\Models\Property::getBedroomsLabel(), [\Illuminate\Support\Facades\Request::input('search.rooms')], ['class' => 'form-control', 'id' => 'rooms']) !!}
+                            {!! Form::select('search[rooms]', ['' => trans('forms.fields.min_rooms')] + \GoProp\Models\Property::getBedroomsLabel(), \Illuminate\Support\Facades\Request::input('search.rooms', null), ['class' => 'form-control', 'id' => 'rooms']) !!}
                         </div>
                         <div class="form-group col-sm-6">
                             <div>{{ trans('property.index.price_range') }}: <strong>IDR <span id="price-from">{{ $priceDefaultFrom }}</span> - IDR <span id="price-to">{{ $priceDefaultTo }}</span></strong></div>
@@ -128,13 +128,13 @@
                                             <ul class="list-unstyled">
                                                 @include('frontend.property.includes.shareTo')
                                                 @if(\Illuminate\Support\Facades\Auth::check() && $property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
-                                                    <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a href="{{ route(($property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'frontend.property.unlike':'frontend.property.like'), ['id' => $property->id]) }}"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
+                                                    <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a data-toggle="tooltip" title="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?trans('property.buttons.unlike'):trans('property.buttons.like') }}" href="{{ route('frontend.property.toggle_like', ['id' => $property->id]) }}" class="toggle-like"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
                                                 @endif
                                                 <li>
                                                     @if(!\GoProp\Facades\PropertyCompareHelper::isAddedToComparison($property))
-                                                    <a href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
+                                                    <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_compare') }}" href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
                                                     @else
-                                                    <a href="{{ route('frontend.property.compare.remove', ['id' => $property->id]) }}"><i class="fa fa-minus"></i></a>
+                                                    <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_uncompare') }}" href="{{ route('frontend.property.compare.remove', ['id' => $property->id]) }}"><i class="fa fa-minus"></i></a>
                                                     @endif
                                                 </li>
                                             </ul>

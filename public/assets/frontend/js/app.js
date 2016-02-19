@@ -1,5 +1,10 @@
 var app = {
   init: function(context){
+      $('[data-toggle="tooltip"]', context).tooltip({
+          container: 'body',
+          placement: 'top'
+      });
+
       // Javascript for Responsive Button
       $('.responsive-btn').click(function() {
           $('.main-menu-wrapper').toggle();
@@ -373,8 +378,8 @@ var app = {
           }
       });
 
-      if($('#viewing-datetime-selector').length > 0){
-          $('#viewing-datetime-selector').datetimepicker({
+      if($('#viewing-datetime-selector', context).length > 0){
+          $('#viewing-datetime-selector', context).datetimepicker({
               icons: {
                   time: 'fa fa-clock-o',
                   date: 'fa fa-calendar',
@@ -391,7 +396,7 @@ var app = {
           });
       }
 
-      $('#viewing-calendar').fullCalendar({
+      $('#viewing-calendar', context).fullCalendar({
           header: {
               center: 'title',
               left: 'prev',
@@ -452,6 +457,27 @@ var app = {
               app.chat.getChats(getChatsTimeoutFunction, $chatForm.data('property_id'));
           })();
       }
+
+      //Ajax Like
+      var $clickedLike;
+      $('a.toggle-like', context).click(function(e){
+          $clickedLike = $(this);
+          $clickedLike.tooltip('destroy');
+
+          $.ajax(
+              $clickedLike.attr('href'),
+              {
+                  success: function(data){
+                      var $newLikeBtn = $(data);
+                      $clickedLike.parent().replaceWith($newLikeBtn);
+                      app.init($newLikeBtn);
+                  },
+                  dataType: 'html'
+              }
+          );
+
+          return false;
+      });
   },
     calculateCommission: function(price, package)
     {

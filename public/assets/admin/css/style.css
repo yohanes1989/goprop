@@ -12,3 +12,10 @@
     background: url('../img/map-marker.png');
     pointer-events: none; /* This disables clicks on the marker. Not fully supported by all major browsers, though */
 }
+
+.sortable-placeholder{
+    float: left;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #999;
+}

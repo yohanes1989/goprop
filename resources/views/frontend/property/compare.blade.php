@@ -28,25 +28,37 @@
                                                 <td>{{ trans('forms.fields.area') }}</td>
                                             </tr>
                                             <tr>
-                                                <td>{{ trans('forms.fields.property.building_size') }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ trans('forms.fields.property.floors') }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ trans('forms.fields.property.land_size') }}</td>
-                                            </tr>
-                                            <tr>
                                                 <td>{{ trans('forms.fields.property.rooms') }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{{ trans('forms.fields.property.bathrooms') }}</td>
                                             </tr>
                                             <tr>
-                                                <td>{{ trans('forms.fields.property.parking') }}</td>
+                                                <td>{{ trans('forms.fields.property.carport_size') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ trans('forms.fields.property.garage_size') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ trans('forms.fields.property.building_size') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ trans('forms.fields.property.building_dimension') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ trans('forms.fields.property.land_size') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ trans('forms.fields.property.land_dimension') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ trans('forms.fields.property.floors') }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{{ trans('forms.fields.property.certificate') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ trans('forms.fields.property.remark') }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -61,13 +73,13 @@
                                             <ul class="list-unstyled">
                                                 @include('frontend.property.includes.shareTo', ['for' => $property->getViewFor()])
                                                     @if(\Illuminate\Support\Facades\Auth::check() && $property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
-                                                    <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a href="{{ route(($property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'frontend.property.unlike':'frontend.property.like'), ['id' => $property->id]) }}"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
+                                                    <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a data-toggle="tooltip" title="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?trans('property.buttons.unlike'):trans('property.buttons.like') }}" href="{{ route('frontend.property.toggle_like', ['id' => $property->id]) }}" class="toggle-like"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
                                                     @endif
                                                     <li>
                                                     @if(!\GoProp\Facades\PropertyCompareHelper::isAddedToComparison($property))
-                                                        <a href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
+                                                        <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_compare') }}" href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
                                                     @else
-                                                        <a href="{{ route('frontend.property.compare.remove', ['id' => $property->id]) }}"><i class="fa fa-minus"></i></a>
+                                                        <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_uncompare') }}" href="{{ route('frontend.property.compare.remove', ['id' => $property->id]) }}"><i class="fa fa-minus"></i></a>
                                                     @endif
                                                 </li>
                                             </ul>
@@ -100,30 +112,37 @@
                                                 <td><strong>{{ trans('forms.fields.area') }}:</strong>&nbsp;{{ \GoProp\Facades\AddressHelper::getAddressLabel($property->subdistrict, 'subdistrict') }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>{{ trans('forms.fields.property.building_size') }}:</strong>&nbsp;{!! !empty($property->building_size)?$property->building_size.' m<sup>2</sup>':'' !!}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>{{ trans('forms.fields.property.floors') }}:</strong>&nbsp;{{ !empty(ceil($property->floors))?$property->floors:'' }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>{{ trans('forms.fields.property.land_size') }}:</strong>&nbsp;{!! !empty($property->land_size)?$property->land_size.' m<sup>2</sup>':'' !!}</td>
-                                            </tr>
-                                            <tr>
                                                 <td><strong>{{ trans('forms.fields.property.rooms') }}: </strong>&nbsp;{{ $property->rooms }}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{{ trans('forms.fields.property.bathrooms') }}:</strong>&nbsp;{{ $property->bathrooms }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>{{ trans('forms.fields.property.parking') }}:</strong>&nbsp;
-                                                    {{ trans('property.parking.'.$property->parking) }}
-                                                    @if($property->parking == 'garage')
-                                                        <em>{{ trans('forms.fields.property.garage_size') }}: {{ $property->garage_size }}</em>
-                                                    @endif
-                                                </td>
+                                                <td><strong>{{ trans('forms.fields.property.carport_size') }}:</strong>&nbsp;{{ $property->carport_size?$property->carport_size:'-' }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>{{ trans('forms.fields.property.certificate') }}:</strong>&nbsp;{{ !empty($property->certificate)?trans('property.certificate.'.$property->certificate):'' }}</td>
+                                                <td><strong>{{ trans('forms.fields.property.garage_size') }}:</strong>&nbsp;{{ $property->garage_size?$property->garage_size:'-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>{{ trans('forms.fields.property.building_size') }}:</strong>&nbsp;{!! !empty($property->building_size+0)?$property->building_size.' m<sup>2</sup>':'-' !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>{{ trans('forms.fields.property.building_dimension') }}:</strong>&nbsp;{!! $property->building_dimension?$property->buildingDimensionWithUnit:'-' !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>{{ trans('forms.fields.property.land_size') }}:</strong>&nbsp;{!! !empty($property->land_size+0)?$property->land_size.' m<sup>2</sup>':'-' !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>{{ trans('forms.fields.property.land_dimension') }}:</strong>&nbsp;{!! $property->land_dimension?$property->landDimensionWithUnit:'-' !!}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>{{ trans('forms.fields.property.floors') }}:</strong>&nbsp;{{ !empty(ceil($property->floors))?$property->floors:'' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>{{ trans('forms.fields.property.certificate') }}:</strong>&nbsp;{{ $property->certificate?trans('property.certificate.'.$property->certificate):'-' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>{{ trans('forms.fields.property.remark') }}:</strong>&nbsp;{{ $property->short_note }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

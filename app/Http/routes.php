@@ -174,6 +174,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                 'as' => 'admin.property.delete',
                 'uses' => 'PropertyController@delete'
             ]);
+
+            Route::post('/{id}/media/reorder', [
+                'as' => 'admin.property.media.reorder',
+                'uses' => 'PropertyController@photosReorder'
+            ]);
+
+            Route::any('/{id}/assign-to-agent', [
+                'as' => 'admin.property.assign_to_agent',
+                'uses' => 'PropertyController@assignToAgent'
+            ]);
         });
 
         //Pages
@@ -521,6 +531,11 @@ Route::group([
             'uses' => 'PropertyController@getUnlikeProperty'
         ]);
 
+        Route::get('/{id}/toggle_like', [
+            'as' => 'frontend.property.unlike',
+            'uses' => 'PropertyController@getUnlikeProperty'
+        ]);
+
         Route::get('/compare', [
             'as' => 'frontend.property.compare',
             'uses' => 'PropertyController@getCompare'
@@ -624,6 +639,11 @@ Route::group([
         Route::post('/photos/delete/{id}/{attachment_id}', [
             'as' => 'frontend.property.photos.delete',
             'uses' => 'PropertyController@postPropertyPhotosDelete'
+        ]);
+
+        Route::post('/photos/reorder/{id}/{type}', [
+            'as' => 'frontend.property.photos.reorder',
+            'uses' => 'PropertyController@postPropertyPhotosReorder'
         ]);
 
         Route::get('/packages/{id}', [

@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Conversation by '.$conversation->sender->profile->singleName)
+@section('title', 'Assign conversation regarding '.$property->property_name)
 
 @section('breadcrumb_list')
     <li><a href="{{ URL::route('admin.customer_inquiry.index') }}"><i class="fa fa-comments"></i> Customer Inquiry</a></li>
