@@ -59,6 +59,7 @@ class PropertyFormRequest extends Request
             $allowedPaymentMethods = implode(',', $allowedPaymentMethods);
 
             if($this->input('action') == 'purchase'){
+                $rules['agree_tc'] = 'required';
                 $rules['payment_method'] = 'required|in:'.$allowedPaymentMethods;
             }
         }
