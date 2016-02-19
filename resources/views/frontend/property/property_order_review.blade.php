@@ -183,7 +183,7 @@
                 </div>
                 @endif
 
-                @if(bccomp($order->total_amount, 0) == 1)
+                @if($order->total_amount > 0)
                 <header class="header-area">
                     <h4 class="entry-title">{!! trans('property.order_review.payment_methods') !!}</h4>
                 </header>
