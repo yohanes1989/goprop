@@ -64,7 +64,7 @@ return [
         'body_copy' => '<p>Photos makes your property look more attractive to buyers and showcase the best things about your property. You can add photos up to maximum 50 photos. You can also edit, delete, or re-order the photos at any time.</p>
 						<p>If you have selected professional photography service you can skip this section and come back to this when you have your property ready.</p>',
         'upload_photos_title' => 'Upload photos(landscape only)',
-        'upload_photos_hint' => 'You can upload multiple photos it one go. You can upload up to 50 images (Max: 500KB)',
+        'upload_photos_hint' => 'You can upload multiple photos it one go. You can upload up to 15 images (Max: 5MB)',
         'choose_photos' => 'Choose Photos',
         'uploaded_photos_title' => 'Uploaded Photos'
     ],
@@ -72,7 +72,7 @@ return [
         'page_title' => 'Floorplans of <span>:title<span>',
         'body_copy' => 'A floorplan shows an overview of your property layouts. If you already have one, you can upload it as an image. If you don\'t have one, we can create it for you later.',
         'upload_photos_title' => 'Upload floorplan images',
-        'upload_photos_hint' => 'You can upload up to 5 floorplans (Max: 1MB)',
+        'upload_photos_hint' => 'You can upload up to 5 floorplans (Max: 2MB)',
         'choose_floorplans' => 'Choose Floorplans',
         'uploaded_floorplans_title' => 'Uploaded Floorplans'
     ],
@@ -129,9 +129,9 @@ return [
             'you-can-save' => 'You can save',
             'up-front-fees' => 'Pay up-front fees',
             'sell-fee' => 'Our fee: Only pay when your property is sold',
-            'sell-fee-notes' => 'Above / Below (5,000,000,000)',
+            'sell-fee-notes' => 'Above / Below (3,000,000,000)',
             'rent-fee' => 'Our fee: Only pay when your property is rent',
-            'rent-fee-notes' => 'Above / Below (5,000,000,000)',
+            'rent-fee-notes' => 'Above / Below (3,000,000,000)',
             'property-verification' => 'Property verification visit by GoProp agent',
             'exclusive-agency-contract' => 'Exclusive agency contract with a 4 month tie-in',
             'legal-setup' => 'Legal setup',
@@ -140,7 +140,11 @@ return [
             'viewing-feedback' => 'Viewing Feedback',
             'offer-negotiation' => 'Offer Negotiation',
             'senior-agent' => 'Handle by Senior Agent',
+            'internal-advertising' => 'Advertised on our homepage',
+            'search-rank-priority' => 'Priority on our search results',
+            'property-consultation' => 'Property consultation with GoProp Agent',
             'major-property-advertising' => 'Advertised on major property portals',
+            'major-property-advertising-advanced' => 'Advertised on major property portals with advanced features',
             'for-sale-board' => 'For sale board',
             'professional-floor-plan' => 'Professional floor plan',
             'professional-photography' => 'Professional photography',
@@ -157,11 +161,12 @@ return [
         'agent_commission' => 'Agent Commission upon completion',
         'payment_methods' => 'Payment Methods',
         'agree_tc' => 'I agree to the',
-        'terms_conditions' => 'terms & conditions'
+        'terms_conditions' => 'terms & conditions',
+        'confirm_message' => 'Do you want to submit this order?'
     ],
     'success' => [
         'page_title' => 'Purchase package is done!',
-        'body_copy' => 'Thank you for trusting GoProp to be your partner. Don\'t worry, your property is in good hands.Please sit back and relax, we will contact you as soon as possible for verification process and futher information. If you have any questions, please contact us at :phone or :email.'
+        'body_copy' => 'Thank you for trusting GoProp to be your partner. Don\'t worry, your property is in good hands. Please sit back and relax, we will contact you as soon as possible for verification process and further information. If you have any questions, please contact us at :phone or :email.'
     ],
     'index' => [
         'property_search' => 'Property Search',

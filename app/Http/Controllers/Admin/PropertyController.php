@@ -5,6 +5,7 @@ namespace GoProp\Http\Controllers\Admin;
 use Carbon\Carbon;
 use GoProp\Http\Controllers\Controller;
 use GoProp\Http\Requests\Admin\PropertyFormRequest;
+use GoProp\Models\Package;
 use GoProp\Models\PackageCategory;
 use GoProp\Models\Property;
 use GoProp\Models\PropertyAttachment;
@@ -13,6 +14,7 @@ use GoProp\Models\ViewingSchedule;
 use Illuminate\Http\Request;
 use GoProp\Facades\AddressHelper;
 use GoProp\Facades\AgentHelper;
+use Illuminate\Support\Facades\Session;
 
 class PropertyController extends Controller
 {
@@ -44,10 +46,12 @@ class PropertyController extends Controller
             $mapDefault = false;
         }
 
+        $package = Session::hasOldInput('package')?Package::findOrFail(Session::getOldInput('package')):null;
+
         $packageOptions = [];
         foreach(PackageCategory::all() as $packageCategory){
-            foreach($packageCategory->packages as $package){
-                $packageOptions[$packageCategory->name][$package->id] = $package->name;
+            foreach($packageCategory->packages as $packageItem){
+                $packageOptions[$packageCategory->name][$packageItem->id] = $packageItem->name;
             }
         }
 
@@ -56,7 +60,8 @@ class PropertyController extends Controller
             'defaultLatitude' => $defaultLatitude,
             'defaultLongitude' => $defaultLongitude,
             'mapDefault' => $mapDefault,
-            'packageOptions' => $packageOptions
+            'packageOptions' => $packageOptions,
+            'package' => $package
         ]);
     }
 
@@ -78,6 +83,14 @@ class PropertyController extends Controller
         $property->processViewingSchedule($request->all());
         $property->save();
 
+        if($request->has('package')){
+            $property->packages()->sync([
+                $request->input('package') => [
+                    'addons' => $request->has('features')?implode('|', $request->input('features')):null
+                ]
+            ]);
+        }
+
         return redirect()->route('admin.property.index')->with('messages', ['Property is successfully created.']);
     }
 
@@ -95,10 +108,12 @@ class PropertyController extends Controller
             $mapDefault = false;
         }
 
+        $package = $property->packages?$property->packages->first():(Session::hasOldInput('package')?Package::findOrFail(Session::getOldInput('package')):Package::whereSlug('basic')->first());
+
         $packageOptions = [];
         foreach(PackageCategory::all() as $packageCategory){
-            foreach($packageCategory->packages as $package){
-                $packageOptions[$packageCategory->name][$package->id] = $package->name;
+            foreach($packageCategory->packages as $packageItem){
+                $packageOptions[$packageCategory->name][$packageItem->id] = $packageItem->name;
             }
         }
 
@@ -108,7 +123,8 @@ class PropertyController extends Controller
             'defaultLatitude' => $defaultLatitude,
             'defaultLongitude' => $defaultLongitude,
             'mapDefault' => $mapDefault,
-            'packageOptions' => $packageOptions
+            'packageOptions' => $packageOptions,
+            'package' => $package
         ]);
     }
 
@@ -134,7 +150,7 @@ class PropertyController extends Controller
         if($request->has('package')){
             $property->packages()->sync([
                 $request->input('package') => [
-                    'addons' => implode('|', $request->input('features'))
+                    'addons' => $request->has('features')?implode('|', $request->input('features')):null
                 ]
             ]);
         }

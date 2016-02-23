@@ -332,6 +332,7 @@ class PropertyController extends Controller
     public function postEdit(PropertyFormRequest $request, $id)
     {
         $property = Property::findOrFail($id);
+
         $property->fill($request->all());
         $property->processViewingSchedule($request->all());
         $property->save();
@@ -464,9 +465,9 @@ class PropertyController extends Controller
         $lastPhoto = $photos->last();
         $nextOrder = $lastPhoto?$lastPhoto->sort_order+1:1;
 
-        $max = 500;
+        $max = 5120;
         if($type == 'floorplan'){
-            $max = 1024;
+            $max = 2048;
         }
 
         $rules = [
@@ -770,7 +771,7 @@ class PropertyController extends Controller
 
         if($property->status == Property::STATUS_DRAFT){
             $property->update([
-                'status' => Property::STATUS_ACTIVE,
+                'status' => Property::STATUS_INACTIVE,
                 'checkout_at' => Carbon::now()
             ]);
         }

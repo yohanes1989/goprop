@@ -106,7 +106,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('postal_code', 'Postal Code *', array('class'=>'col-md-4 control-label')) !!}
+        {!! Form::label('postal_code', 'Postal Code', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::text('profile[postal_code]', null, array('class'=>'form-control', 'id' => 'postal_code' ,'placeholder'=>'Postal Code')) !!}
         </div>

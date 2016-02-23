@@ -119,15 +119,18 @@ class Property extends Model
     //Accessors
     public function getLandDimensionAttribute()
     {
-        if($this->attributes['land_dimension']){
+        $return = [
+            'length' => null,
+            'width' => null,
+        ];
+
+        if(isset($this->attributes['land_dimension'])){
             $explodes = explode('x', $this->attributes['land_dimension']);
 
             $return = [
                 'length' => isset($explodes[0])?$explodes[0]:0,
                 'width' => isset($explodes[1])?$explodes[1]:0,
             ];
-        }else{
-            $return = $this->attributes['land_dimension'];
         }
 
         return $return;
@@ -150,15 +153,18 @@ class Property extends Model
 
     public function getBuildingDimensionAttribute()
     {
-        if($this->attributes['building_dimension']){
+        $return = [
+            'length' => null,
+            'width' => null,
+        ];
+
+        if(isset($this->attributes['building_dimension'])){
             $explodes = explode('x', $this->attributes['building_dimension']);
 
             $return = [
                 'length' => isset($explodes[0])?$explodes[0]:0,
                 'width' => isset($explodes[1])?$explodes[1]:0,
             ];
-        }else{
-            $return = $this->attributes['building_dimension'];
         }
 
         return $return;
@@ -313,6 +319,7 @@ class Property extends Model
         ]);
         $propertyAttachment->property()->associate($this);
         $propertyAttachment->save();
+        $propertyAttachment->resize();
 
         return $propertyAttachment;
     }

@@ -83,9 +83,4 @@ class PageController extends Controller
             'title' => $title
         ]);
     }
-
-    public function propertyTermsConditions()
-    {
-        return view('frontend.page.property_terms_conditions');
-    }
 }

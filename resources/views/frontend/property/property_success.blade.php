@@ -52,7 +52,7 @@
                     <h3 class="entry-title">{!! trans('property.success.page_title') !!}</h3>
                 </header>
                 <div class="entry-content">
-                    <p>{{ trans('property.success.body_copy', ['email' => 'admin@goprop.co.id', 'phone' => '0815 1917 2767']) }}</p>
+                    <p>{{ trans('property.success.body_copy', ['email' => 'marketing@goprop.co.id', 'phone' => '+62 878 8733 2268']) }}</p>
                 </div>
             </div>
         </div>

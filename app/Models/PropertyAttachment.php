@@ -4,6 +4,7 @@ namespace GoProp\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PropertyAttachment extends Model
 {
@@ -16,6 +17,25 @@ class PropertyAttachment extends Model
     public function property()
     {
         return $this->belongsTo('GoProp\Models\Property');
+    }
+
+    //Methods
+    public function resize()
+    {
+        $folder = config('filesystems.disks.local.root').'/';
+        if($this->type == 'photo'){
+            $folder .= self::$photosUploadPath.'/';
+        }elseif($this->type == 'floorplan'){
+            $folder .= self::$floorplanUploadPath.'/';
+        }
+
+        $img = Image::make($folder.$this->filename)->widen(4096, function ($constraint) {
+            $constraint->upsize();
+        });
+        $img->insert(asset('assets/frontend/images/watermark.png'), 'center');
+        $img->save($folder.$this->filename);
+
+        return $img;
     }
 
     //Statics

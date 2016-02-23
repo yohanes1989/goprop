@@ -32,7 +32,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('postal_code', 'Postal Code *', array('class'=>'col-md-4 control-label')) !!}
+        {!! Form::label('postal_code', 'Postal Code', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::text('postal_code', null, array('id' => 'postal_code', 'class'=>'form-control','placeholder'=>'Postal Code')) !!}
         </div>
@@ -55,9 +55,9 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('rooms', 'Rooms *', array('class'=>'col-md-4 control-label')) !!}
+        {!! Form::label('bedrooms', 'Bedrooms *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::text('rooms', null, array('class'=>'form-control', 'id' => 'rooms', 'placeholder'=>'Bedrooms')) !!}
+            {!! Form::select('rooms', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getBedroomsLabel(), null, ['class' => 'form-control', 'id' => 'bedrooms']) !!}
         </div>
     </div>
 
@@ -286,12 +286,12 @@
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::select('package', ['' => 'Select Package'] + $packageOptions, [$property->packages->first()->id], ['class' => 'form-control', 'id' => 'package-select']) !!}
+            {!! Form::select('package', ['' => 'Select Package'] + $packageOptions, [($package?$package->id:null)], ['class' => 'form-control', 'id' => 'package-select']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div id="addons-wrapper">
-            @if($property->packages)
+            @if($property->packages->count() > 0)
                 @foreach($property->packages->first()->paidFeatures as $feature)
                     <div class="checkbox">
                         <label>{!! Form::checkbox('features[]', $feature->id, in_array($feature->id, $property->getPackageAddons())) !!} {{ $feature->name }}</label>

@@ -41,7 +41,7 @@
                     return;
 
                 $('html, body').animate({
-                    scrollTop: $(validator.errorList[0].element).offset().top
+                    scrollTop: $(validator.errorList[0].element).offset().top - 120
                 }, <?php echo Config::get('jsvalidation.duration_animate') ?>);
                 $(validator.errorList[0].element).focus();
 

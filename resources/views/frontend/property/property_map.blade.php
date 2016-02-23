@@ -73,7 +73,7 @@
                                         </form>
                                     </div>
                                     <div class="popin">
-                                        <div id="map" style="height: 400px;"></div>
+                                        <div class="maps-container"><div id="map" style="height: 400px;"></div></div>
                                     </div>
                                 </div>
                             </div>

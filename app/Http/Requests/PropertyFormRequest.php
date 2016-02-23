@@ -80,7 +80,7 @@ class PropertyFormRequest extends Request
         $rules['city'] = 'required';
         $rules['subdistrict'] = 'required';
         $rules['address'] = 'required';
-        $rules['postal_code'] = 'required';
+        $rules['postal_code'] = '';
         $rules['property_type_id'] = 'required|in:'.$propertyTypeAllowedValues;
         $rules['garage_size'] = 'integer';
         $rules['carport_size'] = 'integer';
@@ -118,8 +118,6 @@ class PropertyFormRequest extends Request
         $rules['building_dimension.width'] = 'numeric|required_with:building_dimension.length';
         if($property->type->slug != 'land'){
             $rules['building_size'] .= '|required';
-            $rules['building_dimension.length'] .= '|required';
-            $rules['building_dimension.width'] .= '|required';
         }
 
         $rules['land_size'] = 'numeric|min:1';
@@ -127,8 +125,6 @@ class PropertyFormRequest extends Request
         $rules['land_dimension.width'] = 'numeric|required_with:land_dimension.length';
         if($property->type->slug == 'land'){
             $rules['land_size'] .= '|required';
-            $rules['land_dimension.length'] .= '|required';
-            $rules['land_dimension.width'] .= '|required';
         }
         $rules['floor'] = 'numeric';
         $rules['certificate'] = 'in:'.$certificateAllowedValues;

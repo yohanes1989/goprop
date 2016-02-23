@@ -142,7 +142,8 @@
 
                     $.each(data.files, function (index, file) {
                         if (file.type.match('image.*')) {
-                            //$('#upload-tasks ul').append('<li>' + file.name + '</li>');
+                            data.context = $('<div class="col-xs-3"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style=""></div></div></div>');
+                            data.context.appendTo('#upload-tasks');
                         }else{
                             //data.files.splice(index,1);
                         }
@@ -150,9 +151,16 @@
 
                     data.submit();
                 },
+                progress: function(e, data){
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    data.context.find('.progress-bar').prop('aria-valuenow', progress).css(
+                            'width',
+                            progress + '%'
+                    );
+                },
                 done: function (e, data) {
                     for(var i=0; i<data.result.length; i+=1){
-                        $('#upload-tasks').append(data.result[i]);
+                        data.context.replaceWith(data.result[i]);
                         $('#upload-tasks').sortable('reload');
                     }
                 },
@@ -160,6 +168,10 @@
                     if($('.upload-messages').length < 1){
                         var $uploadMessages = $('<div class="upload-messages"><ul></ul></div>');
                         $('#fileupload-form').before($uploadMessages);
+                    }
+
+                    if(data.context){
+                        data.context.remove();
                     }
 
                     for(var i in data.jqXHR.responseJSON){

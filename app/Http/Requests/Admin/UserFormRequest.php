@@ -44,7 +44,7 @@ class UserFormRequest extends Request
             'profile.province' => 'required|not_in:0',
             'profile.city' => 'required|not_in:0',
             'profile.subdistrict' => 'required|not_in:0',
-            'profile.postal_code' => 'required'
+            'profile.postal_code' => ''
         ];
 
         if(in_array($routeName, ['admin.member.store', 'admin.member.update'])){

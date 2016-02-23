@@ -478,6 +478,21 @@ var app = {
 
           return false;
       });
+
+      //Modify button action behavior
+      $('form', context).each(function(idx, obj){
+          if($(obj).find('button[name="action"]').length){
+              $(obj).find('button[name="action"]').attr('name', 'action_btn');
+
+              if(!$(obj).find('input[name="action"]').length){
+                  $(obj).append('<input name="action" type="hidden" />');
+              }
+
+              $(obj).find('button[name="action_btn"]').click(function(e){
+                  $(obj).find('input[name="action"]').val($(this).val());
+              });
+          }
+      });
   },
     calculateCommission: function(price, package)
     {
@@ -490,11 +505,11 @@ var app = {
             var to = rules[1].trim();
             var commission = commissionRule[key];
 
-            if(from <= price){
+            if(from < price){
                 if(to == '~'){
                     break;
                 }else{
-                    if(to > price){
+                    if(to >= price){
                         break;
                     }
                 }
@@ -633,7 +648,7 @@ $(function() {
 
         that.on('click', onMapClickHandler);
         that.off('mouseleave', onMapMouseleaveHandler);
-        that.find('iframe').css("pointer-events", "none");
+        that.find('iframe, #map').css("pointer-events", "none");
     }
 
     var onMapClickHandler = function (event) {
@@ -643,7 +658,7 @@ $(function() {
         that.off('click', onMapClickHandler);
 
         // Enable scrolling zoom
-        that.find('iframe').css("pointer-events", "auto");
+        that.find('iframe, #map').css("pointer-events", "auto");
 
         // Handle the mouse leave event
         that.on('mouseleave', onMapMouseleaveHandler);

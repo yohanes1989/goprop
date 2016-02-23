@@ -40,7 +40,7 @@ class PropertyFormRequest extends Request
         $rules['city'] = 'required';
         $rules['subdistrict'] = 'required';
         $rules['address'] = 'required';
-        $rules['postal_code'] = 'required';
+        $rules['postal_code'] = '';
         $rules['property_type_id'] = 'required|in:'.$propertyTypeAllowedValues;
         $rules['garage_size'] = 'integer';
         $rules['carport_size'] = 'integer';
@@ -73,8 +73,6 @@ class PropertyFormRequest extends Request
         $rules['land_dimension.width'] = 'numeric|required_with:land_dimension.length';
         if($propertyType && $propertyType->slug == 'land'){
             $rules['land_size'] .= '|required';
-            $rules['land_dimension.length'] .= '|required';
-            $rules['land_dimension.width'] .= '|required';
         }
 
         $rules['building_size'] = 'numeric|min:1';
@@ -82,8 +80,6 @@ class PropertyFormRequest extends Request
         $rules['building_dimension.width'] = 'numeric|required_with:building_dimension.length';
         if($propertyType && $propertyType->slug != 'land'){
             $rules['building_size'] .= '|required';
-            $rules['building_dimension.length'] .= '|required';
-            $rules['building_dimension.width'] .= '|required';
         }
 
         $rules['floor'] = 'numeric';
@@ -98,11 +94,13 @@ class PropertyFormRequest extends Request
 
         $rules['package'] = 'required|in:'.$allowedPackages;
 
-        $package = Package::findOrFail($this->input('package'));
-        $allowedFeatures = implode(',', $package->features->lists('id')->toArray());
+        if($this->has('package')){
+            $package = Package::findOrFail($this->input('package'));
+            $allowedFeatures = implode(',', $package->features->lists('id')->toArray());
 
-        foreach($this->input('features', []) as $featureIdx => $feature){
-            $rules['features.'.$featureIdx] = 'in:'.$allowedFeatures;
+            foreach($this->input('features', []) as $featureIdx => $feature){
+                $rules['features.'.$featureIdx] = 'in:'.$allowedFeatures;
+            }
         }
 
         return $rules;

@@ -18,7 +18,7 @@
         </div>
         <div class="form-group clearfix">
             <div class="col-xs-12">
-                {!! Form::label('postal_code', trans('forms.fields.postal_code')) !!} <sup class="text-danger">*</sup>
+                {!! Form::label('postal_code', trans('forms.fields.postal_code')) !!}
             </div>
             <div class="col-xs-12">
                 {!! Form::text('postal_code', null, ['class' => 'form-control', 'id' => 'postal_code']) !!}

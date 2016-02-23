@@ -84,7 +84,7 @@
 
                             <div class="form-group clearfix">
                                 <div class="col-xs-12">
-                                    {!! Form::label('building_dimension', trans('forms.fields.property.building_dimension')) !!} @if($model->type->slug != 'land')<sup class="text-danger">*</sup>@endif
+                                    {!! Form::label('building_dimension', trans('forms.fields.property.building_dimension')) !!}
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="dimension-row">
@@ -119,7 +119,7 @@
 
                             <div class="form-group clearfix">
                                 <div class="col-xs-12">
-                                    {!! Form::label('land_dimension', trans('forms.fields.property.land_dimension')) !!} @if($model->type->slug == 'land')<sup class="text-danger">*</sup>@endif
+                                    {!! Form::label('land_dimension', trans('forms.fields.property.land_dimension')) !!}
                                 </div>
                                 <div class="col-xs-12">
                                     <div class="dimension-row">
@@ -146,6 +146,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
+                            @if(!in_array($model->type->slug, ['apartment', 'land']))
                             <div class="form-group clearfix">
                                 <div class="col-xs-12">
                                     {!! Form::label('floors', trans('forms.fields.property.floors')) !!}
@@ -154,6 +155,8 @@
                                     {!! Form::select('floors', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getFloorsLabel(), null, ['class' => 'form-control', 'id' => 'floors']) !!}
                                 </div>
                             </div>
+                            @endif
+
                             <div class="form-group clearfix">
                                 <div class="col-xs-12">
                                     {!! Form::label('phone_lines', trans('forms.fields.property.phone_lines')) !!}
@@ -197,20 +200,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12">
-                        <header class="header-area">
-                            <h4 class="entry-title">{{ trans('forms.fields.virtual_tour') }}</h4>
-                        </header>
-                        <div class="entry-content">
-                            <p>{{ trans('property.main_details.virtual_tour_hint') }}</p>
-                        </div>
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="form-group clearfix">
-                            {!! Form::label('virtual_tour_url', trans('forms.fields.property.virtual_tour_url')) !!}
-                            {!! Form::text('virtual_tour_url', null, ['class' => 'form-control', 'id' => 'virtual_tour_url']) !!}
-                        </div>
-                    </div>
+                    
                     <div class="col-xs-12">
                         <hr class="form-divider" />
                     </div>

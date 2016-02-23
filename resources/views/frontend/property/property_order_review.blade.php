@@ -230,7 +230,7 @@
                     <div class="checkbox">
                         <label>
                             {!! Form::checkbox('agree_tc', 1, false) !!}
-                            {{ trans('property.order_review.agree_tc') }} <a href="{{ route('frontend.page.property_terms_conditions') }}" class="ajax_popup fancybox.ajax">{{ trans('property.order_review.terms_conditions') }}</a>
+                            {{ trans('property.order_review.agree_tc') }} <a href="{{ route('frontend.page.static_page', ['identifier' => 'property-terms-conditions']) }}" class="ajax_popup fancybox.ajax">{{ trans('property.order_review.terms_conditions') }}</a>
                         </label>
                     </div>
                 </div>
@@ -246,7 +246,7 @@
                         {!! Form::button(trans('forms.change_package_btn'), ['name' => 'action', 'value' => 'change_package', 'type' => 'submit', 'class' => 'btn btn-yellow']) !!}
                     </div>
                     <div class="col-sm-6 is-right">
-                        {!! Form::button(trans('forms.purchase_btn'), ['name' => 'action', 'value' => 'purchase', 'type' => 'submit', 'class' => 'btn btn-grey']) !!}
+                        {!! Form::button(trans('forms.purchase_btn'), ['name' => 'action', 'value' => 'purchase', 'data-confirm' => trans('property.order_review.confirm_message'), 'type' => 'submit', 'class' => 'btn btn-grey']) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}

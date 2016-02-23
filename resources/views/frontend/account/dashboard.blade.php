@@ -15,7 +15,9 @@
                     <li role="presentation"><a href="#property-lease" aria-controls="lease-property" role="tab" data-toggle="tab">{{ trans('property.my_properties.property_i_lease') }}</a></li>
                     @endif
 
+                    @if($likedProperties->count() > 0)
                     <li role="presentation"><a href="#property-liked" aria-controls="liked-property" role="tab" data-toggle="tab">{{ trans('property.my_properties.property_interested') }}</a></li>
+                    @endif
                 </ul>
 
                 <div class="tab-content">
@@ -48,6 +50,7 @@
                     </div>
                     @endif
 
+                    @if($likedProperties->count() > 0)
                     <div role="tabpanel" class="tab-pane" id="property-liked">
                         <div class="row propertyItem-list">
                             @foreach($likedProperties as $likedProperty)
@@ -59,6 +62,7 @@
                         </div>
                         <div class="clearfix"></div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

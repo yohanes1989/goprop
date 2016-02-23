@@ -100,7 +100,7 @@
                                     {!! Form::label('profile_mobile_phone_number', trans('forms.fields.mobile_phone_number')) !!} <sup class="text-danger">*</sup>
                                 </div>
                                 <div class="col-sm-8">
-                                    {!! Form::text('profile[mobile_phone_number]', null, ['class' => 'form-control', 'id' => 'profile_mobile_phone_number']) !!}
+                                    {!! Form::text('profile[mobile_phone_number]', null, ['class' => 'form-control', 'placeholder' => '0812345678', 'id' => 'profile_mobile_phone_number']) !!}
                                 </div>
                             </div>
                             <div class="form-group clearfix">
@@ -108,7 +108,7 @@
                                     {!! Form::label('profile_home_phone_number', trans('forms.fields.home_phone_number')) !!}
                                 </div>
                                 <div class="col-sm-8">
-                                    {!! Form::text('profile[home_phone_number]', null, ['class' => 'form-control', 'id' => 'profile_home_phone_number']) !!}
+                                    {!! Form::text('profile[home_phone_number]', null, ['class' => 'form-control', 'placeholder' => '0212345678', 'id' => 'profile_home_phone_number']) !!}
                                 </div>
                             </div>
                         </div>

@@ -39,11 +39,7 @@
                     <div class="col-xs-12">
                         <input type="password" id="login-password" name="password" class="form-control input-lg" placeholder="Password">
 
-                        <!--
-                        Hidden checkbox. Its checked property will be toggled every time the remember me (#btn-remember) button is clicked (js code at the bottom)
-                        You can add the checked property by default (the button will be enabled automatically)
-                        -->
-                        <input type="checkbox" id="login-remember" name="remember" hidden="">
+                        <input type="checkbox" id="login-remember" name="remember" value="1" hidden />
                     </div>
                 </div>
                 <div class="form-group">
@@ -63,3 +59,22 @@
         <!-- END Page Content -->
     </div>
 @endsection
+
+@section('bottom_scripts')
+    @parent
+
+    <!-- Javascript code only for this page -->
+    <script>
+        $(function(){
+            /* Save buttons (remember me and terms) and hidden checkboxes in variables */
+            var checkR  = $('#login-remember'),
+                    btnR = $('#btn-remember');
+
+            // Add the 'active' class to button if their checkbox has the property 'checked'
+            if (checkR.prop('checked')) btnR.addClass('active');
+
+            // Toggle 'checked' property of hidden checkboxes when buttons are clicked
+            btnR.on('click', function(){ checkR.prop('checked', !checkR.prop('checked')); });
+        });
+    </script>
+@stop

@@ -1804,3 +1804,9 @@ $font-primary: 'Lato', sans-serif;
     @include box-sizing(border-box);
   }
 }
+
+.maps-container{
+  #map{
+    pointer-events: none;
+  }
+}

@@ -133,7 +133,7 @@
                                                 <td><strong>{{ trans('property.package.feature.value') }}</strong></td>
                                                 @foreach($packageCategory->packages as $package)
                                                     <td>
-                                                        <input type="text"  data-package="{{ $package->id }}" value="5000000000" class="property-price form-control text-center">
+                                                        <input type="text"  data-package="{{ $package->id }}" value="3000000000" class="property-price form-control text-center">
                                                     </td>
                                                 @endforeach
                                             </tr>

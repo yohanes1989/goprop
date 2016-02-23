@@ -6,6 +6,4 @@
     @if($content)
         {!! $content->content !!}
     @endif
-
-@include('frontend.includes.partner')
 @stop
