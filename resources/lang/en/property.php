@@ -87,6 +87,7 @@ return [
         'commercial' => 'Commercial',
         'factory' => 'Factory',
         'land' => 'Land',
+        'villa' => 'Villa',
         'warehouse' => 'Warehouse',
         'working-space' => 'Working Space / Office Space',
     ],
