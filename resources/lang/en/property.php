@@ -83,7 +83,7 @@ return [
     'property_type' => [
         'house' => 'House',
         'apartment' => 'Apartment',
-        'townhouse' => 'Townhouse',
+        'shophouse' => 'Shophouse',
         'commercial' => 'Commercial',
         'factory' => 'Factory',
         'land' => 'Land',
