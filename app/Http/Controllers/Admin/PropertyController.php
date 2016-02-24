@@ -179,9 +179,9 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
-        $max = 500;
+        $max = 5096;
         if($type == 'floorplan'){
-            $max = 1024;
+            $max = 2048;
         }
 
         $rules = [
