@@ -14,14 +14,21 @@ use GoProp\Models\ViewingSchedule;
 use Illuminate\Http\Request;
 use GoProp\Facades\AddressHelper;
 use GoProp\Facades\AgentHelper;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class PropertyController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+
         $qb = Property::with(['agent'])->whereNotNull('checkout_at')->orderBy('checkout_at', 'DESC');
         AddressHelper::addAddressQueryScope($qb);
+
+        if($user->is('agent')){
+            $qb->where('user_id', $user->id);
+        }
 
         $properties = $qb->paginate(50);
 
@@ -46,7 +53,7 @@ class PropertyController extends Controller
             $mapDefault = false;
         }
 
-        $package = Session::hasOldInput('package')?Package::findOrFail(Session::getOldInput('package')):null;
+        $package = (Session::hasOldInput('package') && !empty(Session::getOldInput('package')))?Package::findOrFail(Session::getOldInput('package')):null;
 
         $packageOptions = [];
         foreach(PackageCategory::all() as $packageCategory){
@@ -67,10 +74,18 @@ class PropertyController extends Controller
 
     public function store(PropertyFormRequest $request)
     {
+        $user = Auth::user();
         $property = new Property();
-        $owner = User::where('email', $request->get('owner'))->firstOrFail();
+
+        $ownerEmail = $request->get('owner', $user->email);
+        $owner = User::where('email', $ownerEmail)->firstOrFail();
 
         $property->user()->associate($owner);
+
+        if($user->is('agent')){
+            $property->agent()->associate($owner);
+            $property->status = Property::STATUS_INACTIVE;
+        }
 
         $data = $request->all();
         if($request->input('point_map') != 1){
@@ -130,9 +145,11 @@ class PropertyController extends Controller
 
     public function update(PropertyFormRequest $request, $id)
     {
+        $user = Auth::user();
         $property = Property::findOrFail($id);
 
-        $owner = User::where('email', $request->get('owner'))->firstOrFail();
+        $ownerEmail = $request->get('owner', $user->email);
+        $owner = User::where('email', $ownerEmail)->firstOrFail();
 
         $property->user()->associate($owner);
 

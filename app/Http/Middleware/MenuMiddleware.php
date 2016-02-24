@@ -57,12 +57,13 @@ class MenuMiddleware
                         //$menu->blogs->add('Tags', ['route' => ['admin.tag.index']]);
 
                         $menu->raw('<h2 class="sidebar-header">Operations</h2>');
-                        $menu->add('Properties', ['route' => ['admin.property.index']])->prepend('<i class="gi gi-home"></i> ');
+                        $menu->add('Property Listings', ['route' => ['admin.property.index']])->prepend('<i class="gi gi-home"></i> ');
                         $menu->add('Viewing Schedules', ['route' => ['admin.viewing_schedule.index']])->prepend('<i class="fa fa-calendar"></i> ');
                         $menu->add('Owner Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'owner']])->prepend('<i class="fa fa-comments"></i> ');
                         $menu->add('User Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'user']])->prepend('<i class="fa fa-comments"></i> ');
                     }elseif($this->auth->user()->is('agent')){
                         $menu->raw('<h2 class="sidebar-header">Operations</h2>');
+                        $menu->add('Property Listings', ['route' => ['admin.property.index']])->prepend('<i class="gi gi-home"></i> ');
                         $menu->add('Viewing Schedules', ['route' => ['agent.viewing_schedule.index']])->prepend('<i class="fa fa-calendar"></i> ');
                         $menu->add('Owner Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'owner']])->prepend('<i class="fa fa-comments"></i> ');
                         $menu->add('User Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'user']])->prepend('<i class="fa fa-comments"></i> ');

@@ -129,7 +129,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
         });
 
         //Properties
-        Route::group(['prefix' => '/properties', 'is' => 'administrator'], function(){
+        Route::group(['prefix' => '/properties', 'is' => 'administrator|agent'], function(){
             Route::get('/index', [
                 'as' => 'admin.property.index',
                 'uses' => 'PropertyController@index'
@@ -145,41 +145,46 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                 'uses' => 'PropertyController@store'
             ]);
 
-            Route::get('/{id}/edit', [
-                'as' => 'admin.property.edit',
-                'uses' => 'PropertyController@edit'
-            ]);
+            Route::group(['middleware' => ['admin.can_edit']], function(){
+                Route::get('/{id}/edit', [
+                    'as' => 'admin.property.edit',
+                    'uses' => 'PropertyController@edit',
+                    'middleware' => ['admin.can_edit']
+                ]);
 
-            Route::post('/{id}/update', [
-                'as' => 'admin.property.update',
-                'uses' => 'PropertyController@update'
-            ]);
+                Route::post('/{id}/update', [
+                    'as' => 'admin.property.update',
+                    'uses' => 'PropertyController@update'
+                ]);
 
-            Route::get('/{id}/media', [
-                'as' => 'admin.property.media',
-                'uses' => 'PropertyController@media'
-            ]);
+                Route::get('/{id}/media', [
+                    'as' => 'admin.property.media',
+                    'uses' => 'PropertyController@media'
+                ]);
 
-            Route::post('/{id}/media/upload/{type}', [
-                'as' => 'admin.property.media.upload',
-                'uses' => 'PropertyController@photosUpload'
-            ]);
+                Route::post('/{id}/media/upload/{type}', [
+                    'as' => 'admin.property.media.upload',
+                    'uses' => 'PropertyController@photosUpload'
+                ]);
 
-            Route::post('/{id}/media/delete/{attachment_id}', [
-                'as' => 'admin.property.media.delete',
-                'uses' => 'PropertyController@photosDelete'
-            ]);
+                Route::post('/{id}/media/delete/{attachment_id}', [
+                    'as' => 'admin.property.media.delete',
+                    'uses' => 'PropertyController@photosDelete'
+                ]);
 
-            Route::post('/{id}/delete', [
-                'as' => 'admin.property.delete',
-                'uses' => 'PropertyController@delete'
-            ]);
+                Route::post('/{id}/delete', [
+                    'as' => 'admin.property.delete',
+                    'uses' => 'PropertyController@delete'
+                ]);
 
-            Route::post('/{id}/media/reorder', [
-                'as' => 'admin.property.media.reorder',
-                'uses' => 'PropertyController@photosReorder'
-            ]);
+                Route::post('/{id}/media/reorder', [
+                    'as' => 'admin.property.media.reorder',
+                    'uses' => 'PropertyController@photosReorder'
+                ]);
+            });
+        });
 
+        Route::group(['prefix' => '/properties', 'is' => 'administrator'], function(){
             Route::any('/{id}/assign-to-agent', [
                 'as' => 'admin.property.assign_to_agent',
                 'uses' => 'PropertyController@assignToAgent'

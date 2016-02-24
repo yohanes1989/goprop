@@ -6,6 +6,7 @@ use GoProp\Http\Requests\Request;
 use GoProp\Models\Property;
 use GoProp\Models\PropertyType;
 use GoProp\Models\Package;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyFormRequest extends Request
 {
@@ -26,6 +27,7 @@ class PropertyFormRequest extends Request
      */
     public function rules()
     {
+        $user = Auth::user();
         $propertyTypeAllowedValues = implode(',', PropertyType::lists('id')->all());
         $rentPriceTypeAllowedValues = implode(',', array_keys(Property::getRentTypeLabel()));
         $viewingSchedulesAllowedValues = implode(',', array_keys(Property::getViewingScheduleOptionLabel()));
@@ -34,7 +36,10 @@ class PropertyFormRequest extends Request
 
         $propertyType = PropertyType::find($this->input('property_type_id'));
 
-        $rules['owner'] = 'required|email';
+        if($user->is('administrator')){
+            $rules['owner'] = 'required|email';
+        }
+
         $rules['property_name'] = 'required';
         $rules['province'] = 'required';
         $rules['city'] = 'required';

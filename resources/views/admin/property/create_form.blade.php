@@ -1,4 +1,5 @@
 <div class="col-md-4">
+    @if(Auth::user()->is('administrator'))
     <div class="form-group">
         {!! Form::label('owner', 'Owner *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
@@ -12,6 +13,7 @@
             {!! Form::select('status', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getStatusLabel(), null, ['class' => 'form-control', 'id' => 'status']) !!}
         </div>
     </div>
+    @endif
 
     <div class="form-group">
         {!! Form::label('address', 'Address *', array('class'=>'col-md-4 control-label')) !!}

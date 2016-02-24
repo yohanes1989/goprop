@@ -29,7 +29,7 @@
                         <th>Name</th>
                         <th>Location</th>
                         <th>For</th>
-                        <th>Username</th>
+                        <th>Owner</th>
                         <th>Status</th>
                         <th>Agent</th>
                         <th class="text-center">Actions</th>
