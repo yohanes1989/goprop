@@ -391,6 +391,39 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             });
         });
 
+        //Area
+        Route::group(['prefix' => '/location/area', 'is' => 'administrator'], function(){
+            Route::get('/index', [
+                'as' => 'admin.location.area.index',
+                'uses' => 'LocationController@indexArea'
+            ]);
+
+            Route::get('/create', [
+                'as' => 'admin.location.area.create',
+                'uses' => 'LocationController@createArea'
+            ]);
+
+            Route::post('/store', [
+                'as' => 'admin.location.area.store',
+                'uses' => 'LocationController@storeArea'
+            ]);
+
+            Route::get('/{id}/edit', [
+                'as' => 'admin.location.area.edit',
+                'uses' => 'LocationController@editArea'
+            ]);
+
+            Route::post('/{id}/update', [
+                'as' => 'admin.location.area.update',
+                'uses' => 'LocationController@updateArea'
+            ]);
+
+            Route::post('/{id}/delete', [
+                'as' => 'admin.location.area.delete',
+                'uses' => 'LocationController@deleteArea'
+            ]);
+        });
+
         //Others
         Route::get('/members/find/autocomplete', [
             'as' => 'admin.member.find.auto_complete',

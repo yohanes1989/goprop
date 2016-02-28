@@ -54,6 +54,7 @@ class MenuMiddleware
                             ->link->attr(['class' => 'menu-link']);
                         $menu->blogs->add('Posts', ['route' => ['admin.post.index']]);
                         $menu->blogs->add('Categories', ['route' => ['admin.post.category.index']]);
+                        $menu->add('Areas', ['route' => ['admin.location.area.index']])->prepend('<i class="gi gi-google_maps"></i> ');
                         //$menu->blogs->add('Tags', ['route' => ['admin.tag.index']]);
 
                         $menu->raw('<h2 class="sidebar-header">Operations</h2>');

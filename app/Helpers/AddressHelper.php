@@ -30,16 +30,16 @@ class AddressHelper
         return $this->_provinces;
     }
 
-    public function getCities($province_id = NULL, $selectOption = FALSE)
+    public function getCities($province_id = NULL, $selectOption = FALSE, $refresh = FALSE)
     {
-        if(empty($province_id)){
+        if(empty($province_id) && $province_id != 'all'){
             return [];
         }
 
-        if(!isset($this->_cities)){
+        if(!isset($this->_cities) || $refresh){
             $qb = DB::table($this->cityTable)->selectRaw('*, CONCAT(type, \' \', city_name) AS city_long_name');
 
-            if(!is_null($province_id)){
+            if(!is_null($province_id) && $province_id != 'all'){
                 $qb->where('province_id', $province_id);
             }
 
@@ -60,7 +60,7 @@ class AddressHelper
         }
 
         if(!isset($this->_subdistricts)){
-            $qb = DB::table($this->subdistrictTable);
+            $qb = DB::table($this->subdistrictTable)->orderBy('sort_order', 'ASC');
 
             if(!is_null($city_id)){
                 $qb->where('city_id', $city_id);
