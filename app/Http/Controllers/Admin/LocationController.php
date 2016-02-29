@@ -33,8 +33,8 @@ class LocationController extends Controller
 
         $areas = $qb->paginate(50)->appends(['search' => $request->get('search')]);
 
-        $provinces = ['' => 'Please Select'] + AddressHelper::getProvinces(true);
-        $cities = ['' => 'Please Select'] + AddressHelper::getCities(empty($request->input('search.province'))?'all':$request->input('search.province'), true);
+        $provinces = ['' => 'Select Province'] + AddressHelper::getProvinces(true);
+        $cities = ['' => 'Select City'] + AddressHelper::getCities(empty($request->input('search.province'))?'all':$request->input('search.province'), true);
 
         return view('admin.location.area.index', [
             'areas' => $areas,
@@ -52,7 +52,7 @@ class LocationController extends Controller
         $provinces = AddressHelper::getProvinces(true);
 
         foreach($provinces as $idx=>$province){
-            $cities[$province] = AddressHelper::getCities($idx, true);
+            $cities[$province] = AddressHelper::getCities($idx, true, true);
         }
 
         $cities = ['' => 'Select City'] + $cities;
