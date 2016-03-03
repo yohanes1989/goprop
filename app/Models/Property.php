@@ -42,7 +42,7 @@ class Property extends Model
 
     public static $residentialSlugs = ['house', 'apartment', 'townhouse'];
 
-    public static $availableElectricity = [450, 900, 1300, 2200, 3500, 4400, 4500, 6600, 7600, 7700, 8000, 9000, 10000, 10600, 11000, 12700, 13200, 13300, 13900, 16500, 17600, 19000, 22000, 23000, 24000, 30500, 38100, 41500, 47500, 53000, 61000, 66000, 76000, 82500, 85000, 95000];
+    public static $availableElectricity = [450, 900, 1300, 2200, 3500, 4400, 5500, 6600, 7600, 7700, 8000, 9000, 10000, 10600, 11000, 12700, 13200, 13300, 13900, 16500, 17600, 19000, 22000, 23000, 24000, 30500, 38100, 41500, 47500, 53000, 61000, 66000, 76000, 82500, 85000, 95000];
 
     protected $dates = ['deleted_at', 'checkout_at'];
     protected $fillable = ['property_name', 'province', 'city', 'subdistrict', 'address', 'postal_code',
