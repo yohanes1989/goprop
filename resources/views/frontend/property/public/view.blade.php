@@ -51,7 +51,7 @@
                                 <ul class="slides gallery-group">
                                     @foreach($property->photos as $photo)
                                         <li>
-                                            <a href="{{ url('images/photo_gallery/'.$photo->filename) }}"><img src="{{ url('images/photo_gallery/'.$photo->filename) }}"></a>
+                                            <a href="{{ url('images/original/'.$photo->filename) }}"><img src="{{ url('images/photo_gallery/'.$photo->filename) }}"></a>
                                         </li>
                                     @endforeach
                                 </ul>

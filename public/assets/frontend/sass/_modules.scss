@@ -1818,21 +1818,29 @@ $font-primary: 'Lato', sans-serif;
 
     li{
       height: 100%;
+      position: relative;
     }
 
     img{
       display: inline-block;
       height: 100%;
       width: auto;
+
+      @media (orientation:portrait){
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        left: 0;
+        vertical-align: middle;
+        width: 100%;
+        height: auto;
+      }
     }
   }
 
   .flex-direction-nav{
-    a:before{
-      color: #fff;
-      @include single-text-shadow(1px 1px 0 rgba(0, 0, 0, 0.3));
-    }
-
     .flex-nav-next, .flex-nav-prev{
       @include single-transition(opacity, 0.5s);
       @include opacity(0);
@@ -1859,15 +1867,32 @@ $font-primary: 'Lato', sans-serif;
     .flex-next, .flex-next:hover{
       right: 20px;
     }
-
-    .flex-prev:hover, .flex-next:hover{
-
-    }
   }
 
   &:hover{
     .flex-nav-next, .flex-nav-prev{
       @include opacity(1);
+    }
+  }
+}
+
+.flexslider{
+  .flex-direction-nav {
+    a:before {
+      color: #fff;
+      @include single-text-shadow(1px 1px 0 rgba(0, 0, 0, 0.3));
+    }
+
+    .flex-prev, .flex-prev:hover {
+      left: 10px;
+    }
+
+    .flex-next, .flex-next:hover {
+      right: 10px;
+    }
+
+    .flex-prev:hover, .flex-next:hover {
+
     }
   }
 }
