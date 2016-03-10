@@ -48,9 +48,11 @@
                         <div class="banner-image-area">
                             <!--<div class="banner-status">Open House</div>-->
                             <div id="propertyDetail-Slider" class="flexslider">
-                                <ul class="slides">
+                                <ul class="slides gallery-group">
                                     @foreach($property->photos as $photo)
-                                        <li><img src="{{ url('images/photo_gallery/'.$photo->filename) }}"></li>
+                                        <li>
+                                            <a href="{{ url('images/photo_gallery/'.$photo->filename) }}"><img src="{{ url('images/photo_gallery/'.$photo->filename) }}"></a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -149,12 +151,22 @@
                             @if($property->floorplans->count() > 0)
                             <li>
                                 <a href="#" class="faqs-question">{{ trans('property.view.floorplans') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
-                                <div class="faqs-answer clearfix">
-                                    @foreach($property->floorplans as $floorplan)
-                                    <div class="row">
-                                        <img src="{{ url('images/property_floorplan/'.$floorplan->filename) }}" alt="" class="img-responsive">
+                                <div class="faqs-answer clearfix gallery-group">
+                                    <div class="row row-eq-height">
+                                    @foreach($property->floorplans as $idx=>$floorplan)
+                                        <?php $idx += 1; ?>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <a href="{{ url('images/photo_gallery/'.$floorplan->filename) }}"><img src="{{ url('images/property_floorplan/'.$floorplan->filename) }}" alt="" class="img-responsive"></a>
                                     </div>
+                                        @if($idx % 4 == 0)
+                                        <div class="clearfix hidden-xs"></div>
+                                        @endif
+
+                                        @if($idx % 2 == 0)
+                                            <div class="clearfix visible-xs"></div>
+                                        @endif
                                     @endforeach
+                                    </div>
                                 </div>
                             </li>
                             @endif

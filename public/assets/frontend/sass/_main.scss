@@ -454,16 +454,21 @@ ol.faq-list {
 	background-image: none;
 	@include box-shadow(none);
 }
-.tooltip.top {
-	.tooltip-arrow {
-		border-top-color: $color-yellow;
-	}
-	.tooltip-inner {
-		background-color: $color-yellow;
-		font-size: 15px;
-		color: $color-black;
-		padding: 8px 12px;
-	}
+
+.tooltip{
+  z-index: 502;
+
+  .top {
+    .tooltip-arrow {
+      border-top-color: $color-yellow;
+    }
+    .tooltip-inner {
+      background-color: $color-yellow;
+      font-size: 15px;
+      color: $color-black;
+      padding: 8px 12px;
+    }
+  }
 }
 
 .slider{
@@ -579,16 +584,16 @@ ol.faq-list {
 				background-color: $color-blue-light;
 				&:first-child {
 					background-color: #62707d;
-					color: #fff;				
+					color: #fff;
 					th {
 						&:hover {
 							background-color: #62707d!important;
 						}
-					}	
+					}
 				}
 				th {
-					@include border-radius(0px);					
-				}				
+					@include border-radius(0px);
+				}
 			}
 		}
 		tbody {
@@ -636,4 +641,18 @@ ol.faq-list {
   width: 100px;
   height: 100px;
   border: 1px solid $color-grey-light;
+}
+
+.lg-progress-bar{
+  .lg-progress{
+    background-color: $color-yellow;
+  }
+}
+
+.lg-outer{
+  .lg-thumb-item{
+    &.active, &:hover{
+      border-color: $color-yellow;
+    }
+  }
 }

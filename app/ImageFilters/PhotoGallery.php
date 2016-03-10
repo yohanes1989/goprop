@@ -9,6 +9,6 @@ class PhotoGallery implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
-        return $image->widen(800);
+        return $image->widen(1200);
     }
 }

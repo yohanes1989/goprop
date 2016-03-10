@@ -38,7 +38,7 @@ $font-primary: 'Lato', sans-serif;
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 1200;
+	z-index: 500;
 	@media (max-width: 768px) {
 		background-color: $color-black;					
 	}
@@ -876,7 +876,6 @@ $font-primary: 'Lato', sans-serif;
 		margin-top: 30px;
 	}
 	.banner-image-area {
-		background-color: #2b2837;
 		position: relative;
 		margin-bottom: 20px;
 
@@ -1282,7 +1281,7 @@ $font-primary: 'Lato', sans-serif;
 			}
 			.form-wizard-menu {		
 				position: relative;
-				z-index: 999;	
+				z-index: 501;
 				ul {
 					overflow: hidden;
 					text-align: center;
@@ -1808,5 +1807,67 @@ $font-primary: 'Lato', sans-serif;
 .maps-container{
   #map{
     pointer-events: none;
+  }
+}
+
+#propertyDetail-Slider{
+  background-color: #2b2837;
+
+  .slides{
+    text-align: center;
+
+    li{
+      height: 100%;
+    }
+
+    img{
+      display: inline-block;
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  .flex-direction-nav{
+    a:before{
+      color: #fff;
+      @include single-text-shadow(1px 1px 0 rgba(0, 0, 0, 0.3));
+    }
+
+    .flex-nav-next, .flex-nav-prev{
+      @include single-transition(opacity, 0.5s);
+      @include opacity(0);
+      position: absolute;
+      top: 0;
+      width: 80px;
+      height: 100%;
+    }
+
+    .flex-nav-next{
+      right: 0;
+      @include background-image(linear-gradient(to left, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0)));
+    }
+
+    .flex-nav-prev{
+      left: 0;
+      @include background-image(linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0)));
+    }
+
+    .flex-prev, .flex-prev:hover {
+      left: 20px;
+    }
+
+    .flex-next, .flex-next:hover{
+      right: 20px;
+    }
+
+    .flex-prev:hover, .flex-next:hover{
+
+    }
+  }
+
+  &:hover{
+    .flex-nav-next, .flex-nav-prev{
+      @include opacity(1);
+    }
   }
 }

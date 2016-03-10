@@ -26,6 +26,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/fullcalendar/fullcalendar.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/flag-icon.min.css') }}">
+        <link type="text/css" rel="stylesheet" href="{{ asset('assets/frontend/vendor/lightGallery/dist/css/lightgallery.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/style.css') }}">
         @show
     </head>
@@ -167,6 +168,11 @@
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/flexslider/jquery.flexslider-min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/fullcalendar/fullcalendar.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/accounting.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lightgallery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-autoplay.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-hash.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-pager.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-thumbnail.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/js/app.js') }}"></script>
         @show
     </body>

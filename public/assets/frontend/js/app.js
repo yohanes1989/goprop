@@ -99,6 +99,16 @@ var app = {
           }
       });
 
+      //Javascript for gallery lightbox
+      $('.gallery-group', context).each(function(idx, obj){
+          $(obj).lightGallery({
+              galleryId: idx+1,
+              thumbnail:true,
+              selector: 'a',
+              download: false
+          });
+      });
+
       // Javascript for Counting Character in Textarea Field
       $('.textarea-group textarea', context).keyup(function () {
           var left = 300 - $(this).val().length;
@@ -349,13 +359,15 @@ var app = {
           });
       });
 
+      $('#propertyDetail-Slider .slides', context).height($(window).height()*0.6);
+
       $(window).load(function(){
           $('#propertyDetailThumb-Slider', context).flexslider({
               animation: "slide",
               controlNav: false,
-              animationLoop: false,
+              animationLoop: true,
               slideshow: false,
-              itemWidth: 150,
+              itemWidth: 120,
               itemMargin: 5,
               asNavFor: '#propertyDetail-Slider'
           });
@@ -363,9 +375,9 @@ var app = {
           $('#propertyDetail-Slider', context).flexslider({
               animation: "slide",
               controlNav: false,
-              animationLoop: false,
-              slideshow: false,
-              smoothHeight: true,
+              animationLoop: true,
+              slideshow: true,
+              pauseOnHover: true,
               sync: "#propertyDetailThumb-Slider"
           });
       });
