@@ -105,7 +105,8 @@ var app = {
               galleryId: idx+1,
               thumbnail:true,
               selector: 'a',
-              download: false
+              download: false,
+              hash: false
           });
       });
 
