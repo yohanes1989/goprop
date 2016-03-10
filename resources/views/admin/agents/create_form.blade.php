@@ -1,10 +1,12 @@
 <div class="col-md-4">
+    <!--
     <div class="form-group">
         {!! Form::label('username', 'Username *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::text('username', null, array('class'=>'form-control', 'id' => 'username', 'placeholder'=>'Username')) !!}
         </div>
     </div>
+    -->
 
     <div class="form-group">
         {!! Form::label('email', 'Email *', array('class'=>'col-md-4 control-label')) !!}
@@ -86,7 +88,7 @@
     </div>
 
     <div class="form-group">
-        {!! Form::label('home_phone_number', 'Home Phone Number *', array('class'=>'col-md-4 control-label')) !!}
+        {!! Form::label('home_phone_number', 'Home Phone Number', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::text('profile[home_phone_number]', null, array('class'=>'form-control', 'id' => 'home_phone_number', 'placeholder'=>'Home Phone Number')) !!}
         </div>
@@ -122,6 +124,7 @@
 
 <div class="form-group">
     <div class="col-md-12 text-center">
+        {!! Form::hidden('role', 'agent') !!}
         {!! Form::submit('Save',array('class'=>'btn btn-primary')) !!}
         {!! Form::reset('Reset',array('class'=>'btn btn-default')) !!}
 

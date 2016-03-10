@@ -2,6 +2,7 @@
 
 namespace GoProp\Http\Requests\Admin;
 
+use GoProp\Facades\AgentHelper;
 use GoProp\Http\Requests\Request;
 use GoProp\Models\User;
 use GoProp\Models\Subscription;
@@ -31,14 +32,14 @@ class UserFormRequest extends Request
         $routeName = $this->route()->getName();
 
         $rules = [
-            'username' => 'required|max:255',
+            'username' => 'max:255',
             'email' => 'required|email|max:255',
             'password' => 'confirmed|min:6',
             'status' => 'required|in:'.implode(',', $allowedStatus),
             'profile.first_name' => 'required|min:2',
             'profile.last_name' => 'min:2',
             'profile.mobile_phone_number' => 'required|min:5',
-            'profile.home_phone_number' => 'min:5',
+            //'profile.home_phone_number' => 'min:5',
             'profile.profile_picture' => 'image|max:500',
             'profile.address' => 'required',
             'profile.province' => 'required|not_in:0',
@@ -46,6 +47,10 @@ class UserFormRequest extends Request
             'profile.subdistrict' => 'required|not_in:0',
             'profile.postal_code' => ''
         ];
+
+        if($this->get('role') != 'agent'){
+            $rules['username'] .= '|required';
+        }
 
         if(in_array($routeName, ['admin.member.store', 'admin.member.update'])){
             $rules['profile.extendedProfile.property_to_sell'] = 'required';
@@ -69,5 +74,19 @@ class UserFormRequest extends Request
         }
 
         return $rules;
+    }
+
+    public function all()
+    {
+        if($this->get('role') == 'agent' && !$this->route()->hasParameter('id')){
+            $attributes = parent::all();
+
+            // you can add fields
+            $attributes['username'] = AgentHelper::getNextAgentCode();
+
+            $this->replace($attributes);
+        }
+
+        return parent::all();
     }
 }

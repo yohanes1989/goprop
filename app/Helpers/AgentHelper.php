@@ -32,4 +32,31 @@ class AgentHelper
             return 'No Conversation';
         }
     }
+
+    public function formatAgentCode($number)
+    {
+        $prefix = 'agent';
+
+        return $prefix.str_pad($number, 3, '0', STR_PAD_LEFT);
+    }
+
+    public function getNextAgentCode()
+    {
+        $prefix = 'agent';
+
+        $qb = User::orderBy('username', 'DESC');
+        $qb->whereHas('roles', function($query){
+            $query->where('slug', 'agent');
+        });
+
+        $lastAgent = $qb->first();
+
+        if(!$lastAgent){
+            $lastAgentNumber = 0;
+        }else{
+            $lastAgentNumber = intval(str_replace($prefix,'', $lastAgent->username));
+        }
+
+        return $this->formatAgentCode($lastAgentNumber+1);
+    }
 }

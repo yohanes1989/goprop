@@ -75,7 +75,7 @@ class AgentController extends Controller
         $user = User::findOrFail($id);
         $user->load(['profile', 'profile.extendedProfile']);
 
-        $user->username = $request->input('username');
+        //$user->username = $request->input('username');
         $user->status = $request->input('status');
 
         if($request->input('remove_profile_picture') == 1){
