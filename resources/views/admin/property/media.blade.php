@@ -18,6 +18,14 @@
             <div class="block">
                 <div class="block-title">
                     <h4>Photos for {{ $property->property_name }}</h4>
+
+                    <div class="block-options pull-right">
+                        <div class="btn-group btn-group-sm">
+                            {!! Form::open(['route' => ['admin.property.media.delete_all', 'id' => $property->id, 'type' => 'photo'], 'style' => 'display: inline;']) !!}
+                            <button class="btn btn-xs btn-default btn-confirm" data-toggle="tooltip" title="" data-original-title="Delete All">Delete all</button>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="upload-form-wrapper">
@@ -38,6 +46,14 @@
             <div class="block">
                 <div class="block-title">
                     <h4>Floorplans for {{ $property->property_name }}</h4>
+
+                    <div class="block-options pull-right">
+                        <div class="btn-group btn-group-sm">
+                            {!! Form::open(['route' => ['admin.property.media.delete_all', 'id' => $property->id, 'type' => 'floorplan'], 'style' => 'display: inline;']) !!}
+                            <button class="btn btn-xs btn-default btn-confirm" data-toggle="tooltip" title="" data-original-title="Delete All">Delete all</button>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
                 </div>
 
                 <div class="upload-form-wrapper">

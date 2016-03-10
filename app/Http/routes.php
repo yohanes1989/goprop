@@ -172,6 +172,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                     'uses' => 'PropertyController@photosDelete'
                 ]);
 
+                Route::post('/{id}/media/delete/all/{type}', [
+                    'as' => 'admin.property.media.delete_all',
+                    'uses' => 'PropertyController@photosDeleteAll'
+                ]);
+
                 Route::post('/{id}/delete', [
                     'as' => 'admin.property.delete',
                     'uses' => 'PropertyController@delete'

@@ -241,6 +241,25 @@ class PropertyController extends Controller
         }
     }
 
+    public function photosDeleteAll(Request $request, $id, $type)
+    {
+        $property = Property::findOrFail($id);
+
+        $photos = [];
+
+        if($type == 'photo'){
+            $photos = $property->photos;
+        }elseif($type == 'floorplan'){
+            $photos = $property->floorplans;
+        }
+
+        foreach($photos as $photo){
+            $photo->delete();
+        }
+
+        return redirect()->back()->with('messages', ['All '.$type.' are deleted.']);
+    }
+
     public function photosReorder(Request $request, $id)
     {
         $property = Property::findOrFail($id);
