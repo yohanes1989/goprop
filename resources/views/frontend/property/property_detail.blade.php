@@ -193,7 +193,7 @@
                     </div>
                     <div class="col-xs-12">
                         <div class="form-group clearfix">
-                            {!! Form::label('description', trans('forms.fields.property.description')) !!} <sup class="text-danger">*</sup>
+                            {!! Form::label('description', trans('forms.fields.property.description')) !!}
                             <div class="textarea-group">
                                 <div class="textarea-count"><span>300</span> {{ trans('forms.fields.words_remaining') }}</div>
                                 {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 8, 'max' => 300]) !!}

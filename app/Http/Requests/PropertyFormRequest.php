@@ -129,7 +129,7 @@ class PropertyFormRequest extends Request
         $rules['floor'] = 'numeric';
         $rules['certificate'] = 'in:'.$certificateAllowedValues;
         $rules['virtual_tour_url'] = 'url';
-        $rules['description'] = 'required|min:10|max:300';
+        //$rules['description'] = 'required|min:10|max:300';
 
         return $rules;
     }

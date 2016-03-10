@@ -69,22 +69,8 @@
                         </p>
                         <ol class="faq-list">
                             <li>
-                                <a href="#" class="faqs-question">{{ trans('property.view.address') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
-                                <div class="faqs-answer clearfix">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <p><strong>{{ trans('forms.fields.province') }}:</strong> {{ $province }}</p>
-                                            <p><strong>{{ trans('forms.fields.city') }}:</strong> {{ $city }}</p>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <p><strong>{{ trans('forms.fields.area') }}:</strong> {{ $subdistrict }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="#" class="faqs-question">{{ trans('property.view.details') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
-                                <div class="faqs-answer clearfix">
+                                <a href="#" class="faqs-question opened">{{ trans('property.view.details') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
+                                <div class="faqs-answer clearfix" style="display: block;">
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <p><strong>{{ trans('forms.fields.property.'.$for.'_price') }}:</strong>
@@ -94,7 +80,7 @@
                                             <p><strong>{{ trans('forms.fields.property.land_size') }}:</strong> {{ $property->land_size+0 }} m<sup>2</sup></p>
                                             @endif
 
-                                            @if($property->land_dimension)
+                                            @if($property->land_dimension['length'] && $property->land_dimension['width'])
                                                 <p><strong>{{ trans('forms.fields.property.land_dimension') }}:</strong> {{ $property->landDimensionWithUnit }}</p>
                                             @endif
 
@@ -102,7 +88,7 @@
                                             <p><strong>{{ trans('forms.fields.property.building_size') }}:</strong> {{ $property->building_size+0 }} m<sup>2</sup></p>
                                             @endif
 
-                                            @if($property->building_dimension)
+                                            @if($property->building_dimension['length'] && $property->building_dimension['width'])
                                                 <p><strong>{{ trans('forms.fields.property.building_dimension') }}:</strong> {{ $property->buildingDimensionWithUnit }}</p>
                                             @endif
                                         </div>
@@ -142,6 +128,20 @@
                                             @if(!empty($property->certificate))
                                             <p><strong>{{ trans('forms.fields.property.certificate') }}:</strong> {{ trans('property.certificate.'.$property->certificate) }}</p>
                                             @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#" class="faqs-question">{{ trans('property.view.address') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
+                                <div class="faqs-answer clearfix">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p><strong>{{ trans('forms.fields.province') }}:</strong> {{ $province }}</p>
+                                            <p><strong>{{ trans('forms.fields.city') }}:</strong> {{ $city }}</p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p><strong>{{ trans('forms.fields.area') }}:</strong> {{ $subdistrict }}</p>
                                         </div>
                                     </div>
                                 </div>

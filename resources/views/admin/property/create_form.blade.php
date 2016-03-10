@@ -170,7 +170,7 @@
         <h4 class="sub-header">Description</h4>
 
         <div class="form-group">
-            {!! Form::label('description', 'Listing Description *', ['class' => 'control-label col-md-3']) !!}
+            {!! Form::label('description', 'Listing Description', ['class' => 'control-label col-md-3']) !!}
             <div class="col-md-9">
                 {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 5, 'id' => 'description']) !!}
             </div>

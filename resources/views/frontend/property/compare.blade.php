@@ -127,13 +127,13 @@
                                                 <td><strong>{{ trans('forms.fields.property.building_size') }}:</strong>&nbsp;{!! !empty($property->building_size+0)?$property->building_size.' m<sup>2</sup>':'-' !!}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>{{ trans('forms.fields.property.building_dimension') }}:</strong>&nbsp;{!! $property->building_dimension?$property->buildingDimensionWithUnit:'-' !!}</td>
+                                                <td><strong>{{ trans('forms.fields.property.building_dimension') }}:</strong>&nbsp;{!! ($property->building_dimension['length'] && $property->building_dimension['width'])?$property->buildingDimensionWithUnit:'-' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{{ trans('forms.fields.property.land_size') }}:</strong>&nbsp;{!! !empty($property->land_size+0)?$property->land_size.' m<sup>2</sup>':'-' !!}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>{{ trans('forms.fields.property.land_dimension') }}:</strong>&nbsp;{!! $property->land_dimension?$property->landDimensionWithUnit:'-' !!}</td>
+                                                <td><strong>{{ trans('forms.fields.property.land_dimension') }}:</strong>&nbsp;{!! ($property->land_dimension['width'] && $property->land_dimension['length'])?$property->landDimensionWithUnit:'-' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{{ trans('forms.fields.property.floors') }}:</strong>&nbsp;{{ !empty(ceil($property->floors))?$property->floors:'' }}</td>

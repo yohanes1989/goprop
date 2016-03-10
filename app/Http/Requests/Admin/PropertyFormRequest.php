@@ -90,7 +90,7 @@ class PropertyFormRequest extends Request
         $rules['floor'] = 'numeric';
         $rules['certificate'] = 'in:'.$certificateAllowedValues;
         $rules['virtual_tour_url'] = 'url';
-        $rules['description'] = 'required|min:10|max:300';
+        //$rules['description'] = 'required|min:10|max:300';
 
         $rules['latitude'] = 'required_if:point_map,1';
         $rules['longitude'] = 'required_if:point_map,1';

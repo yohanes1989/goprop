@@ -1,5 +1,5 @@
 <div class="calling-us-widget">
-    <h4 class="entry-title">{{ trans('contact.call_us_text', ['phone' => '0815 1917 2767']) }}</h4>
+    <h4 class="entry-title">{{ trans('contact.call_us_text', ['phone' => '+62 878 8733 2268']) }}</h4>
     <div class="entry-content">
         {!! Form::open(['method' => 'POST', 'route' => 'contact.request_call', 'class' => 'ajax-form']) !!}
             <div class="form-group">
