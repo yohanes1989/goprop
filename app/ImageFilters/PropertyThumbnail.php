@@ -9,6 +9,6 @@ class PropertyThumbnail implements FilterInterface
 {
     public function applyFilter(Image $image)
     {
-        return $image->fit(640, 480);
+        return $image->widen(640)->crop(640, 420);
     }
 }

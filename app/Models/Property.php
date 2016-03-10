@@ -305,11 +305,11 @@ class Property extends Model
         $prefix = $this->id.'_'.time();
         $fileName = $prefix.'.'.$photo->getClientOriginalExtension();
         $duplicateCount = 0;
-        while(Storage::disk('local')->exists($uploadPath.'/'.$fileName)){
+        while(Storage::disk('local')->exists($uploadPath.'/original/'.$fileName)){
             $duplicateCount += 1;
             $fileName = $prefix.($duplicateCount+1).'.'.$photo->getClientOriginalExtension();
         }
-        Storage::disk('local')->put($uploadPath.'/'.$fileName, File::get($photo));
+        Storage::disk('local')->put($uploadPath.'/original/'.$fileName, File::get($photo));
 
         $propertyAttachment->fill([
             'title' => filter_var($photo->getClientOriginalName(), FILTER_SANITIZE_STRING),

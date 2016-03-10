@@ -29,11 +29,14 @@ class PropertyAttachment extends Model
             $folder .= self::$floorplanUploadPath.'/';
         }
 
-        $img = Image::make($folder.$this->filename)->widen(4096, function ($constraint) {
+        $img = Image::make($folder.'original/'.$this->filename)->widen(4096, function ($constraint) {
             $constraint->upsize();
         });
+        $img->save($folder.'original/'.$this->filename);
+
+        $img = Image::make($folder.'original/'.$this->filename)->widen(800);
         $img->insert(asset('assets/frontend/images/watermark.png'), 'center');
-        $img->save($folder.$this->filename);
+        $img->save($folder.$this->filename, 60);
 
         return $img;
     }
@@ -47,6 +50,10 @@ class PropertyAttachment extends Model
                 $folder = $model::$photosUploadPath;
             }elseif($model->type == 'floorplan'){
                 $folder = $model::$floorplanUploadPath;
+            }
+
+            if(Storage::disk('local')->exists($folder.'/original/'.$model->filename)){
+                Storage::disk('local')->delete($folder.'/original/'.$model->filename);
             }
 
             if(Storage::disk('local')->exists($folder.'/'.$model->filename)){
