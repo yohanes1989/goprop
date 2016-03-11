@@ -252,7 +252,7 @@ var app = {
               $(this).removeClass("opened");
               $(this).children('.faqs-arrow').children('i').removeClass('fa-angle-up');
               $(this).children('.faqs-arrow').children('i').addClass('fa-angle-down');
-              $(this).next(".faqs-answer").slideUp("fast");
+              $(this).next(".awer").slideUp("fast");
               return false;
           } else {
               $("a.faqs-question").removeClass("opened");

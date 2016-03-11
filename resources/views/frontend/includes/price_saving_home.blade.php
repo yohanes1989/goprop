@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label>{{ trans('property.price_saving_widget.estimated_property_price') }}</label>
                             <input type="text" id="inputPropertyPrice" value="" data-slider-min="100000000" data-slider-max="5000000000"
-                                   data-slider-step="500000" data-slider-value="2500000000" />
+                                   data-slider-step="5000000" data-slider-value="2500000000" />
                         </div>
                         <div class="form-group">
                             <small>{{ trans('property.price_saving_widget.adjust_price') }}</small>

@@ -146,8 +146,8 @@
                                 </div>
                             </li>
                             <li>
-                                <a href="#" class="faqs-question">{{ trans('property.view.address') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
-                                <div class="faqs-answer clearfix">
+                                <a href="#" class="faqs-question opened">{{ trans('property.view.address') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
+                                <div class="faqs-answer clearfix" style="display: block;">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p><strong>{{ trans('forms.fields.province') }}:</strong> {{ $province }}</p>
@@ -161,8 +161,8 @@
                             </li>
                             @if($property->floorplans->count() > 0)
                             <li>
-                                <a href="#" class="faqs-question">{{ trans('property.view.floorplans') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
-                                <div class="faqs-answer clearfix gallery-group">
+                                <a href="#" class="faqs-question opened">{{ trans('property.view.floorplans') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
+                                <div class="faqs-answer clearfix gallery-group" style="display: block;">
                                     <div class="row row-eq-height">
                                     @foreach($property->floorplans as $idx=>$floorplan)
                                         <?php $idx += 1; ?>
@@ -184,8 +184,8 @@
 
                             @if(!empty($property->virtual_tour_url))
                             <li>
-                                <a href="#" class="faqs-question">{{ trans('property.view.virtual_tour') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
-                                <div class="faqs-answer clearfix">
+                                <a href="#" class="faqs-question opened">{{ trans('property.view.virtual_tour') }} <span class="faqs-arrow"><i class="fa fa-angle-down"></i></span></a>
+                                <div class="faqs-answer clearfix" style="display: block;">
                                     <div class="row">
                                         <p><a href="{{ $property->virtual_tour_url }}" target="_blank">{{ $property->virtual_tour_url }}</a></p>
                                     </div>
