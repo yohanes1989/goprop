@@ -30,12 +30,12 @@ class PaymentEventListener
      */
     public function handle(Event $event)
     {
+        $payment = Payment::findOrFail($event->transactionDetail['transaction_id']);
+
         if($event instanceof \GoProp\Events\PaymentCompletedEvent){
             switch($event->transactionDetail['method']){
                 case MyShortCart::getMachineName():
                     if ($event->transactionDetail['status'] == 'success') {
-                        $payment = Payment::findOrFail($event->transactionDetail['transaction_id']);
-
                         if (isset($event->transactionDetail['payment_channel'])) {
 
                         }else{
