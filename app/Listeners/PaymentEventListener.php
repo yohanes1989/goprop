@@ -40,9 +40,9 @@ class PaymentEventListener
                         if (isset($event->transactionDetail['payment_channel'])) {
 
                         }else{
-                            $payment->order->update(
+                            $payment->order->update([
                                 'status' => Order::STATUS_PENDING
-                            );
+                            ]);
 
                             $payment->update([
                                 'status' => Payment::STATUS_PAID,
