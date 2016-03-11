@@ -4,6 +4,7 @@ namespace GoProp\Listeners;
 
 use Carbon\Carbon;
 use GoProp\Events\Event;
+use GoProp\Models\Order;
 use GoProp\Models\Payment;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,6 +40,10 @@ class PaymentEventListener
                         if (isset($event->transactionDetail['payment_channel'])) {
 
                         }else{
+                            $payment->order->update(
+                                'status' => Order::STATUS_PENDING
+                            );
+
                             $payment->update([
                                 'status' => Payment::STATUS_PAID,
                                 'amount' => $event->transactionDetail['amount'],
