@@ -114,7 +114,8 @@ return [
         'photo_rotate_successful' => 'Photo is successfully rotated.',
         'unpublished' => 'Property is successfully unpublished.',
         'published' => 'Property is successfully published.',
-        'publish_failed' => 'Property can\'t be published due to unauthorized action.'
+        'publish_failed' => 'Property can\'t be published due to unauthorized action.',
+        'unauthorized_access' => 'You are not authorized to access this page.'
     ],
     'steps' => [
         'main_details' => 'Main Details',

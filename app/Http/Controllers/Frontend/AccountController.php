@@ -65,6 +65,10 @@ class AccountController extends Controller
     {
         $property = Property::find($property_id);
 
+        if($property->status == Property::STATUS_DRAFT){
+            return redirect()->back()->withErrors([trans('property.messages.unauthorized_access')]);
+        }
+
         $user = Auth::user();
         $qb = $user->likedProperties();
         AddressHelper::addAddressQueryScope($qb->getQuery());

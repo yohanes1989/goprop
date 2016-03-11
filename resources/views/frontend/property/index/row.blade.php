@@ -59,7 +59,10 @@
 
             <div class="user-info">
             <ul class="list-unstyled">
+                @if(!in_array($property->status, [\GoProp\Models\Property::STATUS_DRAFT]))
                 <li><a data-toggle="tooltip" title="{{ trans('property.buttons.talk_to_agent') }}" href="{{ route('frontend.account.inbox', ['property_id' => $property->id, 'new' => 1]) }}"><img src="{{ asset('assets/frontend/images/property-agent.png') }}"></a></li>
+                @endif
+
                 @if($property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
                     <li>
                         <a data-toggle="tooltip"  title="{{ trans('property.buttons.schedule_viewing') }}" href="{{ route('frontend.property.schedule_viewing', ['id' => $property->id]) }}" class="ajax_popup fancybox.ajax">
@@ -67,14 +70,17 @@
                         </a>
                     </li>
                 @endif
-                <li><a data-toggle="tooltip" title="{{ trans('property.buttons.edit_property') }}" href="{{ route('frontend.property.edit', ['id' => $property->id]) }}"><img src="{{ asset('assets/frontend/images/property-edit.png') }}"></a></li>
 
-                @if(in_array($property->status, [\GoProp\Models\Property::STATUS_ACTIVE]))
-                <li><a data-toggle="tooltip" data-confirm="{{ trans('property.view.unpublish_confirm') }}" title="{{ trans('property.buttons.disable') }}" href="{{ route('frontend.property.set_unpublish', ['id' => $property->id]) }}"><img src="{{ asset('assets/frontend/images/property-delete.png') }}"></a></li>
-                @endif
+                @if($property->user_id == \Illuminate\Support\Facades\Auth::user()->id)
+                    <li><a data-toggle="tooltip" title="{{ trans('property.buttons.edit_property') }}" href="{{ route('frontend.property.edit', ['id' => $property->id]) }}"><img src="{{ asset('assets/frontend/images/property-edit.png') }}"></a></li>
 
-                @if(in_array($property->status, [\GoProp\Models\Property::STATUS_INACTIVE]))
-                    <li><a data-toggle="tooltip" title="{{ trans('property.buttons.enable') }}" href="{{ route('frontend.property.set_unpublish', ['id' => $property->id]) }}"><img src="{{ asset('assets/frontend/images/property-publish.png') }}"></a></li>
+                    @if(in_array($property->status, [\GoProp\Models\Property::STATUS_ACTIVE]))
+                    <li><a data-toggle="tooltip" data-confirm="{{ trans('property.view.unpublish_confirm') }}" title="{{ trans('property.buttons.disable') }}" href="{{ route('frontend.property.set_unpublish', ['id' => $property->id]) }}"><img src="{{ asset('assets/frontend/images/property-delete.png') }}"></a></li>
+                    @endif
+
+                    @if(in_array($property->status, [\GoProp\Models\Property::STATUS_INACTIVE]))
+                        <li><a data-toggle="tooltip" title="{{ trans('property.buttons.enable') }}" href="{{ route('frontend.property.set_unpublish', ['id' => $property->id]) }}"><img src="{{ asset('assets/frontend/images/property-publish.png') }}"></a></li>
+                    @endif
                 @endif
             </ul>
             </div>
