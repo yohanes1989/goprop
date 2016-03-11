@@ -15,7 +15,7 @@ var app = {
           autoplay:true,
           autoplayTimeout:3000,
           smartSpeed: 500,
-          items: 3,
+          items: 4,
           loop: false
       });
 

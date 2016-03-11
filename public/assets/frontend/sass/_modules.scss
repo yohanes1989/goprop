@@ -520,10 +520,12 @@ $font-primary: 'Lato', sans-serif;
 				display: block;
 				text-align: center;
 				cursor: pointer;
+                padding: 0 1em;
 
 				img {
 					display: inline-block;
-					width: auto;
+					max-width: 100%;
+                    height: auto;
 				}
 			}
 		}
