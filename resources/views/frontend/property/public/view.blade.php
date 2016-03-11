@@ -7,6 +7,8 @@
     <meta property="og:title" content="{{ $property->property_name }}" />
     <meta property="og:description" content="{{ $property->getMetaDescription() }}" />
     <meta property="og:image" content="{{ url('images/original/'.$property->getPhotoThumbnail()) }}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 @stop
 
 @section('content')
