@@ -43,6 +43,11 @@ $font-primary: 'Lato', sans-serif;
 		background-color: $color-black;					
 	}
 	.brand {
+        img{
+          width: 190px;
+          height: auto;
+        }
+
 		a {
 			display: inline-block;
 			margin: 36px 0 20px;
