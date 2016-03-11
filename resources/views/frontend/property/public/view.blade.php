@@ -1,5 +1,14 @@
 @extends('frontend.master.layout')
 
+@section('open_graph')
+    @parent
+
+    <meta property="og:url" content="{{ route('frontend.property.view', ['for' => $property->getViewFor(), 'id' => $property->id]) }}" />
+    <meta property="og:title" content="{{ $property->property_name }}" />
+    <meta property="og:description" content="{{ $property->getMetaDescription() }}" />
+    <meta property="og:image" content="{{ url('images/property_gallery/'.$property->getPhotoThumbnail()) }}" />
+@stop
+
 @section('content')
 <section class="property-search-columns">
     <div class="mid-content">

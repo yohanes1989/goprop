@@ -127,7 +127,7 @@ var app = {
 
       //Alert
       $('[data-confirm]', context).on('click', function(e){
-          return confirm($(e.target).data('confirm'));
+          return confirm($(this).data('confirm'));
       });
 
       // Javascript for Address options

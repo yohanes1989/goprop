@@ -11,6 +11,7 @@ class Property extends Model
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
     const STATUS_BLOCKED = 'blocked';
+    const STATUS_REVIEW = 'review';
     const STATUS_DRAFT = 'draft';
 
     const RENT_PRICE_TYPE_MONTHLY = 'monthly';
@@ -223,12 +224,17 @@ class Property extends Model
     }
 
     //Methods
-    public function getPackageAddons()
+    public function isOwner($user)
     {
-        $package = $this->packages?$this->packages->first():NULL;
+        return $this->user?($user->id == $this->user->id):FALSE;
+    }
 
-        if($package){
-            return explode('|', $package->pivot->addons);
+    public function getPackageAddons($package)
+    {
+        foreach($this->packages as $propertyPackage){
+            if($propertyPackage->id == $package->id){
+                return explode('|', $propertyPackage->pivot->addons);
+            }
         }
 
         return [];
@@ -241,6 +247,30 @@ class Property extends Model
         }
 
         return 'property-default.jpg';
+    }
+
+    public function getMetaDescription()
+    {
+        $content = '';
+
+        if(!empty($this->land_size+0)){
+            $content .= trans('forms.fields.property.land_size').':'.$this->land_size.' m<sup>2</sup>';
+            $content .= "\n";
+        }
+
+        if(!empty($this->building_size+0)){
+            $content .= trans('forms.fields.property.building_size').':'.$this->building_size.' m<sup>2</sup>';
+            $content .= "\n";
+        }
+
+        if($this->isResidential()){
+            $content .= $this->rooms.trans_choice('property.index.bedrooms', $this->rooms);
+            $content .= "\n";
+
+            $content .= $this->bathrooms.trans_choice('property.index.bathrooms', $this->bathrooms);
+        }
+
+        return $content;
     }
 
     public function isLikedBy($user)
@@ -356,6 +386,7 @@ class Property extends Model
             self::STATUS_ACTIVE => trans('property.status.'.self::STATUS_ACTIVE),
             self::STATUS_INACTIVE => trans('property.status.'.self::STATUS_INACTIVE),
             self::STATUS_BLOCKED => trans('property.status.'.self::STATUS_BLOCKED),
+            self::STATUS_REVIEW => trans('property.status.'.self::STATUS_REVIEW),
             self::STATUS_DRAFT => trans('property.status.'.self::STATUS_DRAFT),
         ];
 

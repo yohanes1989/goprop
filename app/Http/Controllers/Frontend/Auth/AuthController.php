@@ -26,6 +26,7 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'getLogout']);
 
         $this->redirectTo = route('frontend.account.dashboard');
+        $this->loginPath = route('frontend.account.login');
     }
 
     public function getRegister()

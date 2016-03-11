@@ -22,6 +22,39 @@ class PropertyAttachment extends Model
     //Methods
     public function resize()
     {
+        $folder = $this->getFolder();
+
+        $img = Image::make($folder.'original/'.$this->filename)->widen(4096, function ($constraint) {
+            $constraint->upsize();
+        });
+        $img->save($folder.'original/'.$this->filename);
+
+        $this->createWatermarkedImage();
+
+        return $img;
+    }
+
+    public function rotate($dir='right')
+    {
+        $folder = $this->getFolder();
+
+        $img = Image::make($folder.'original/'.$this->filename);
+
+        if($dir == 'right'){
+            $img->rotate(-90);
+        }else{
+            $img->rotate(90);
+        }
+
+        $img->save($folder.'original/'.$this->filename);
+
+        $this->createWatermarkedImage();
+
+        return $img;
+    }
+
+    public function getFolder()
+    {
         $folder = config('filesystems.disks.local.root').'/';
         if($this->type == 'photo'){
             $folder .= self::$photosUploadPath.'/';
@@ -29,16 +62,17 @@ class PropertyAttachment extends Model
             $folder .= self::$floorplanUploadPath.'/';
         }
 
-        $img = Image::make($folder.'original/'.$this->filename)->widen(4096, function ($constraint) {
-            $constraint->upsize();
-        });
-        $img->save($folder.'original/'.$this->filename);
+        return $folder;
+    }
 
-        $img = Image::make($folder.'original/'.$this->filename)->widen(800);
+    protected function createWatermarkedImage()
+    {
+        $folder = $this->getFolder();
+
+        $img = Image::make($folder.'original/'.$this->filename)->widen(1200);
         $img->insert(asset('assets/frontend/images/watermark.png'), 'center');
-        $img->save($folder.$this->filename, 60);
 
-        return $img;
+        return $img->save($folder.$this->filename, 60);
     }
 
     //Statics

@@ -97,14 +97,23 @@ class PropertyFormRequest extends Request
 
         $allowedPackages = implode(',', Package::lists('id')->toArray());
 
-        $rules['package'] = 'required|in:'.$allowedPackages;
-
-        if($this->has('package')){
-            $package = Package::findOrFail($this->input('package'));
+        $rules['sell_package'] = 'required_if:for_sell,1|in:'.$allowedPackages;
+        if($this->has('sell_package')){
+            $package = Package::findOrFail($this->input('sell_package'));
             $allowedFeatures = implode(',', $package->features->lists('id')->toArray());
 
-            foreach($this->input('features', []) as $featureIdx => $feature){
-                $rules['features.'.$featureIdx] = 'in:'.$allowedFeatures;
+            foreach($this->input('features.sell', []) as $featureIdx => $feature){
+                $rules['features.sell.'.$featureIdx] = 'in:'.$allowedFeatures;
+            }
+        }
+
+        $rules['rent_package'] = 'required_if:for_rent,1|in:'.$allowedPackages;
+        if($this->has('rent_package')){
+            $package = Package::findOrFail($this->input('rent_package'));
+            $allowedFeatures = implode(',', $package->features->lists('id')->toArray());
+
+            foreach($this->input('features.rent', []) as $featureIdx => $feature){
+                $rules['features.rent.'.$featureIdx] = 'in:'.$allowedFeatures;
             }
         }
 

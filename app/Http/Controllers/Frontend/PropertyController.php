@@ -38,7 +38,7 @@ class PropertyController extends Controller
             'getPropertyMap', 'postPropertyMap',
             'getPropertyPhotos', 'postPropertyPhotos',
             'getPropertyFloorplans', 'postPropertyFloorplans',
-            'postPropertyPhotosUpload', 'postPropertyPhotosDelete', 'postPropertyPhotosReorder']]);
+            'postPropertyPhotosUpload', 'postPropertyPhotosDelete', 'getPropertyPhotosRotate', 'postPropertyPhotosReorder']]);
         $this->middleware('property_cart_order', ['only' => ['getPropertyOrderReview', 'postPropertyOrderReview']]);
     }
 
@@ -495,11 +495,7 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
-        $allowedAttachments = $property->attachments()->lists('id')->all();
-
-        if(!in_array($attachment_id, $allowedAttachments)){
-            return redirect()->route('frontend.property.photos', ['id' => $id])->with('messages', [trans('forms.property.messages.attachment_invalid_property')]);
-        }
+        $this->attachmentBelongsToProperty($attachment_id, $property);
 
         $propertyAttachment = PropertyAttachment::findOrFail($attachment_id);
         $propertyAttachment->delete();
@@ -508,6 +504,23 @@ class PropertyController extends Controller
             return redirect()->route('frontend.property.photos', ['id' => $property->id])->with('messages', [trans('property.messages.photo_delete_successful')]);
         }elseif($propertyAttachment->type == 'floorplan'){
             return redirect()->route('frontend.property.floorplans', ['id' => $property->id])->with('messages', [trans('property.messages.floorplan_delete_successful')]);
+        }
+    }
+
+    public function getPropertyPhotosRotate(Request $request, $dir='right', $id, $attachment_id)
+    {
+        $property = Property::findOrFail($id);
+
+        $this->attachmentBelongsToProperty($attachment_id, $property);
+
+        $propertyAttachment = PropertyAttachment::findOrFail($attachment_id);
+
+        $propertyAttachment->rotate($dir);
+
+        if($propertyAttachment->type == 'photo'){
+            return redirect()->route('frontend.property.photos', ['id' => $property->id])->with('messages', [trans('property.messages.photo_rotate_successful')]);
+        }elseif($propertyAttachment->type == 'floorplan'){
+            return redirect()->route('frontend.property.floorplans', ['id' => $property->id])->with('messages', [trans('property.messages.photo_rotate_successful')]);
         }
     }
 
@@ -539,7 +552,15 @@ class PropertyController extends Controller
     public function getPropertyPackages($id)
     {
         $property = Property::findOrFail($id);
-        $packageCategories = PackageCategory::all();
+
+        $packageCategories = [];
+
+        if($property->for_sell){
+            $packageCategories[] = PackageCategory::where('slug', 'sell')->firstOrFail();
+        }
+        if($property->for_rent){
+            $packageCategories[] = PackageCategory::where('slug', 'rent')->firstOrFail();
+        }
 
         $selectedAddons = [];
 
@@ -563,7 +584,9 @@ class PropertyController extends Controller
         }
 
         if($order){
-            $selectedAddons[$order->package->id] = with(new Collection($order->getAddons()))->lists('id')->all();
+            foreach($property->packages as $package){
+                $selectedAddons[$package->id] = explode('|', $package->pivot->addons);
+            }
         }
 
         return view('frontend.property.property_packages', [
@@ -577,11 +600,9 @@ class PropertyController extends Controller
     {
         $user = Auth::user();
         $property = Property::findOrFail($id);
-        $package = Package::findOrFail($request->input('action'));
-
-        $features = $request->input('features.'.$package->id, []);
 
         $propertyCartOrder = $property->getCartOrder();
+
         if(empty($propertyCartOrder)){
             $order = new Order([
                 'status' => Order::STATUS_CART
@@ -593,31 +614,56 @@ class PropertyController extends Controller
             $order = $propertyCartOrder;
         }
 
-        if($package->isExclusive){
-            $exclusiveCategory = 'level_'.$package->category->slug;
-        }else{
-            $exclusiveCategory = FALSE;
-        }
-
         //Clear Order Item first
         $order->items()->delete();
+        $property->packages()->detach();
 
-        foreach($features as $idx=>$feature){
-            $featureObj = $package->features->find($feature);
+        $orderTempAddons = [];
 
-            $orderItem = new OrderItem([
-                'item' => $featureObj->id,
-                'item_type' => 'feature',
-                'quantity' => 1,
-                'price' => $featureObj->pivot->price,
-                'net_price' => $featureObj->pivot->price,
-                'sort_order' => $idx + 1
+        foreach($request->input('action', []) as $idx=>$action){
+            $package = Package::findOrFail($action);
+
+            $features = $request->input('features.'.$package->id, []);
+            $addons = [];
+
+            if($package->isExclusive){
+                $exclusiveCategory = 'level_'.$package->category->slug;
+            }else{
+                $exclusiveCategory = FALSE;
+            }
+
+            foreach($features as $idy=>$feature){
+                $featureObj = $package->features->find($feature);
+                $addons[] = $featureObj->id;
+
+                if(!in_array($featureObj->id, $orderTempAddons)){
+                    $orderTempAddons[] = $featureObj->id;
+
+                    $orderItem = new OrderItem([
+                        'item' => $featureObj->id,
+                        'item_type' => 'feature',
+                        'quantity' => 1,
+                        'price' => $featureObj->pivot->price,
+                        'net_price' => $featureObj->pivot->price,
+                        'sort_order' => $idy + 1
+                    ]);
+
+                    $order->items()->save($orderItem);
+                }
+            }
+
+            //Associate first package to Order temporarily
+            if($idx==0){
+                $order->package()->associate($package);
+            }
+
+            $property->packages()->attach([
+                $package->id => [
+                    'addons' => implode('|', $addons)
+                ]
             ]);
-
-            $order->items()->save($orderItem);
         }
 
-        $order->package()->associate($package);
         $order->calculate();
         $order->save();
 
@@ -643,27 +689,6 @@ class PropertyController extends Controller
         if($request->input('action') == 'purchase'){
             $order = $property->getCartOrder();
             $payment_method = Payment::getPaymentMethods($request->input('payment_method'), TRUE);
-
-            if($order->package->category->slug == 'sell'){
-                $attachedPackages = $property->packages()->leftJoin('package_categories AS PC', 'PC.ID', '=', 'package_category_id')->where('PC.slug', 'sell')->get();
-            }elseif($order->package->category->slug == 'rent'){
-                $attachedPackages = $property->packages()->leftJoin('package_categories AS PC', 'PC.ID', '=', 'package_category_id')->where('PC.slug', 'rent')->get();
-            }
-
-            if($attachedPackages->count() > 0){
-                $property->packages()->detach($attachedPackages->lists('id')->all());
-            }
-
-            $addons = [];
-            foreach($order->items as $item){
-                $addons[] = $item->getItem()->id;
-            }
-
-            $property->packages()->attach([
-                $order->package->id => [
-                    'addons' => implode('|', $addons)
-                ]
-            ]);
 
             $payment = new Payment([
                 'total_amount' => $order->total_amount,
@@ -771,7 +796,7 @@ class PropertyController extends Controller
 
         if($property->status == Property::STATUS_DRAFT){
             $property->update([
-                'status' => Property::STATUS_INACTIVE,
+                'status' => Property::STATUS_REVIEW,
                 'checkout_at' => Carbon::now()
             ]);
         }
@@ -785,14 +810,34 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function getDraftEdit($id)
+    public function getUnpublish($id)
     {
         $property = Property::findOrFail($id);
-        $property->update([
-            'status' => Property::STATUS_DRAFT
-        ]);
 
-        return redirect()->route('frontend.property.edit', ['id' => $id]);
+        //If not DRAFT, set to inactive
+        if($property->status != Property::STATUS_DRAFT){
+            $property->update([
+                'status' => Property::STATUS_INACTIVE
+            ]);
+        }
+
+        return redirect()->back()->with('messages', [trans('property.messages.unpublished')]);
+    }
+
+    public function getPublish($id)
+    {
+        $property = Property::findOrFail($id);
+
+        //If not DRAFT, set to inactive
+        if($property->status == Property::STATUS_INACTIVE){
+            $property->update([
+                'status' => Property::STATUS_ACTIVE
+            ]);
+        }else{
+            return redirect()->back()->with('messages', [trans('property.messages.publish_failed')]);
+        }
+
+        return redirect()->back()->with('messages', [trans('property.messages.published')]);
     }
 
     public function getLikeProperty($id)
@@ -983,5 +1028,15 @@ class PropertyController extends Controller
         return view('frontend.property.compare', [
             'properties' => $properties
         ]);
+    }
+
+    //Others
+    public function attachmentBelongsToProperty($attachment_id, $property)
+    {
+        $allowedAttachments = $property->attachments()->lists('id')->all();
+
+        if(!in_array($attachment_id, $allowedAttachments)){
+            return redirect()->route('frontend.property.photos', ['id' => $id])->with('messages', [trans('forms.property.messages.attachment_invalid_property')]);
+        }
     }
 }

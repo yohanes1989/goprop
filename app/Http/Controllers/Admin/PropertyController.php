@@ -41,35 +41,43 @@ class PropertyController extends Controller
     {
         $property = new Property();
 
-        $defaultLatitude = old('latitude', config('app.default_latitude'));
-        $defaultLongitude = old('longitude', config('app.default_longitude'));
+        $defaultLatitude = empty($property->latitude)?config('app.default_latitude'):$property->latitude;
+        $defaultLongitude = empty($property->longitude)?config('app.default_longitude'):$property->longitude;
 
-        $property->latitude = $defaultLatitude;
-        $property->longitude = $defaultLongitude;
-
-        if(empty($defaultLatitude) || empty($defaultLongitude)){
+        if(empty($property->latitude) || empty($property->longitude)){
             $mapDefault = true;
         }else{
             $mapDefault = false;
         }
 
-        $package = (Session::hasOldInput('package') && !empty(Session::getOldInput('package')))?Package::findOrFail(Session::getOldInput('package')):null;
+        $sellPackage = old('sell_package')?Package::findOrFail(old('sell_package')):null;
+        $rentPackage = old('rent_package')?Package::findOrFail(old('rent_package')):null;
 
-        $packageOptions = [];
-        foreach(PackageCategory::all() as $packageCategory){
-            foreach($packageCategory->packages as $packageItem){
-                $packageOptions[$packageCategory->name][$packageItem->id] = $packageItem->name;
+        $packages = $property->packages()->with('category')->get();
+        foreach($packages as $package){
+            if($package->category->slug == 'rent' && !$rentPackage){
+                $rentPackage = $package;
+            }elseif($package->category->slug == 'sell' && !$sellPackage){
+                $sellPackage = $package;
             }
         }
 
-        return view('admin.property.create', [
+        $viewData = [
             'property' => $property,
             'defaultLatitude' => $defaultLatitude,
             'defaultLongitude' => $defaultLongitude,
             'mapDefault' => $mapDefault,
-            'packageOptions' => $packageOptions,
-            'package' => $package
-        ]);
+            'sellPackage' => $sellPackage,
+            'rentPackage' => $rentPackage
+        ];
+
+        foreach(PackageCategory::all() as $packageCategory){
+            ${$packageCategory->slug.'PackageOptions'} = $packageCategory->packages->pluck('name', 'id')->all();
+
+            $viewData[$packageCategory->slug.'PackageOptions'] = ${$packageCategory->slug.'PackageOptions'};
+        }
+
+        return view('admin.property.create', $viewData);
     }
 
     public function store(PropertyFormRequest $request)
@@ -98,10 +106,18 @@ class PropertyController extends Controller
         $property->processViewingSchedule($request->all());
         $property->save();
 
-        if($request->has('package')){
-            $property->packages()->sync([
-                $request->input('package') => [
-                    'addons' => $request->has('features')?implode('|', $request->input('features')):null
+        if($request->has('sell_package')){
+            $property->packages()->attach([
+                $request->input('sell_package') => [
+                    'addons' => implode('|', $request->input('features.sell', []))
+                ]
+            ]);
+        }
+
+        if($request->has('rent_package')){
+            $property->packages()->attach([
+                $request->input('rent_package') => [
+                    'addons' => implode('|', $request->input('features.rent', []))
                 ]
             ]);
         }
@@ -123,24 +139,35 @@ class PropertyController extends Controller
             $mapDefault = false;
         }
 
-        $package = $property->packages?$property->packages->first():(Session::hasOldInput('package')?Package::findOrFail(Session::getOldInput('package')):Package::whereSlug('basic')->first());
+        $sellPackage = old('sell_package')?Package::findOrFail(old('sell_package')):null;
+        $rentPackage = old('rent_package')?Package::findOrFail(old('rent_package')):null;
 
-        $packageOptions = [];
-        foreach(PackageCategory::all() as $packageCategory){
-            foreach($packageCategory->packages as $packageItem){
-                $packageOptions[$packageCategory->name][$packageItem->id] = $packageItem->name;
+        $packages = $property->packages()->with('category')->get();
+        foreach($packages as $package){
+            if($package->category->slug == 'rent' && !$rentPackage){
+                $rentPackage = $package;
+            }elseif($package->category->slug == 'sell' && !$sellPackage){
+                $sellPackage = $package;
             }
         }
 
-        return view('admin.property.edit', [
+        $viewData = [
             'owner' => $owner,
             'property' => $property,
             'defaultLatitude' => $defaultLatitude,
             'defaultLongitude' => $defaultLongitude,
             'mapDefault' => $mapDefault,
-            'packageOptions' => $packageOptions,
-            'package' => $package
-        ]);
+            'sellPackage' => $sellPackage,
+            'rentPackage' => $rentPackage
+        ];
+
+        foreach(PackageCategory::all() as $packageCategory){
+            ${$packageCategory->slug.'PackageOptions'} = $packageCategory->packages->pluck('name', 'id')->all();
+
+            $viewData[$packageCategory->slug.'PackageOptions'] = ${$packageCategory->slug.'PackageOptions'};
+        }
+
+        return view('admin.property.edit', $viewData);
     }
 
     public function update(PropertyFormRequest $request, $id)
@@ -164,10 +191,20 @@ class PropertyController extends Controller
         $property->processViewingSchedule($request->all());
         $property->save();
 
-        if($request->has('package')){
-            $property->packages()->sync([
-                $request->input('package') => [
-                    'addons' => $request->has('features')?implode('|', $request->input('features')):null
+        //Clear all packages
+        $property->packages()->detach();
+        if($request->has('sell_package')){
+            $property->packages()->attach([
+                $request->input('sell_package') => [
+                    'addons' => implode('|', $request->input('features.sell', []))
+                ]
+            ]);
+        }
+
+        if($request->has('rent_package')){
+            $property->packages()->attach([
+                $request->input('rent_package') => [
+                    'addons' => implode('|', $request->input('features.rent', []))
                 ]
             ]);
         }
@@ -225,11 +262,7 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
-        $allowedAttachments = $property->attachments()->lists('id')->all();
-
-        if(!in_array($attachment_id, $allowedAttachments)){
-            return redirect()->route('frontend.property.photos', ['id' => $id])->with('messages', [trans('forms.property.messages.attachment_invalid_property')]);
-        }
+        $this->attachmentBelongsToProperty($attachment_id, $property);
 
         $propertyAttachment = PropertyAttachment::findOrFail($attachment_id);
         $propertyAttachment->delete();
@@ -285,6 +318,23 @@ class PropertyController extends Controller
         return response()->json($ordered);
     }
 
+    public function photosRotate(Request $request, $id, $dir='right', $attachment_id)
+    {
+        $property = Property::findOrFail($id);
+
+        $this->attachmentBelongsToProperty($attachment_id, $property);
+
+        $propertyAttachment = PropertyAttachment::findOrFail($attachment_id);
+
+        $propertyAttachment->rotate($dir);
+
+        if($propertyAttachment->type == 'photo'){
+            return redirect()->back()->with('messages', ['Photo has been rotated']);
+        }elseif($propertyAttachment->type == 'floorplan'){
+            return redirect()->back()->with('messages', ['Floorplan has been rotated']);
+        }
+    }
+
     public function assignToAgent(Request $request, $id)
     {
         $property = Property::findOrFail($id);
@@ -337,5 +387,14 @@ class PropertyController extends Controller
             'property' => $property,
             'agentOptions' => $agentOptions
         ]);
+    }
+
+    public function attachmentBelongsToProperty($attachment_id, $property)
+    {
+        $allowedAttachments = $property->attachments()->lists('id')->all();
+
+        if(!in_array($attachment_id, $allowedAttachments)){
+            return redirect()->back()->with('messages', [trans('forms.property.messages.attachment_invalid_property')]);
+        }
     }
 }

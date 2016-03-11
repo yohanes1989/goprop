@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-6">
     @if(Auth::user()->is('administrator'))
     <div class="form-group">
         {!! Form::label('owner', 'Owner *', array('class'=>'col-md-4 control-label')) !!}
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-6">
     <div class="form-group">
         {!! Form::label('property_name', 'Listing Title *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
@@ -108,59 +108,6 @@
         {!! Form::label('short_note', 'Short Note', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::textarea('short_note', null, ['class' => 'form-control', 'rows' => 3, 'id' => 'short_note']) !!}
-        </div>
-    </div>
-</div>
-
-<div class="col-md-4">
-    <div class="form-group">
-       {!! Form::label('for_sell', 'Is this property for Sell? *', ['class' => 'col-md-4 control-label']) !!}
-        <div class="col-md-8">
-            {!! Form::select('for_sell', ['' => trans('forms.please_select')] + \GoProp\Facades\ProjectHelper::getYesNoOptions(), null, ['class' => 'form-control', 'id' => 'for_sell']) !!}
-        </div>
-    </div>
-
-    <div data-field-dependent="for_sell|1" class="form-group">
-        {!! Form::label('sell_viewing_schedule', 'Viewing Schedule *', ['class' => 'col-md-4 control-label']) !!}
-        <div class="col-md-8">
-            @foreach(\GoProp\Models\Property::getViewingScheduleOptionLabel() as $viewingOptionIdx => $viewingOption)
-                <label class="checkbox-inline">
-                    {!! Form::checkbox('sell_viewing_schedule[]', $viewingOptionIdx, (strpos($property->sell_viewing_schedule, $viewingOptionIdx) !== false)) !!} {{ $viewingOption }}
-                </label>
-            @endforeach
-        </div>
-    </div>
-
-    <div data-field-dependent="for_sell|1" class="form-group">
-        {!! Form::label('sell_price', 'Sell Price *', ['class' => 'col-md-4 control-label']) !!}
-        <div class="col-md-8">
-        {!! Form::text('sell_price', null, ['class' => 'form-control', 'id' => 'sell_price']) !!}
-        </div>
-    </div>
-
-    <div class="form-group">
-        {!! Form::label('for_rent', 'Is this property for Rent? *', ['class' => 'col-md-4 control-label']) !!}
-        <div class="col-md-8">
-            {!! Form::select('for_rent', ['' => trans('forms.please_select')] + \GoProp\Facades\ProjectHelper::getYesNoOptions(), null, ['class' => 'form-control', 'id' => 'for_rent']) !!}
-        </div>
-    </div>
-
-    <div data-field-dependent="for_rent|1" class="form-group">
-        {!! Form::label('rent_viewing_schedule', 'Viewing Schedule *', ['class' => 'col-md-4 control-label']) !!}
-        <div class="col-md-8">
-            @foreach(\GoProp\Models\Property::getViewingScheduleOptionLabel() as $viewingOptionIdx => $viewingOption)
-                <label class="checkbox-inline">
-                    {!! Form::checkbox('rent_viewing_schedule[]', $viewingOptionIdx, (strpos($property->rent_viewing_schedule, $viewingOptionIdx) !== false)) !!} {{ $viewingOption }}
-                </label>
-            @endforeach
-        </div>
-    </div>
-
-    <div data-field-dependent="for_rent|1" class="form-group">
-        {!! Form::label('rent_price', 'Rent Price *', ['class' => 'col-md-4 control-label']) !!}
-        <div class="col-md-8">
-        {!! Form::text('rent_price', null, ['class' => 'form-control', 'id' => 'rent_price']) !!}
-        {!! Form::select('rent_price_type', \GoProp\Models\Property::getRentTypeLabel(), null, ['class' => 'form-control', 'id' => 'rent_price_type']) !!}
         </div>
     </div>
 </div>
@@ -283,23 +230,89 @@
     </div>
 </div>
 
-<div class="row">
-    <h4 class="sub-header">Package</h4>
+<h4 class="sub-header">Packages</h4>
+
+<div class="row gutter30">
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('for_sell', 'Is this property for Sell? *', ['class' => 'col-md-4 control-label']) !!}
+            <div class="col-md-8">
+                {!! Form::select('for_sell', ['' => trans('forms.please_select')] + \GoProp\Facades\ProjectHelper::getYesNoOptions(), null, ['class' => 'form-control', 'id' => 'for_sell']) !!}
+            </div>
+        </div>
+
+        <div data-field-dependent="for_sell|1" class="form-group">
+            {!! Form::label('sell_viewing_schedule', 'Viewing Schedule *', ['class' => 'col-md-4 control-label']) !!}
+            <div class="col-md-8">
+                @foreach(\GoProp\Models\Property::getViewingScheduleOptionLabel() as $viewingOptionIdx => $viewingOption)
+                    <label class="checkbox-inline">
+                        {!! Form::checkbox('sell_viewing_schedule[]', $viewingOptionIdx, (strpos($property->sell_viewing_schedule, $viewingOptionIdx) !== false)) !!} {{ $viewingOption }}
+                    </label>
+                @endforeach
+            </div>
+        </div>
+
+        <div data-field-dependent="for_sell|1" class="form-group">
+            {!! Form::label('sell_price', 'Sell Price *', ['class' => 'col-md-4 control-label']) !!}
+            <div class="col-md-8">
+                {!! Form::text('sell_price', null, ['class' => 'form-control', 'id' => 'sell_price']) !!}
+            </div>
+        </div>
+
+        <div data-field-dependent="for_sell|1" class="form-group">
+            {!! Form::select('sell_package', ['' => 'Select Package'] + $sellPackageOptions, $sellPackage?[$sellPackage->id]:null, ['class' => 'form-control package-select']) !!}
+
+            <div class="addons-wrapper">
+                @if($sellPackage)
+                    @foreach($sellPackage->paidFeatures as $idx=>$feature)
+                        <div class="checkbox">
+                            <label>{!! Form::checkbox('features[sell]['.$idx.']', $feature->id, old('features.sell.'.$idx, in_array($feature->id, $property->getPackageAddons($sellPackage)))) !!} {{ $feature->name }}</label>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+    </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::select('package', ['' => 'Select Package'] + $packageOptions, [($package?$package->id:null)], ['class' => 'form-control', 'id' => 'package-select']) !!}
+            {!! Form::label('for_rent', 'Is this property for Rent? *', ['class' => 'col-md-4 control-label']) !!}
+            <div class="col-md-8">
+                {!! Form::select('for_rent', ['' => trans('forms.please_select')] + \GoProp\Facades\ProjectHelper::getYesNoOptions(), null, ['class' => 'form-control', 'id' => 'for_rent']) !!}
+            </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div id="addons-wrapper">
-            @if($property->packages->count() > 0)
-                @foreach($property->packages->first()->paidFeatures as $feature)
-                    <div class="checkbox">
-                        <label>{!! Form::checkbox('features[]', $feature->id, in_array($feature->id, $property->getPackageAddons())) !!} {{ $feature->name }}</label>
-                    </div>
+
+        <div data-field-dependent="for_rent|1" class="form-group">
+            {!! Form::label('rent_viewing_schedule', 'Viewing Schedule *', ['class' => 'col-md-4 control-label']) !!}
+            <div class="col-md-8">
+                @foreach(\GoProp\Models\Property::getViewingScheduleOptionLabel() as $viewingOptionIdx => $viewingOption)
+                    <label class="checkbox-inline">
+                        {!! Form::checkbox('rent_viewing_schedule[]', $viewingOptionIdx, (strpos($property->rent_viewing_schedule, $viewingOptionIdx) !== false)) !!} {{ $viewingOption }}
+                    </label>
                 @endforeach
-            @endif
+            </div>
+        </div>
+
+        <div data-field-dependent="for_rent|1" class="form-group">
+            {!! Form::label('rent_price', 'Rent Price *', ['class' => 'col-md-4 control-label']) !!}
+            <div class="col-md-8">
+                {!! Form::text('rent_price', null, ['class' => 'form-control', 'id' => 'rent_price']) !!}
+                {!! Form::select('rent_price_type', \GoProp\Models\Property::getRentTypeLabel(), null, ['class' => 'form-control', 'id' => 'rent_price_type']) !!}
+            </div>
+        </div>
+
+        <div data-field-dependent="for_rent|1" class="form-group">
+            {!! Form::select('rent_package', ['' => 'Select Package'] + $rentPackageOptions, $rentPackage?[$rentPackage->id]:null, ['class' => 'form-control package-select']) !!}
+
+            <div class="addons-wrapper">
+                @if($rentPackage)
+                    @foreach($rentPackage->paidFeatures as $idx=>$feature)
+                        <div class="checkbox">
+                            <label>{!! Form::checkbox('features[rent]['.$idx.']', $feature->id, old('features.rent.'.$idx, in_array($feature->id, $property->getPackageAddons($rentPackage)))) !!} {{ $feature->name }}</label>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
         </div>
     </div>
 </div>
@@ -321,21 +334,25 @@
 
     <script>
         $(document).ready(function() {
-            $('#package-select').on('change', function(){
+            $('.package-select').on('change', function(){
+                var $select = $(this);
                 $.ajax(
-                        global_vars.admin_path+'/packages/'+$(this).val()+'/features/0',
+                        global_vars.admin_path+'/packages/'+$select.val()+'/features/0',
                         {
                             method: 'get',
                             success: function(data){
-                                $('#addons-wrapper').empty();
+                                $select.parent().find('.addons-wrapper').empty();
+
+                                var count = 0;
 
                                 for(var i in data){
                                     var $checkbox = [
                                         '<div class="checkbox"><label>',
-                                        '<input type="checkbox" value="'+i+'" name="features[]" /> '+data[i].name,
+                                        '<input type="checkbox" value="'+i+'" name="features['+data[i].category+']['+count+']" /> '+data[i].name,
                                         '</label></div>'
                                     ];
-                                    $('#addons-wrapper').append($checkbox.join(''));
+                                    $select.parent().find('.addons-wrapper').append($checkbox.join(''));
+                                    count += 1;
                                 }
                             }
                         }

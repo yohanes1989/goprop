@@ -31,7 +31,7 @@ class PropertyEditable
         $property = Property::findOrFail($propertyId);
 
         if($property->status != Property::STATUS_DRAFT){
-            return redirect()->route('frontend.property.create');
+            //return redirect()->route('frontend.property.create');
         }
 
         return $next($request);

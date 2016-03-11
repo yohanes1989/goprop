@@ -12,6 +12,7 @@ return [
         'inactive' => 'Inactive',
         'blocked' => 'Blocked',
         'draft' => 'Draft',
+        'review' => 'Admin Review',
     ],
     'rent_price_type' => [
         'yearly' => 'Yearly',
@@ -80,6 +81,10 @@ return [
         'page_title' => 'Select a package for <span>:title<span>',
         'body_copy' => 'Please select from one of the packages below. Please note that your property will need to be verified before it goes live so this may take a few days. We will contact you soon about the verification process.',
     ],
+    'packages_edit' => [
+        'page_title' => 'Current package for <span>:title<span>',
+        'body_copy' => 'To update your Property package, please contact us.',
+    ],
     'property_type' => [
         'house' => 'House',
         'apartment' => 'Apartment',
@@ -106,6 +111,10 @@ return [
         'attachment_invalid_property' => 'The photo is invalid.',
         'photo_delete_successful' => 'Photo is successfully removed.',
         'floorplan_delete_successful' => 'Floorplan is successfully removed.',
+        'photo_rotate_successful' => 'Photo is successfully rotated.',
+        'unpublished' => 'Property is successfully unpublished.',
+        'published' => 'Property is successfully published.',
+        'publish_failed' => 'Property can\'t be published due to unauthorized action.'
     ],
     'steps' => [
         'main_details' => 'Main Details',
@@ -123,7 +132,11 @@ return [
         'category' => [
             'sell' => 'Sell My Property',
             'rent' => 'Rent My Property',
+            'sell_label' => 'Sell',
+            'rent_label' => 'Rent',
         ],
+        'sell_package' => 'Choose Sell Package',
+        'rent_package' => 'Choose Rent Package',
         'feature' => [
             'value' => 'Property value',
             'projection-fee' => 'Projection fee after completion',
@@ -180,8 +193,8 @@ return [
         'advanced_search' => 'Advanced Search (:count)',
         'submit_property' => 'Submit Property',
         'search_property' => 'Search Property',
-        'bedrooms' => '[0,1] Bed|[2,Inf] Beds',
-        'bathrooms' => '[0,1] Bath|[2,Inf] Baths',
+        'bedrooms' => '[0,1] Bedroom|[2,Inf] Bedrooms',
+        'bathrooms' => '[0,1] Bathroom|[2,Inf] Bathrooms',
         'type_keyword' => 'Type Keyword',
         'sort_by' => [
             'price_asc' => 'Lowest Price',
@@ -198,7 +211,7 @@ return [
         'preview_edit' => 'Edit Property',
         'preview_text' => 'Preview Mode',
         'virtual_tour' => 'Virtual Tour',
-        'unpublish_confirm' => 'This action will unpublish the property. Are you sure you want to edit?'
+        'unpublish_confirm' => 'This action will unpublish the property. Are you sure you want to do this?'
     ],
     'like' => [
         'like_message' => 'You just liked :property_name.',
@@ -278,6 +291,9 @@ return [
         'schedule_viewing' => 'Schedule Viewing',
         'edit_property' => 'Edit Property',
         'like' => 'Like',
-        'unlike' => 'Unlike'
+        'unlike' => 'Unlike',
+        'disable' => 'Disable property',
+        'preview' => 'Preview property',
+        'enable' => 'Enable property',
     ]
 ];

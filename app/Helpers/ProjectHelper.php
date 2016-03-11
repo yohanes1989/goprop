@@ -5,7 +5,6 @@ namespace GoProp\Helpers;
 use GoProp\Models\Property;
 use Illuminate\Support\Facades\Cookie;
 use GoProp\Models\Order;
-use GoProp\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class ProjectHelper
@@ -57,14 +56,22 @@ class ProjectHelper
             ->orderBy(DB::raw('RAND()'))
             ->take(5);
 
-        $sellExclusiveProperties = $qb->select(DB::raw('properties.*, "sell" AS exclusive_type'))
+        $sellQb = clone $qb;
+        $sellExclusiveProperties = $sellQb->select(DB::raw('properties.*, "sell" AS exclusive_type'))
             ->whereHas('packages', function($query){
-                $query->where('id', 2);
+                $query->whereHas('category', function($query2){
+                    $query2->where('slug', 'sell');
+                });
+                $query->where('slug', 'exclusive');
             })->get()->all();
 
+        $rentQb = $qb;
         $rentExclusiveProperties = $qb->select(DB::raw('properties.*, "rent" AS exclusive_type'))
             ->whereHas('packages', function($query){
-                $query->where('id', 5);
+                $query->whereHas('category', function($query2){
+                    $query2->where('slug', 'rent');
+                });
+                $query->where('slug', 'exclusive');
             })->get()->all();
 
         $properties = array_merge($rentExclusiveProperties, $sellExclusiveProperties);

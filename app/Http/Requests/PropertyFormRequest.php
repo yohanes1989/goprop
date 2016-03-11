@@ -46,13 +46,16 @@ class PropertyFormRequest extends Request
         }elseif(in_array($routeName, ['frontend.property.packages.process'])){
             $allowedPackages = implode(',', Package::lists('id')->toArray());
 
-            $rules['action'] = 'required|in:'.$allowedPackages;
+            $rules['action'] = 'required';
+            foreach($this->input('action', []) as $idx=>$action){
+                $rules['action.'.$idx] = 'in:'.$allowedPackages;
 
-            $package = Package::findOrFail($this->input('action'));
-            $allowedFeatures = implode(',', $package->features->lists('id')->toArray());
+                $package = Package::findOrFail($action);
+                $allowedFeatures = implode(',', $package->features->lists('id')->toArray());
 
-            foreach($this->input('features.'.$package->id, []) as $featureIdx => $feature){
-                $rules['features.'.$package->id.'.'.$featureIdx] = 'in:'.$allowedFeatures;
+                foreach($this->input('features.'.$package->id, []) as $featureIdx => $feature){
+                    $rules['features.'.$package->id.'.'.$featureIdx] = 'in:'.$allowedFeatures;
+                }
             }
         }elseif(in_array($routeName, ['frontend.property.review.process'])){
             $allowedPaymentMethods = array_keys(Payment::getPaymentMethods(null, TRUE));

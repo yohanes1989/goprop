@@ -47,8 +47,8 @@
                     <div class="custom-tabs">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs text-right" role="tablist">
-                            <li role="presentation" class="active"><a href="#sell-property" aria-controls="sell-property" role="tab" data-toggle="tab">Sell My Property</a></li>
-                            <li role="presentation"><a href="#rent-property" aria-controls="rent-property" role="tab" data-toggle="tab">Rent My Property</a></li>
+                            <li role="presentation" class="active"><a href="#sell-property" aria-controls="sell-property" role="tab" data-toggle="tab">{{ trans('property.package.category.sell') }}</a></li>
+                            <li role="presentation"><a href="#rent-property" aria-controls="rent-property" role="tab" data-toggle="tab">{{ trans('property.package.category.rent') }}</a></li>
                         </ul>
 
                         <!-- Tab panes -->

@@ -4,12 +4,7 @@
     <div class="top-navigation">
         <div class="row">
             <div class="col-sm-10">
-                <div class="menu-preview">
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('frontend.property.view', ['for' => $model->getViewFor(), 'id' => $model->id, 'preview' => TRUE, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}"><img src="{{ asset('assets/frontend/images/property-preview.png') }}" alt="" /> {{ trans('property.create.preview_property') }}</a></li>
-                        <li><a href="#"><img src="{{ asset('assets/frontend/images/property-disable.png') }}" alt="" /> Disable property</a></li>
-                    </ul>
-                </div>
+                @include('frontend.property.includes.edit_top_bar')
                 <div class="form-wizard-menu">
                     <ul class="list-unstyled">
                         <li class="active"><a href="{{ route('frontend.property.edit', ['id' => $model->id]) }}">
@@ -142,7 +137,7 @@
 
                     $.each(data.files, function (index, file) {
                         if (file.type.match('image.*')) {
-                            data.context = $('<div class="col-xs-3"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style=""></div></div></div>');
+                            data.context = $('<div class="col-xs-6 col-md-3"><div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style=""></div></div></div>');
                             data.context.appendTo('#upload-tasks');
                         }else{
                             //data.files.splice(index,1);

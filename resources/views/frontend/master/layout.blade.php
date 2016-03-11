@@ -14,6 +14,11 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        @section('open_graph')
+            <meta property="og:site_name" content="{{ config('app.default_title') }}" />
+            <meta property="og:locale" content="{{ LaravelLocalization::getCurrentLocale() }}" />
+        @show
+
         @section('styles')
         <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
 

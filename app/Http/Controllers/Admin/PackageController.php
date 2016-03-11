@@ -17,13 +17,15 @@ class PackageController extends Controller
                 if($all){
                     $return[$feature->id] = [
                         'name' => $feature->name,
-                        'price' => 0
+                        'price' => 0,
+                        'category' => $package->category->slug
                     ];
                 }
             }else{
                 $return[$feature->id] = [
                     'name' => $feature->name,
-                    'price' => $feature->pivot->price
+                    'price' => $feature->pivot->price,
+                    'category' => $package->category->slug
                 ];
             }
         }

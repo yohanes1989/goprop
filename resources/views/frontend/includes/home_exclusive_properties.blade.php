@@ -13,9 +13,8 @@
                         @foreach($exclusiveProperties as $exclusiveProperty)
                             <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->exclusive_type }}">
                                 <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id, 'for' => $exclusiveProperty->exclusive_type]) }}">
-                                @if($exclusiveProperty->photos->count() > 0)
-                                    <img src="{{ url('images/exclusive_thumbnail/'.$exclusiveProperty->photos->first()->filename) }}" />
-                                @endif
+                                    <img src="{{ url('images/exclusive_thumbnail/'.$exclusiveProperty->getPhotoThumbnail()) }}" />
+
                                     <div class="exclusiveProperty-overlay">
                                         <div class="exclusiveProperty-detail">
                                             <h3 class="entry-title">{{ $exclusiveProperty->property_name }}</h3>

@@ -107,24 +107,58 @@
                         @include('frontend.property.compare_bar')
 
                         <div class="propertyItem-list">
-                            <div class="row">
-                                @foreach($paginator as $property)
-                                <div class="propertyItem-child col-sm-6">
+                            @foreach($paginator as $property)
+                            <div class="propertyItem-child row">
+                                <div class="col-sm-5">
                                     <div class="img-wrap">
                                         <a href="{{ route('frontend.property.view', ['for' => $for, 'id' => $property->id]) }}">
                                             <img src="{{ url('images/property_thumbnail/'.$property->getPhotoThumbnail()) }}" class="img-responsive">
                                         </a>
                                     </div>
+                                </div>
+                                <div class="col-sm-7">
                                     <header class="entry-header clearfix">
-                                        <div class="pull-left">
-                                            <h4 class="entry-title"><a href="{{ route('frontend.property.view', ['for' => $for, 'id' => $property->id]) }}">{{ $property->property_name }}</a></h4>
-                                            <div class="entry-desc">
-                                                {{ trans('property.for.'.$for.'_property_title', ['name' => trans('property.property_type.'.$property->type->slug)]) }}<br/>
-                                                {{ $property->subdistrict_name, $property->city_name }}
-                                            </div>
-                                        </div>
+                                        <h4 class="entry-price">
+                                            @include('frontend.property.includes.price')
+                                        </h4>
 
-                                        <div class="pull-right user-info">
+                                        <h4 class="entry-title"><a href="{{ route('frontend.property.view', ['for' => $for, 'id' => $property->id]) }}">{{ $property->property_name }}</a></h4>
+
+                                        <div class="entry-desc">
+                                            {{ trans('property.for.'.$for.'_property_title', ['name' => trans('property.property_type.'.$property->type->slug)]) }}
+                                        </div>
+                                    </header>
+
+                                    <div class="entry-content">
+                                        @if(!empty($property->land_size+0))
+                                        <div class="featureChild">
+                                            <span class="name">{{ trans('forms.fields.property.land_size') }}:</span>
+                                            <span class="desc">{!! $property->land_size.' m<sup>2</sup>' !!}</span>
+                                        </div>
+                                        @endif
+
+                                        @if(!empty($property->building_size+0))
+                                            <div class="featureChild">
+                                                <span class="name">{{ trans('forms.fields.property.building_size') }}:</span>
+                                                <span class="desc">{!! $property->building_size.' m<sup>2</sup>' !!}</span>
+                                            </div>
+                                        @endif
+
+                                        @if($property->isResidential())
+                                                <div class="clearfix"></div>
+
+                                            <div class="featureChild">
+                                                <span class="name">{{ $property->rooms }}</span>
+                                                <span class="desc">{{ trans_choice('property.index.bedrooms', $property->rooms) }}</span>
+                                            </div>
+                                            <div class="featureChild">
+                                                <span class="name">{{ $property->bathrooms }}</span>
+                                                <span class="desc">{{ trans_choice('property.index.bathrooms', $property->bathrooms) }}</span>
+                                            </div>
+                                        @endif
+                                            <div class="clearfix"></div>
+
+                                        <div class="user-info">
                                             <ul class="list-unstyled">
                                                 @include('frontend.property.includes.shareTo')
                                                 @if(\Illuminate\Support\Facades\Auth::check() && $property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
@@ -132,36 +166,17 @@
                                                 @endif
                                                 <li>
                                                     @if(!\GoProp\Facades\PropertyCompareHelper::isAddedToComparison($property))
-                                                    <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_compare') }}" href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
+                                                        <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_compare') }}" href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
                                                     @else
-                                                    <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_uncompare') }}" href="{{ route('frontend.property.compare.remove', ['id' => $property->id]) }}"><i class="fa fa-minus"></i></a>
+                                                        <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_uncompare') }}" href="{{ route('frontend.property.compare.remove', ['id' => $property->id]) }}"><i class="fa fa-minus"></i></a>
                                                     @endif
                                                 </li>
                                             </ul>
                                         </div>
-                                    </header>
-                                    <div class="entry-content clearfix">
-                                        <div class="pull-left">
-                                            @if($property->isResidential())
-                                            <div class="featureChild">
-                                                <div class="name">{{ $property->rooms }}</div>
-                                                <div class="desc">{{ trans_choice('property.index.bedrooms', $property->rooms) }}</div>
-                                            </div>
-                                            <div class="featureChild">
-                                                <div class="name">{{ $property->bathrooms }}</div>
-                                                <div class="desc">{{ trans_choice('property.index.bathrooms', $property->bathrooms) }}</div>
-                                            </div>
-                                            @endif
-                                        </div>
-                                        <div class="pull-right">
-                                            <h3 class="entry-price">
-                                                @include('frontend.property.includes.price')
-                                            </h3>
-                                        </div>
                                     </div>
                                 </div>
-                                @endforeach
                             </div>
+                            @endforeach
                         </div>
 
                         @include('frontend.master.pagination')

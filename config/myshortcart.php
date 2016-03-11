@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'prefix' => 'GOPROP',
+    'prefix' => 'DEVGOPROP',
     'shared_key' => 'o5k7p4R3W9u4',
     'store_id' => '00163896',
     'table_name' => 'myshortcart_transactions',

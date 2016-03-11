@@ -177,6 +177,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                     'uses' => 'PropertyController@photosDeleteAll'
                 ]);
 
+                Route::get('/{id}/media/rotate/{dir}/{attachment_id}', [
+                    'as' => 'admin.property.media.rotate',
+                    'uses' => 'PropertyController@photosRotate'
+                ]);
+
                 Route::post('/{id}/delete', [
                     'as' => 'admin.property.delete',
                     'uses' => 'PropertyController@delete'
@@ -610,8 +615,8 @@ Route::group([
         ]);
 
         Route::get('/unpublish-edit/{id}', [
-            'as' => 'frontend.property.set_draft_edit',
-            'uses' => 'PropertyController@getDraftEdit'
+            'as' => 'frontend.property.set_unpublish',
+            'uses' => 'PropertyController@getUnpublish'
         ]);
 
         Route::get('/create', [
@@ -682,6 +687,11 @@ Route::group([
         Route::post('/photos/delete/{id}/{attachment_id}', [
             'as' => 'frontend.property.photos.delete',
             'uses' => 'PropertyController@postPropertyPhotosDelete'
+        ]);
+
+        Route::get('/photos/rotate/{dir}/{id}/{attachment_id}', [
+            'as' => 'frontend.property.photos.rotate',
+            'uses' => 'PropertyController@getPropertyPhotosRotate'
         ]);
 
         Route::post('/photos/reorder/{id}/{type}', [

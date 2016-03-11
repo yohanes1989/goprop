@@ -778,16 +778,13 @@ $font-primary: 'Lato', sans-serif;
 		.entry-header {
 			padding: 0 15px;
 			.entry-title {
-				margin-top: 20px;
 				margin-bottom: 5px;
 			}
-			.entry-desc {
-				font-size: 12px;
-				color: $color-grey;
-			}			
 		}		
 		.entry-content {
+            margin-top: 1em;
 			padding: 0 15px;
+
 			@media (min-width: 768px) {
 				min-height: 55px;
 			}
@@ -795,22 +792,23 @@ $font-primary: 'Lato', sans-serif;
 				float: left;
 				text-align: center;
 				margin-right: 15px;
+                font-size: 1.1em;
+                line-height: 1.5em;
+
 				.name {
-					font-size: 28px;
 					color: $color-grey;
 				}
 				.desc {
-					font-size: 11px;
 					color: $color-grey;
-					text-transform: uppercase;
 				}
 			}
-			.entry-price {
-				color: #c0994f;
-				margin-top: 5px;
-				font-weight: 400;
-			}
-		}		
+		}
+
+      .entry-price {
+        color: #c0994f;
+        margin-top: 5px;
+        font-weight: 400;
+      }
 	}
 }
 
@@ -1273,7 +1271,10 @@ $font-primary: 'Lato', sans-serif;
 								color: $color-red;
 							}
 							img {
-								display: inline-block; margin-right: 5px;
+								display: inline-block;
+                              margin-right: 5px;
+                              width: 40px;
+                              height: auto;
 							}
 						}
 					}
@@ -1281,7 +1282,7 @@ $font-primary: 'Lato', sans-serif;
 			}
 			.form-wizard-menu {		
 				position: relative;
-				z-index: 501;
+				z-index: 200;
 				ul {
 					overflow: hidden;
 					text-align: center;
@@ -1409,31 +1410,23 @@ $font-primary: 'Lato', sans-serif;
 				overflow: hidden;
 				margin-bottom: 20px;
 				.account-property-detail {
-					ul {
-						margin: 0 0 20px;
-						text-align: right;
-						@media (max-width: 768px) {
-							margin: 10px 0 20px;
-						}
-						li {
-							display: inline-block;
-							margin-left: 10px;
+                  .entry-header, .entry-content{
+                    padding: 0;
+                  }
 
-							a {
-								display: block;
-								&:hover {
-									text-decoration: none;
-								}
-								img {
-									display: inline-block;
-									width: 25px;
-								}
-							}
-						}
-					}
-					.entry-price {
-						margin-top: 10px;
-					}
+                  .featureChild{
+                    font-size: 1em;
+
+                  }
+
+                  .user-info{
+                    li{
+                      img{
+                        width: 30px;
+                        height: auto;
+                      }
+                    }
+                  }
 				}
 			}
 		}
