@@ -222,6 +222,8 @@ return [
     'default_latitude' => '-6.229519',
     'default_longitude' => '106.805748',
 
+    'fb_app_id' => '1679682888953135',
+
     'contact_from_email' => env('FROM_EMAIL'),
     'contact_from_name' => env('FROM_NAME'),
     'contact_destination' => explode(',', env('CONTACT_EMAILS')),

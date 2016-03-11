@@ -251,26 +251,23 @@ class Property extends Model
 
     public function getMetaDescription()
     {
-        $content = '';
+        $content = [];
 
         if(!empty($this->land_size+0)){
-            $content .= trans('forms.fields.property.land_size').':'.$this->land_size.' m<sup>2</sup>';
-            $content .= "\n";
+            $content[] = trans('forms.fields.property.land_size').':'.$this->land_size.' m<sup>2</sup>';
         }
 
         if(!empty($this->building_size+0)){
-            $content .= trans('forms.fields.property.building_size').':'.$this->building_size.' m<sup>2</sup>';
-            $content .= "\n";
+            $content[] = trans('forms.fields.property.building_size').':'.$this->building_size.' m<sup>2</sup>';
         }
 
         if($this->isResidential()){
-            $content .= $this->rooms.trans_choice('property.index.bedrooms', $this->rooms);
-            $content .= "\n";
+            $content[] = $this->rooms.trans_choice('property.index.bedrooms', $this->rooms);
 
-            $content .= $this->bathrooms.trans_choice('property.index.bathrooms', $this->bathrooms);
+            $content[] = $this->bathrooms.trans_choice('property.index.bathrooms', $this->bathrooms);
         }
 
-        return $content;
+        return implode(' | ', $content);
     }
 
     public function isLikedBy($user)
