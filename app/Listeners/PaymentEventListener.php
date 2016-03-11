@@ -45,11 +45,15 @@ class PaymentEventListener
                                 'received_at' => Carbon::now()->toDateTimeString()
                             ]);
 
-                            Session::set('payment_redirect_to', route('frontend.property.success', ['id' => $payment->order->package->id]));
+                            Session::set('payment_redirect_to', route('frontend.property.success', ['id' => $payment->order->property->id]));
                         }
                     }
                     break;
             }
+        }elseif($event instanceof \GoProp\Events\PaymentCancelledEvent){
+            Session::set('payment_redirect_to', route('frontend.property.review', ['id' => $payment->order->property->id]));
+        }elseif($event instanceof \GoProp\Events\PaymentFailedEvent){
+            Session::set('payment_redirect_to', route('frontend.property.review', ['id' => $payment->order->property->id]));
         }
     }
 }
