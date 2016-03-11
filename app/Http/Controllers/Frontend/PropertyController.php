@@ -699,7 +699,6 @@ class PropertyController extends Controller
             $payment->order()->associate($order);
             $payment->save();
 
-            $order->status = Order::STATUS_PENDING;
             $order->generateOrderNumber();
             $order->save();
 
@@ -708,6 +707,9 @@ class PropertyController extends Controller
                     return redirect()->route('frontend.property.payment', ['id' => $property->id]);
                     break;
                 default:
+                    $order->status = Order::STATUS_PENDING;
+                    $order->save();
+
                     return redirect()->route('frontend.property.success', ['id' => $property->id]);
                     break;
             }
