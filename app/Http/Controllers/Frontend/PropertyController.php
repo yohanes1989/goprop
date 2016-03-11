@@ -761,8 +761,8 @@ class PropertyController extends Controller
                     'customer_mobile_phone' => $user->profile->mobile_phone_number,
                     'customer_address' => trim(str_replace(["\r","\n"],' ',$user->profile->address)),
                     'customer_postal_code' => trim($user->profile->postal_code),
-                    'customer_city' => trim(AddressHelper::getAddressLabel($user->profile->city, 'city')),
-                    'customer_state' => trim(AddressHelper::getAddressLabel($user->profile->province, 'province')),
+                    'customer_city' => $user->profile->city?trim(AddressHelper::getAddressLabel($user->profile->city, 'city')):'',
+                    'customer_state' => $user->profile->province?trim(AddressHelper::getAddressLabel($user->profile->province, 'province')):'',
                     'customer_country' => 360,
                     'customer_birthday' => '',
                 ];
