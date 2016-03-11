@@ -99,7 +99,7 @@
                                 <div class="col-sm-7"></div>
                                 <div class="col-sm-2 grid-setting">
                                     <!--<a href="" class="active"><i class="fa fa-bars"></i></a>-->
-                                    <a href="" class="active"><i class="fa fa-th"></i></a>
+                                    <!--<a href="" class="active"><i class="fa fa-th"></i></a>-->
                                 </div>
                             </div>
                         </div>

@@ -179,7 +179,7 @@ return [
         'confirm_message' => 'Do you want to submit this order?'
     ],
     'success' => [
-        'page_title' => 'Purchase package is done!',
+        'page_title' => 'Your property is successfully submitted!',
         'body_copy' => 'Thank you for trusting GoProp to be your partner. Don\'t worry, your property is in good hands. Please sit back and relax, we will contact you as soon as possible for verification process and further information. If you have any questions, please contact us at :phone or :email.'
     ],
     'index' => [
