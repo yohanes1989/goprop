@@ -254,11 +254,11 @@ class Property extends Model
         $content = [];
 
         if(!empty($this->land_size+0)){
-            $content[] = trans('forms.fields.property.land_size').':'.$this->land_size.' m%C2%B2';
+            $content[] = trans('forms.fields.property.land_size').':'.$this->land_size.' m2';
         }
 
         if(!empty($this->building_size+0)){
-            $content[] = trans('forms.fields.property.building_size').':'.$this->building_size.' m%C2%B2';
+            $content[] = trans('forms.fields.property.building_size').':'.$this->building_size.' m2';
         }
 
         if($this->isResidential()){
@@ -267,7 +267,10 @@ class Property extends Model
             $content[] = $this->bathrooms.trans_choice('property.index.bathrooms', $this->bathrooms);
         }
 
-        return implode("\n", $content);
+        $return = '';
+        $return .= implode(" | ", $content);
+
+        return $return;
     }
 
     public function isLikedBy($user)
