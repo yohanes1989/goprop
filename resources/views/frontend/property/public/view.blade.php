@@ -6,7 +6,7 @@
     <meta property="og:url" content="{{ route('frontend.property.view', ['for' => $property->getViewFor(), 'id' => $property->id]) }}" />
     <meta property="og:title" content="{{ $property->property_name }}" />
     <meta property="og:description" content="{{ $property->getMetaDescription() }}" />
-    <meta property="og:image" content="{{ url('images/property_gallery/'.$property->getPhotoThumbnail()) }}" />
+    <meta property="og:image" content="{{ url('images/original/'.$property->getPhotoThumbnail()) }}" />
 @stop
 
 @section('content')
