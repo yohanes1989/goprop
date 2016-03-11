@@ -3,6 +3,12 @@
 @section('content')
     <div class="user-content-begin">
         <div class="col-sm-10">
+            <div class="menu-preview">
+                <ul class="list-unstyled">
+                    <li><a href="{{ route('frontend.property.create') }}" class="btn btn-yellow">{{ trans('property.buttons.new_property') }}</a></li>
+                </ul>
+            </div>
+
             <!-- Custom Tabs -->
             <div class="custom-tabs">
                 <!-- Nav tabs -->

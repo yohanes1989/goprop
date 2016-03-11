@@ -289,6 +289,7 @@ return [
     'buttons' => [
         'talk_to_agent' => 'Talk to Our Agent',
         'schedule_viewing' => 'Schedule Viewing',
+        'new_property' => 'Upload New Property',
         'edit_property' => 'Edit Property',
         'like' => 'Like',
         'unlike' => 'Unlike',
