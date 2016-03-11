@@ -74,7 +74,7 @@
                                                 <td>
                                                     {{ trans('property.package.feature.'.$packageCategory->slug.'-fee') }}
                                                     <div class="note">
-                                                        * {{ trans('property.package.feature.'.$packageCategory->slug.'-fee-notes') }}
+                                                        {{ trans('property.package.feature.'.$packageCategory->slug.'-fee-notes') }}
                                                     </div>
                                                 </td>
                                                 @foreach($packageCategory->packages as $package)
@@ -133,7 +133,7 @@
                                                 <td><strong>{{ trans('property.package.feature.value') }}</strong></td>
                                                 @foreach($packageCategory->packages as $package)
                                                     <td>
-                                                        <input type="text"  data-package="{{ $package->id }}" value="3000000000" class="property-price form-control text-center">
+                                                        <input type="text"  data-package="{{ $package->id }}" value="" placeholder="{{ trans('forms.input_price') }}" class="property-price form-control text-center">
                                                     </td>
                                                 @endforeach
                                             </tr>
@@ -145,6 +145,7 @@
                                                     </td>
                                                 @endforeach
                                             </tr>
+                                            @if($packageCategory->slug != 'rent')
                                             <tr>
                                                 <td><strong>{{ trans('property.package.feature.you-can-save') }}**</strong></td>
                                                 @foreach($packageCategory->packages as $package)
@@ -153,6 +154,7 @@
                                                     </td>
                                                 @endforeach
                                             </tr>
+                                            @endif
                                             <tr>
                                                 <td></td>
                                                 @foreach($packageCategory->packages as $package)
@@ -172,12 +174,14 @@
                                                 </div>
                                             </div>
 
+                                            @if($packageCategory->slug != 'rent')
                                             <div class="row">
                                                 <div class="col-sm-7"></div>
                                                 <div class="payment col-sm-5">
                                                     <img src="{{ asset('assets/frontend/images/payment-logo.png') }}" class="img-responsive">
                                                 </div>
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="clearfix"></div>

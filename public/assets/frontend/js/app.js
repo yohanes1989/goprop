@@ -219,12 +219,22 @@ var app = {
               {
                   $(this).val(accounting.formatNumber($(this).val()));
                   var price = accounting.unformat($(this).val());
+
+                  if(price == 0){
+                      $(this).val(null);
+                  }
+
                   var calculatedCommission = app.calculateCommission(price, $(this).data('package'));
                   var projectedFee = accounting.unformat($('.up-front-total[data-package="'+$(this).data('package')+'"]').text()) + calculatedCommission;
                   var conventionalFee = price * 2.5/100;
 
                   $('.projection-fee[data-package="'+$(this).data('package')+'"]').text(accounting.formatNumber(projectedFee));
-                  $('.saving-amount[data-package="'+$(this).data('package')+'"]').text(accounting.formatNumber(conventionalFee - projectedFee));
+
+                  if(conventionalFee - projectedFee < 0){
+                      $('.saving-amount[data-package="'+$(this).data('package')+'"]').text(0);
+                  }else{
+                      $('.saving-amount[data-package="'+$(this).data('package')+'"]').text(accounting.formatNumber(conventionalFee - projectedFee));
+                  }
               }
           });
 

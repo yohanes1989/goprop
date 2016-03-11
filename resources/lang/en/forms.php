@@ -15,6 +15,7 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'delete_btn' => 'Delete',
+    'input_price' => 'Input your property price',
     'fields' => [
         'username' => 'Username',
         'email' => 'Email Address',
