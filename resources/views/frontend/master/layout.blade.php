@@ -17,7 +17,6 @@
         @section('open_graph')
             <meta property="fb:app_id" content="{{ config('app.fb_app_id') }}" />
             <meta property="og:site_name" content="{{ config('app.default_title') }}" />
-            <meta property="og:locale" content="{{ LaravelLocalization::getCurrentLocale() }}" />
         @show
 
         @section('styles')
