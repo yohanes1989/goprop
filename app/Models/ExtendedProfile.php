@@ -65,6 +65,7 @@ class ExtendedProfile extends Model
             'search_engine' => trans('extended_profile.referral_source.search_engine'),
             'facebook' => trans('extended_profile.referral_source.facebook'),
             'twitter' => trans('extended_profile.referral_source.twitter'),
+            'instagram' => trans('extended_profile.referral_source.instagram'),
             'tv' => trans('extended_profile.referral_source.tv'),
             'brochure' => trans('extended_profile.referral_source.brochure'),
             'news' => trans('extended_profile.referral_source.news'),

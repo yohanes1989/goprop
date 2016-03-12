@@ -24,6 +24,7 @@ return [
         'recommendation' => 'Recommendation',
         'facebook' => 'Facebook',
         'twitter' => 'Twitter',
+        'instagram' => 'Instagram',
         'tv' => 'TV',
         'brochure' => 'Brochure',
         'news' => 'News',

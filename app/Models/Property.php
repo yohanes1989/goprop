@@ -292,10 +292,14 @@ class Property extends Model
             }
         }
 
-        if($this->for_sell){
+        if($this->for_sell && $this->for_rent){
+            $for = 'both';
+        }elseif($this->for_sell){
             $for = 'sell';
-        }else{
+        }elseif($this->for_rent){
             $for = 'rent';
+        }else{
+            $for = 'neither';
         }
 
         return $for;

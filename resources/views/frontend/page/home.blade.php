@@ -33,7 +33,7 @@
         {!! $overviewSection->content !!}
     @endif
 
-    <section class="property-table-columns">
+    <section id="packages" class="property-table-columns">
         <div class="container">
             <div class="col-xs-12">
                 <header class="header-area text-center">

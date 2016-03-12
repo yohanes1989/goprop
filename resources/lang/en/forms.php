@@ -96,5 +96,6 @@ return [
         'all_cities' => 'All Cities',
         'all_areas' => 'All Areas',
         'min_rooms' => 'Min. Rooms',
+        'all' => 'All'
     ],
 ];

@@ -32,6 +32,8 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/fullcalendar/fullcalendar.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/flag-icon.min.css') }}">
         <link type="text/css" rel="stylesheet" href="{{ asset('assets/frontend/vendor/lightGallery/dist/css/lightgallery.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/ion.rangeSlider/css/ion.rangeSlider.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/vendor/ion.rangeSlider/css/ion.rangeSlider.goprop.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/style.css') }}">
         @show
     </head>
@@ -74,13 +76,13 @@
                     <div class="main-menu-wrapper">
                         <nav id="main-nav">
                             <ul>
-                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'get-started']) }}">Get Started</a></li>
-                                <li><a href="{{ route('frontend.property.create') }}">Upload Property</a></li>
-                                <li><a href="{{ route('frontend.property.search') }}" data-replace-href="{{ route('frontend.property.simple_search') }}" class="ajax_popup fancybox.ajax">Property Search</a></li>
+                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'get-started']) }}">{{ trans('menu.get_started') }}</a></li>
+                                <li><a href="{{ route('frontend.property.create') }}">{{ trans('menu.upload_property') }}</a></li>
+                                <li><a href="{{ route('frontend.property.search') }}" data-replace-href="{{ route('frontend.property.simple_search') }}" class="ajax_popup fancybox.ajax">{{ trans('menu.property_search') }}</a></li>
                                 <!--<li><a href="">How It Works</a></li>-->
-                                <li><a href="{{ route('frontend.page.resources') }}">Resources</a></li>
-                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'about-goprop']) }}">About</a></li>
-                                <li><a href="{{ route('frontend.page.contact') }}">Contact</a></li>
+                                <li><a href="{{ route('frontend.page.resources') }}">{{ trans('menu.resources') }}</a></li>
+                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'about-goprop']) }}">{{ trans('menu.about') }}</a></li>
+                                <li><a href="{{ route('frontend.page.contact') }}">{{ trans('menu.contact') }}</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -104,9 +106,9 @@
                     <div class="footer-child col-sm-3">
                         <div class="footer-content">
                             <ul class="list-unstyled">
-                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'get-started']) }}">Get Started</a></li>
-                                <li><a href="{{ route('frontend.property.create') }}">Upload Property</a></li>
-                                <li><a href="{{ route('frontend.property.search') }}">Property Search</a>
+                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'get-started']) }}">{{ trans('menu.get_started') }}</a></li>
+                                <li><a href="{{ route('frontend.property.create') }}">{{ trans('menu.upload_property') }}</a></li>
+                                <li><a href="{{ route('frontend.property.search') }}">{{ trans('menu.property_search') }}</a>
                                     <!--
                                     <ul class="list-unstyled">
                                         <li><a href="{{ route('frontend.property.search') }}">All Listing</a></li>
@@ -120,9 +122,9 @@
                     <div class="footer-child col-sm-3">
                         <div class="footer-content">
                             <ul class="list-unstyled">
-                                <li><a href="">Resources</a></li>
-                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'about-goprop']) }}">About</a></li>
-                                <li><a href="{{ route('frontend.page.contact') }}">Contact</a></li>
+                                <li><a href="{{ route('frontend.page.resources') }}">{{ trans('menu.resources') }}</a></li>
+                                <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'about-goprop']) }}">{{ trans('menu.about') }}</a></li>
+                                <li><a href="{{ route('frontend.page.contact') }}">{{ trans('menu.contact') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -178,6 +180,7 @@
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-hash.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-pager.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-thumbnail.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/frontend/vendor/ion.rangeSlider/js/ion.rangeSlider.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/js/app.js') }}"></script>
         @show
     </body>

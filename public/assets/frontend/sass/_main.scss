@@ -152,7 +152,7 @@ ol.faq-list {
 			&.socialShare-to {
 				position: relative;
 				&:hover > ul {
-					bottom: 90%;
+					top: 90%;
 					opacity: 1;
 					height: auto;
 					display: block;
@@ -160,7 +160,7 @@ ol.faq-list {
 				}
 				& > ul {
 					position: absolute;
-					bottom: 100%;
+					top: 100%;
 					background-color: $color-blue;
 					list-style: none;
 					margin: 0;
@@ -172,18 +172,19 @@ ol.faq-list {
 					overflow: hidden;
 					@include border-radius(4px);
 					@include transition(all .25s);
+                    z-index: 505;
 					&:before {
 						content: '';
 						position: absolute;
-						top: 100%;
+						bottom: 100%;
 						left: 0;
 						right: 0;
 						margin: auto;
 						width: 0;
 						height: 0;
 						border-style: solid;
-						border-width: 5px 5px 0 5px;
-						border-color: $color-blue transparent transparent transparent;
+						border-width: 0 5px 5px 5px;
+						border-color: transparent transparent $color-blue transparent;
 					}
 					li {
 						display: inline-block;

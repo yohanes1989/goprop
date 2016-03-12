@@ -6,6 +6,8 @@ return [
         'rent' => 'Rent',
         'sell_property_title' => ':name for Sell',
         'rent_property_title' => ':name for Rent',
+        'both_property_title' => ':name for Sell/Rent',
+        'neither_property_title' => ':name not for Sell/Rent',
     ],
     'status' => [
         'active' => 'Active',

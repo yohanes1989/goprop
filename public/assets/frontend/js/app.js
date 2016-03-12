@@ -69,12 +69,16 @@ var app = {
       });
 
       // Javascript for Price Range - Bootstrap Slider
-      $('#inputPriceRange', context).slider({
-          tooltip: 'hide'
-      });
-      $('#inputPriceRange', context).on('change', function(slideEvt){
-          $('#price-from', context).text(accounting.formatNumber(slideEvt.value.newValue[0]));
-          $('#price-to', context).text(accounting.formatNumber(slideEvt.value.newValue[1]));
+      $rangeSlider = $('#inputPriceRange', context);
+      $rangeSlider.ionRangeSlider({
+          type: 'double',
+          input_values_separator: ',',
+          hide_min_max: true,
+          hide_from_to: true,
+          onChange: function(data){
+              $('#price-from', context).text(accounting.formatNumber(data.from));
+              $('#price-to', context).text(accounting.formatNumber(data.to));
+          }
       });
       $('#price-from', context).text(accounting.formatNumber($('#price-from', context).text()));
       $('#price-to', context).text(accounting.formatNumber($('#price-to', context).text()));
@@ -120,6 +124,10 @@ var app = {
       });
 
       //Share popup
+      $('.socialShare-to > a', context).click(function(e){
+          e.preventDefault();
+      });
+
       $('.popup-share-link', context).click(function(e){
           e.preventDefault();
           window.open($(this).attr('href'), "_blank", "toolbar=no, scrollbars=no, resizable=no, top=200, left=200, width=640, height=300");
@@ -240,7 +248,7 @@ var app = {
 
           $('.property-price', obj).trigger('keyup');
 
-          $('.feature-price', obj).on('change', function(){
+          $('.feature-price', obj).on('click', function(){
               $upFrontFee = 0;
               $('.feature-price[data-package="'+$(this).data('package')+'"]:checked', obj).each(function(idy, objY){
                   $upFrontFee += parseFloat($(objY).data('price'));
@@ -262,16 +270,12 @@ var app = {
               $(this).removeClass("opened");
               $(this).children('.faqs-arrow').children('i').removeClass('fa-angle-up');
               $(this).children('.faqs-arrow').children('i').addClass('fa-angle-down');
-              $(this).next(".awer").slideUp("fast");
+              $(this).next(".faqs-answer").slideUp("fast");
               return false;
           } else {
-              $("a.faqs-question").removeClass("opened");
               $(this).addClass("opened");
-              $("a.faqs-question").children('.faqs-arrow').children('i').removeClass('fa-angle-up');
-              $("a.faqs-question").children('.faqs-arrow').children('i').addClass('fa-angle-down');
               $(this).children('.faqs-arrow').children('i').removeClass('fa-angle-down');
               $(this).children('.faqs-arrow').children('i').addClass('fa-angle-up');
-              $(".faqs-answer").slideUp("fast");
               $(this).next(".faqs-answer").slideDown("fast");
               return false;
           }
@@ -279,15 +283,24 @@ var app = {
 
       // Price Saving Calculator Widget
       if($('#price-saving-widget', context).length > 0){
+          /*
           $('#price-saving-widget #inputPropertyPrice', context).slider({
               tooltip: 'always',
               formatter: function(data){
                   return accounting.formatNumber(data);
               }
           });
+          */
+          $savingSlider = $('#price-saving-widget #inputPropertyPrice', context);
+          $savingSlider.ionRangeSlider({
+              hide_min_max: true,
+              onChange: function(data){
+                  $('#price-saving-widget .saved-value', context).text(accounting.formatNumber(app.calculateSaving(data.from)));
+              }
+          });
 
           $('#price-saving-widget #inputPropertyPrice', context).on('change', function(slideEvt){
-              $('#price-saving-widget .saved-value', context).text(accounting.formatNumber(app.calculateSaving(slideEvt.value.newValue)));
+              //$('#price-saving-widget .saved-value', context).text(accounting.formatNumber(app.calculateSaving(slideEvt.value.newValue)));
           });
           $('#price-saving-widget .saved-value', context).text(accounting.formatNumber(app.calculateSaving($('#price-saving-widget #inputPropertyPrice', context).val())));
 
@@ -370,7 +383,7 @@ var app = {
           });
       });
 
-      $('#propertyDetail-Slider .slides', context).height($(window).height()*0.6);
+      $('#propertyDetail-Slider .slides', context).height($(window).height()*0.55);
 
       $(window).load(function(){
           $('#propertyDetailThumb-Slider', context).flexslider({
@@ -495,7 +508,10 @@ var app = {
                       $clickedLike.parent().replaceWith($newLikeBtn);
                       app.init($newLikeBtn);
                   },
-                  dataType: 'html'
+                  dataType: 'html',
+                  error: function(xhr){
+                      alert(xhr.responseText);
+                  }
               }
           );
 

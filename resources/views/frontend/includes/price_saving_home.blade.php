@@ -35,11 +35,11 @@
         <div class="col-sm-4">
             <div class="widget-child">
                 <div id="price-saving-widget" class="calculate-price-widget estimated-property-sale">
-                    <div class="form-begin">
+                    <div class="form-begin" style="padding: 0 10px;">
                         <div class="form-group">
                             <label>{{ trans('property.price_saving_widget.estimated_property_price') }}</label>
-                            <input type="text" id="inputPropertyPrice" value="" data-slider-min="100000000" data-slider-max="5000000000"
-                                   data-slider-step="5000000" data-slider-value="2500000000" />
+                            <input type="text" id="inputPropertyPrice" value="" data-min="10000000" data-max="5000000000"
+                                   data-step="5000000" data-from="2500000000" />
                         </div>
                         <div class="form-group">
                             <small>{{ trans('property.price_saving_widget.adjust_price') }}</small>

@@ -34,7 +34,7 @@
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            {!! Form::select('search[for]', \GoProp\Models\Property::getForLabel(), [\Illuminate\Support\Facades\Request::input('search.for')], ['class' => 'form-control']) !!}
+                            {!! Form::select('search[for]', ['' => trans('forms.fields.all')] + \GoProp\Models\Property::getForLabel(), [\Illuminate\Support\Facades\Request::input('search.for')], ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-sm-3">
                             {!! Form::text('search[keyword]',  \Illuminate\Support\Facades\Request::input('search.keyword'), ['class' => 'form-control', 'placeholder' => trans('forms.fields.keyword'), 'id' => 'keyword']) !!}
@@ -57,8 +57,8 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <div>{{ trans('property.index.price_range') }}: <strong>IDR <span id="price-from">{{ $priceDefaultFrom }}</span> - IDR <span id="price-to">{{ $priceDefaultTo }}</span></strong></div>
-                            <input type="text" id="inputPriceRange" name="search[price]" value="" data-slider-min="10000000" data-slider-max="100000000000"
-                                   data-slider-step="500000" data-slider-value="[{{ $priceDefaultFrom }},{{ $priceDefaultTo }}]" />
+                            <input type="text" id="inputPriceRange" name="search[price]" value="" data-min="100000000" data-max="100000000000"
+                                   data-step="50000000" data-from="{{ $priceDefaultFrom }}" data-to="{{ $priceDefaultTo }}" />
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                                         <h4 class="entry-title"><a href="{{ route('frontend.property.view', ['for' => $for, 'id' => $property->id]) }}">{{ $property->property_name }}</a></h4>
 
                                         <div class="entry-desc">
-                                            {{ trans('property.for.'.$for.'_property_title', ['name' => trans('property.property_type.'.$property->type->slug)]) }}
+                                            {{ trans('property.for.'.$property->getViewFor().'_property_title', ['name' => trans('property.property_type.'.$property->type->slug)]) }}
                                         </div>
                                     </header>
 
@@ -161,9 +161,7 @@
                                         <div class="user-info">
                                             <ul class="list-unstyled">
                                                 @include('frontend.property.includes.shareTo')
-                                                @if(\Illuminate\Support\Facades\Auth::check() && $property->user_id != \Illuminate\Support\Facades\Auth::user()->id)
-                                                    <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a data-toggle="tooltip" title="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?trans('property.buttons.unlike'):trans('property.buttons.like') }}" href="{{ route('frontend.property.toggle_like', ['id' => $property->id]) }}" class="toggle-like"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
-                                                @endif
+                                                <li class="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'checked':'' }}"><a data-toggle="tooltip" title="{{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?trans('property.buttons.unlike'):trans('property.buttons.like') }}" href="{{ route('frontend.property.toggle_like', ['id' => $property->id]) }}" class="toggle-like"><i class="fa {{ $property->isLikedBy(\Illuminate\Support\Facades\Auth::user())?'fa-heart':'fa-heart-o' }}"></i></a></li>
                                                 <li>
                                                     @if(!\GoProp\Facades\PropertyCompareHelper::isAddedToComparison($property))
                                                         <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_compare') }}" href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
