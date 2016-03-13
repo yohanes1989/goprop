@@ -53,7 +53,7 @@
                         </div>
                         <div class="entry-detail-price">
                             <h2 class="entry-price">
-                                @include('frontend.property.includes.price', ['for' => $property->getViewFor($for)])
+                                @include('frontend.property.includes.price', ['for' => $property->getViewFor()])
                             </h2>
                         </div>
                     </div>
