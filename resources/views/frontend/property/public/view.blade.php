@@ -89,9 +89,16 @@
                                 <div class="faqs-answer clearfix" style="display: block;">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <p><strong>{{ trans('forms.fields.property.'.$for.'_price') }}:</strong>
-                                                {{ \GoProp\Facades\ProjectHelper::formatNumber($property->getPrice($for), true) }}
-                                                {{ ($for == 'rent')?' ('.trans('property.rent_price_type.'.$property->rent_price_type).')':'' }}</p>
+                                            @if($property->for_sell)
+                                            <p><strong>{{ trans('forms.fields.property.sell_price') }}:</strong>
+                                                {{ \GoProp\Facades\ProjectHelper::formatNumber($property->getPrice('sell'), true) }}
+                                            @endif
+
+                                            @if($property->for_rent)
+                                                <p><strong>{{ trans('forms.fields.property.rent_price') }}:</strong>
+                                                    {{ \GoProp\Facades\ProjectHelper::formatNumber($property->getPrice('rent'), true).' ('.trans('property.rent_price_type.'.$property->rent_price_type).')' }}
+                                            @endif
+
                                             @if(!empty(intval($property->land_size)))
                                             <p><strong>{{ trans('forms.fields.property.land_size') }}:</strong> {{ $property->land_size+0 }} m<sup>2</sup></p>
                                             @endif
