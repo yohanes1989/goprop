@@ -239,7 +239,7 @@ var app = {
           var $upFrontFee = 0;
 
           $('.property-price', obj).on('keyup', function(evt){
-              var charCode = (evt.which) ? evt.which : event.keyCode;
+              var charCode = (evt.which) ? evt.which : evt.keyCode;
 
               if (charCode == undefined || (charCode > 47 && charCode <58) || charCode == 45 || charCode == 32 || charCode == 9 || charCode == 8)
               {
