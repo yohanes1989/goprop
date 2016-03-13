@@ -11,7 +11,7 @@
                     ?>
                     @foreach($exclusiveProperties as $exclusiveProperty)
                         <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->exclusive_type }}">
-                            <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id, 'for' => $exclusiveProperty->exclusive_type]) }}">
+                            <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id]) }}">
                                 <img src="{{ url('images/exclusive_thumbnail/'.$exclusiveProperty->getPhotoThumbnail()) }}" />
 
                                 <div class="exclusiveProperty-overlay">

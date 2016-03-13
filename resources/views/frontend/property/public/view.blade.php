@@ -5,7 +5,7 @@
 @section('open_graph')
     @parent
 
-    <meta property="og:url" content="{{ route('frontend.property.view', ['for' => $property->getViewFor($for), 'id' => $property->id]) }}" />
+    <meta property="og:url" content="{{ route('frontend.property.view', ['id' => $property->id]) }}" />
     <meta property="og:title" content="{{ $property->property_name }}" />
     <meta property="og:description" content="{{ $property->getMetaDescription() }}" />
     <meta property="og:image" content="{{ url('images/original/'.$property->getPhotoThumbnail()) }}" />

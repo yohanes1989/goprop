@@ -4,7 +4,7 @@
         <div class="col-xs-12">
             {!! Form::open(['method' => 'GET', 'route' => 'frontend.property.search']) !!}
                 <div class="form-group">
-                    {!! Form::select('search[for]', \GoProp\Models\Property::getForLabel(), [\Illuminate\Support\Facades\Request::input('search.for')], ['class' => 'form-control']) !!}
+                    {!! Form::select('search[for]', ['' => trans('forms.fields.all')] + \GoProp\Models\Property::getForLabel(), [\Illuminate\Support\Facades\Request::input('search.for')], ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
                     {!! Form::text('search[keyword]',  null, ['class' => 'form-control', 'placeholder' => trans('forms.fields.keyword'), 'id' => 'keyword']) !!}

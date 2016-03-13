@@ -433,13 +433,13 @@ var app = {
 
           $(obj).find('.nav-tabs a').click(function(){
               $(obj).find('.nav-title').text($(this).text());
-              $(obj).find('.nav-tabs').hide();
+              $(obj).find('.nav-tabs').removeClass('show');
           });
 
           if($('.nav-tabs', context).length){
               $(obj).prepend('<div class="custom-tab-dropdown"><div class="nav-title">'+$(obj).find('li.active').text()+'</div></div>');
               $(obj).find('.nav-title').click(function(e){
-                  $(obj).find('.nav-tabs').toggle();
+                  $(obj).find('.nav-tabs').toggleClass('show');
               });
           }
       });

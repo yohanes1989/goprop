@@ -187,7 +187,7 @@ return [
     ],
     'index' => [
         'property_search' => 'Property Search',
-        'im_looking_for' => 'I\'m looking for',
+        'im_looking_for' => 'Property for',
         'title' => 'Property',
         'price_range' => 'Price range',
         'for_sell_title' => 'Property for sale',

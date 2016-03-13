@@ -187,7 +187,7 @@ return [
     ],
     'index' => [
         'property_search' => 'Cari Properti',
-        'im_looking_for' => 'Saya ingin',
+        'im_looking_for' => 'Kategori',
         'title' => 'Properti',
         'price_range' => 'Jarak Harga',
         'for_sell_title' => 'Properti dijual',

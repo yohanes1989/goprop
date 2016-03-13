@@ -564,7 +564,7 @@ Route::group([
             'uses' => 'PropertyController@getSearch'
         ]);
 
-        Route::get('/{for}/{id}/view', [
+        Route::get('/{id}/view', [
             'as' => 'frontend.property.view',
             'uses' => 'PropertyController@getView'
         ]);

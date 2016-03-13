@@ -73,7 +73,10 @@ class PropertyController extends Controller
 
     public function getSearch(Request $request)
     {
-        $for = $request->input('search.for', 'sell');
+        $for = $request->input('search.for');
+        if(empty($for)){
+            $for = 'sell';
+        }
 
         $priceDefaultFrom = 100000000;
         $priceDefaultTo = 100000000000;
@@ -214,13 +217,14 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function getView($for, $id)
+    public function getView($id)
     {
         $user = Auth::user();
         $property = Property::findOrFail($id);
         $province = AddressHelper::getAddressLabel($property->province, 'province');
         $city = AddressHelper::getAddressLabel($property->city, 'city');
         $subdistrict = AddressHelper::getAddressLabel($property->subdistrict, 'subdistrict');
+        $for = $property->getViewFor();
 
         $liked = ($user)?$user->likesAProperty($property):FALSE;
 

@@ -186,7 +186,7 @@ ol.faq-list {
 		li {
 			display: inline-block;
 			padding: 5px 0 15px;
-          margin-right: 8px;
+          margin: 0 5px;
 
 			&.socialShare-to {
 				position: relative;
@@ -411,6 +411,11 @@ ol.faq-list {
         }
       }
     }
+
+    .nav-tabs.show{
+      display: block;
+    }
+
     .tab-content {
       padding: 10px;
     }

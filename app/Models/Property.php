@@ -307,6 +307,10 @@ class Property extends Model
 
     public function getPrice($type)
     {
+        if(!in_array($type, ['sell', 'rent'])){
+            $type = 'sell';
+        }
+
         return $this->{$type.'_price'};
     }
 
