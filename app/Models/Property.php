@@ -226,7 +226,7 @@ class Property extends Model
     //Methods
     public function isOwner($user)
     {
-        return $this->user?($user->id == $this->user->id):FALSE;
+        return ($this->user && $user)?($user->id == $this->user->id):FALSE;
     }
 
     public function getPackageAddons($package)

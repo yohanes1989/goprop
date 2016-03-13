@@ -32,7 +32,7 @@
                         <div class="pull-right user-info">
                             <ul>
                                 @include('frontend.property.includes.shareTo')
-                                @if(!$property->isOwner(Auth::user())){
+                                @if(!$property->isOwner(Auth::user()))
                                 <li class="{{ $liked?'checked':'' }}"><a data-toggle="tooltip" title="{{ $liked?trans('property.buttons.unlike'):trans('property.buttons.like') }}" href="{{ route('frontend.property.toggle_like', ['id' => $property->id]) }}" class="toggle-like"><i class="fa {{ $liked?'fa-heart':'fa-heart-o' }}"></i></a></li>
                                 @endif
                                 <li>
