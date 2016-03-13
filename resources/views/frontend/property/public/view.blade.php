@@ -1,9 +1,11 @@
 @extends('frontend.master.layout')
 
+@section('page_title', ProjectHelper::formatTitle($property->property_name.', '.trans('property.for.'.$for.'_property_title', ['name' => trans('property.property_type.'.$property->type->slug)])))
+
 @section('open_graph')
     @parent
 
-    <meta property="og:url" content="{{ route('frontend.property.view', ['for' => $property->getViewFor(), 'id' => $property->id]) }}" />
+    <meta property="og:url" content="{{ route('frontend.property.view', ['for' => $property->getViewFor($for), 'id' => $property->id]) }}" />
     <meta property="og:title" content="{{ $property->property_name }}" />
     <meta property="og:description" content="{{ $property->getMetaDescription() }}" />
     <meta property="og:image" content="{{ url('images/original/'.$property->getPhotoThumbnail()) }}" />
@@ -30,7 +32,9 @@
                         <div class="pull-right user-info">
                             <ul>
                                 @include('frontend.property.includes.shareTo')
+                                @if(!$property->isOwner(Auth::user())){
                                 <li class="{{ $liked?'checked':'' }}"><a data-toggle="tooltip" title="{{ $liked?trans('property.buttons.unlike'):trans('property.buttons.like') }}" href="{{ route('frontend.property.toggle_like', ['id' => $property->id]) }}" class="toggle-like"><i class="fa {{ $liked?'fa-heart':'fa-heart-o' }}"></i></a></li>
+                                @endif
                                 <li>
                                     @if(!\GoProp\Facades\PropertyCompareHelper::isAddedToComparison($property))
                                     <a data-toggle="tooltip" title="{{ trans('property.property_comparison.tooltip_compare') }}" href="{{ route('frontend.property.compare.add', ['id' => $property->id]) }}"><i class="fa fa-plus"></i></a>
@@ -49,7 +53,7 @@
                         </div>
                         <div class="entry-detail-price">
                             <h2 class="entry-price">
-                                @include('frontend.property.includes.price', ['for' => $property->getViewFor()])
+                                @include('frontend.property.includes.price', ['for' => $property->getViewFor($for)])
                             </h2>
                         </div>
                     </div>

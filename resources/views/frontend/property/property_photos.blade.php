@@ -3,7 +3,7 @@
 @section('content')
     <div class="top-navigation">
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-md-10">
                 @include('frontend.property.includes.edit_top_bar')
                 <div class="form-wizard-menu">
                     <ul class="list-unstyled">
@@ -37,12 +37,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2"></div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-10">
+        <div class="col-md-10">
             <header class="header-area">
                 <h3 class="entry-title">{!! trans('property.photos.page_title', ['title' => $model->property_name]) !!}</h3>
             </header>
@@ -106,7 +105,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-2"></div>
     </div>
 @endsection
 

@@ -6,42 +6,60 @@ var app = {
       });
 
       // Javascript for Responsive Button
-      $('.responsive-btn').click(function() {
-          $('.main-menu-wrapper').toggle();
+      $('#responsive-btn').click(function() {
+          $('.menu-section', '#header').toggle();
+          $('.main-menu-wrapper', '#header').toggle();
       });
 
       // Javascript for Owl Carousel
       $('#partner-carousel', context).owlCarousel({
           autoplay:true,
-          autoplayTimeout:3000,
+          autoplayTimeout: 1000,
           smartSpeed: 500,
-          items: 4,
-          loop: false
+          items: 1,
+          loop: true,
+          responsive: {
+              640: {
+                  items: 3
+              },
+              1024: {
+                  items: 4
+              }
+          }
       });
 
       $('#testimonial-carousel', context).owlCarousel({
           autoplay:true,
-          autoplayTimeout:3000,
+          autoplayTimeout:5000,
           items: 1,
           loop: true
       });
 
       $('#exclusiveProperty-list', context).owlCarousel({
           autoplay:true,
-          autoplayTimeout:3000,
-          items: 3,
+          autoplayTimeout:5000,
+          smartSpeed: 1500,
+          items: 1,
           loop: true,
           nav:true,
           navText: [
               "<i class='fa fa-chevron-left icon-white'></i>",
               "<i class='fa fa-chevron-right icon-white'></i>"
-          ]
+          ],
+          responsive: {
+              640: {
+                  items: 2
+              },
+              768: {
+                  items: 3
+              }
+          }
       });
 
       $('#exclusivePropertyWidget-list', context).owlCarousel({
           autoplay:true,
-          autoplayTimeout:3000,
-          smartSpeed: 500,
+          autoplayTimeout:5000,
+          smartSpeed: 1500,
           items: 1,
           loop: true,
           nav:true,
@@ -91,7 +109,7 @@ var app = {
       // Javascript for Lightbox - Colorbox
       $('.ajax_popup', context).fancybox({
           maxWidth	: 800,
-          fitToView	: false,
+          fitToView	: true,
           width		: 800,
           height	: 300,
           autoScale	: true,
@@ -408,9 +426,21 @@ var app = {
 
       //Tab auto active
       $('.custom-tabs', context).each(function(idx, obj){
-          if($(obj).find('.active').length < 1){
+          if($(obj).find('li.active').length < 1){
               $(obj).find('.nav-tabs li:first').addClass('active');
               $(obj).find('.tab-pane:first').addClass('active');
+          }
+
+          $(obj).find('.nav-tabs a').click(function(){
+              $(obj).find('.nav-title').text($(this).text());
+              $(obj).find('.nav-tabs').hide();
+          });
+
+          if($('.nav-tabs', context).length){
+              $(obj).prepend('<div class="custom-tab-dropdown"><div class="nav-title">'+$(obj).find('li.active').text()+'</div></div>');
+              $(obj).find('.nav-title').click(function(e){
+                  $(obj).find('.nav-tabs').toggle();
+              });
           }
       });
 
@@ -531,6 +561,32 @@ var app = {
                   $(obj).find('input[name="action"]').val($(this).val());
               });
           }
+      });
+
+      //Collapsible
+      $('[data-collapsible]', context).each(function(idx, obj){
+          var $collapsiblePanel = $('<div class="collapsible-panel"><div class="panel-content"></div></div>');
+          $(obj).before($collapsiblePanel);
+          $collapsiblePanel.prepend('<div class="panel-title">'+$(obj).data('collapsible')+'</div>');
+          $collapsiblePanel.find('.panel-content').append(obj);
+
+          $collapsiblePanel.find('.panel-title').click(function(e){
+              e.preventDefault();
+
+              $collapsiblePanel.find('.panel-content').toggle();
+          });
+      });
+
+      $('.sidebar-toggle', context).click(function(e){
+          e.preventDefault();
+
+          $(this).parent().find('.sidebar-menu').toggle(400, function(){
+              if($(this).is(':visible')){
+                  $(e.target).addClass('sidebar-open');
+              }else{
+                  $(e.target).removeClass('sidebar-open');
+              }
+          });
       });
   },
     calculateCommission: function(price, package)

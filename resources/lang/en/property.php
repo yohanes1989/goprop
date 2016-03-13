@@ -192,6 +192,7 @@ return [
         'price_range' => 'Price range',
         'for_sell_title' => 'Property for sale',
         'for_rent_title' => 'Property for rent',
+        'search_filter' => 'Search Filter',
         'in_city' => 'in <strong>:location</strong>',
         'advanced_search' => 'Advanced Search (:count)',
         'submit_property' => 'Submit Property',

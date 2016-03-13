@@ -3,7 +3,7 @@
 @section('content')
     <div class="top-navigation">
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-md-10">
                 @include('frontend.property.includes.edit_top_bar')
                 <div class="form-wizard-menu">
                     <ul class="list-unstyled">
@@ -37,12 +37,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2"></div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-10">
+        <div class="col-md-10">
             <div class="register-form-wrapper">
                 {!! Form::model($model, ['route' => ['frontend.property.review.process', 'id' => $model->id]]) !!}
                 <header class="header-area">
@@ -188,7 +187,7 @@
                 </header>
                 <div class="entry-content" id="payment-method-section">
                     <div class="row">
-                        <div class="col-xs-4">
+                        <div class="col-sm-4 col-xs-6">
                             @foreach(\GoProp\Models\Payment::getPaymentMethods() as $paymentMethodIdx=>$paymentMethod)
                             <div class="radio">
                                 <label>
@@ -198,7 +197,7 @@
                             @endforeach
                         </div>
 
-                        <div class="col-xs-8">
+                        <div class="col-sm-8 col-xs-6">
                             <div id="payment-descriptions">
                                 @foreach(\GoProp\Models\Payment::getPaymentMethods() as $paymentMethodIdx=>$paymentMethod)
                                 <div data-payment_method="{{ $paymentMethodIdx }}" class="payment-description">
@@ -241,17 +240,16 @@
                     <hr class="form-divider">
                 </div>
                 <div class="form-action row">
-                    <div class="col-sm-6 is-left">
-                        {!! Form::button(trans('forms.change_package_btn'), ['name' => 'action', 'value' => 'change_package', 'type' => 'submit', 'class' => 'btn btn-yellow']) !!}
+                    <div class="col-xs-6 is-left">
+                        {!! Form::button(trans('forms.change_package_btn'), ['name' => 'action', 'value' => 'change_package', 'type' => 'submit', 'class' => 'btn btn-transparent']) !!}
                     </div>
-                    <div class="col-sm-6 is-right">
+                    <div class="col-xs-6 is-right">
                         {!! Form::button(trans('forms.purchase_btn'), ['name' => 'action', 'value' => 'purchase', 'data-confirm' => trans('property.order_review.confirm_message'), 'type' => 'submit', 'class' => 'btn btn-grey']) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}
             </div>
         </div>
-        <div class="col-sm-2"></div>
     </div>
 @endsection
 

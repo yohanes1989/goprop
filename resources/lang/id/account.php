@@ -15,6 +15,7 @@ return [
         'viewings_btn' => 'Kunjungan',
         'properties_btn' => 'Properti',
         'full_sales_progression_btn' => 'Laporan Perkembangan',
+        'account_navigation' => 'Navigasi Akun'
     ],
     'login' => [
         'page_title' => 'Login ke GoProp',

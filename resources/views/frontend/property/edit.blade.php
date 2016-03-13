@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-sm-10">
+        <div class="col-md-10">
             <header class="header-area">
                 <h3 class="entry-title">{{ trans('property.create.page_title') }}</h3>
             </header>
@@ -17,7 +17,5 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-sm-2"></div>
     </div>
 @endsection

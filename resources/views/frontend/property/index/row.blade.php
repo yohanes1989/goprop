@@ -1,4 +1,4 @@
-<div class="propertyItem-child row">
+<div class="propertyItem-child">
     <div class="col-sm-5">
         <div class="img-wrap">
             <a href="{{ route('frontend.property.view', ['for' => $for, 'id' => $property->id]) }}"><img src="{{ url('images/property_thumbnail/'.$property->getPhotoThumbnail()) }}" class="img-responsive"></a>

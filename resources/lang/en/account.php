@@ -15,6 +15,7 @@ return [
         'viewings_btn' => 'Viewings',
         'properties_btn' => 'Properties',
         'full_sales_progression_btn' => 'Full Sales Progression',
+        'account_navigation' => 'Account Navigation'
     ],
     'login' => [
         'page_title' => 'Login to My Go Prop',

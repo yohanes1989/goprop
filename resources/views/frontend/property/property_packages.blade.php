@@ -19,7 +19,7 @@
 @section('content')
     <div class="top-navigation">
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-md-10">
                 @include('frontend.property.includes.edit_top_bar')
                 <div class="form-wizard-menu">
                     <ul class="list-unstyled">
@@ -53,12 +53,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2"></div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-10">
+        <div class="col-md-10">
             @if($model->status == \GoProp\Models\Property::STATUS_DRAFT)
             <header class="header-area">
                 <h3 class="entry-title">{!! trans('property.packages.page_title', ['title' => $model->property_name]) !!}</h3>
@@ -73,7 +72,7 @@
             <div class="row">
                 <div class="register-form-wrapper">
                     {!! Form::model($model, ['route' => ['frontend.property.packages.process', 'id' => $model->id]]) !!}
-                    <div class="property-table-columns col-xs-12">
+                    <div class="property-table-columns">
                         <!-- Custom Tabs -->
                         <div id="package-selection-tabs" class="custom-tabs">
                             <!-- Tab panes -->
@@ -254,7 +253,6 @@
                 </div>
             @endif
         </div>
-        <div class="col-sm-2"></div>
     </div>
 @endsection
 

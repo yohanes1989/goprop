@@ -121,7 +121,7 @@ return [
     ],
     'steps' => [
         'main_details' => 'Detail Utama',
-        'property_details' => 'Detai Properti',
+        'property_details' => 'Detail Properti',
         'map' => 'Peta',
         'photos' => 'Gambar',
         'floorplan' => 'Denah',
@@ -196,6 +196,7 @@ return [
         'advanced_search' => 'Pencarian (:count)',
         'submit_property' => 'Upload Properti',
         'search_property' => 'Cari Properti',
+        'search_filter' => 'Filter Pencarian',
         'bedrooms' => '[0,1] Kamar|[2,Inf] Kamar',
         'bathrooms' => '[0,1] Kamar Mandi|[2,Inf] Kamar Mandi',
         'type_keyword' => 'Masukkan kata kunci',

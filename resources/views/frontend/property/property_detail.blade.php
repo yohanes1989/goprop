@@ -3,7 +3,7 @@
 @section('content')
     <div class="top-navigation">
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-md-10">
                 @include('frontend.property.includes.edit_top_bar')
                 <div class="form-wizard-menu">
                     <ul class="list-unstyled">
@@ -37,12 +37,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2"></div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-sm-10">
+        <div class="col-md-10">
             <header class="header-area">
                 <h3 class="entry-title">{!! trans('property.main_details.page_title', ['title' => $model->property_name]) !!}</h3>
             </header>
@@ -200,20 +199,21 @@
                         <hr class="form-divider" />
                     </div>
 
-                    <div class="col-xs-4">
-                        <a href="{{ route('frontend.property.packages', ['id' => $model->id]) }}" class="btn btn-yellow">{{ trans('forms.skip_package_btn') }}</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                        {!! Form::button(trans('forms.save_information_btn'), ['name' => 'action', 'value' => 'save_information', 'type' => 'submit', 'class' => 'btn btn-yellow']) !!}
-                    </div>
-                    <div class="col-xs-4 text-right">
-                        {!! Form::button(trans('forms.save_continue_btn'), ['name' => 'action', 'value' => 'save_continue', 'type' => 'submit', 'class' => 'btn btn-yellow']) !!}
+                    <div class="actions">
+                        <div class="col-sm-4 col-sm-12">
+                            <a href="{{ route('frontend.property.packages', ['id' => $model->id]) }}" class="btn btn-yellow">{{ trans('forms.skip_package_btn') }}</a>
+                        </div>
+                        <div class="col-sm-4 col-sm-12">
+                            {!! Form::button(trans('forms.save_information_btn'), ['name' => 'action', 'value' => 'save_information', 'type' => 'submit', 'class' => 'btn btn-yellow']) !!}
+                        </div>
+                        <div class="col-sm-4 col-sm-12">
+                            {!! Form::button(trans('forms.save_continue_btn'), ['name' => 'action', 'value' => 'save_continue', 'type' => 'submit', 'class' => 'btn btn-yellow']) !!}
+                        </div>
                     </div>
                     {!! Form::close() !!}
                 </div>
             </div>
         </div>
-        <div class="col-sm-2"></div>
     </div>
 @endsection
 

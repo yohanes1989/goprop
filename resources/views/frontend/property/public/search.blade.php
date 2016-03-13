@@ -4,7 +4,7 @@
     <section class="property-search-columns">
         <div class="top-content">
             <div class="container">
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <header class="header-area">
                         @if(\Illuminate\Support\Facades\Request::has('for'))
                             <h3 class="entry-title">{!! trans('property.index.for_'.\Illuminate\Support\Facades\Request::input('for').'_title') !!}{!! !empty($citySearch)?' '.trans('property.index.in_city', ['location' => $citySearch]):'' !!}</h3>
@@ -12,11 +12,6 @@
                             <h3 class="entry-title">{!! trans('property.index.title') !!}{!! !empty($citySearch)?' '.trans('property.index.in_city', ['location' => $citySearch]):'' !!}</h3>
                         @endif
                     </header>
-                </div>
-                <div class="col-sm-4">
-                    <div class="other-link">
-                        <a href="{{ route('frontend.property.create') }}"><i class="fa fa-bars"></i> {{ trans('property.index.submit_property') }}</a>
-                    </div>
                 </div>
             </div>
 
@@ -30,7 +25,7 @@
         </div>
         <div class="mid-content">
             <div class="container">
-                {!! Form::open(['method' => 'GET']) !!}
+                {!! Form::open(['method' => 'GET', 'data-collapsible' => trans('property.index.search_filter')]) !!}
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="form-group col-sm-3">
@@ -66,10 +61,11 @@
                     {!! Form::hidden('sort', \Illuminate\Support\Facades\Request::get('sort')) !!}
                     <button class="btn btn-yellow btn-submit">{{ trans('property.index.search_property') }}</button>
                 </div>
-                {!! Form::close() !!}
+
                 <div class="col-xs-12">
                     <hr class="form-divider" />
                 </div>
+                {!! Form::close() !!}
             </div>
         </div>
 
@@ -181,6 +177,10 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-3">
+                    <div class="widget-child">
+                        <a href="{{ route('frontend.property.create') }}"><i class="fa fa-plus"></i> {{ trans('property.index.submit_property') }}</a>
+                    </div>
+
                     <div class="widget-child">
                         @include('frontend.includes.login_sidebar')
                     </div>

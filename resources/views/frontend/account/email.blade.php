@@ -22,7 +22,7 @@
                         <p>&nbsp;</p>
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <div class="col-sm-4 align-right">
+                                <div class="col-sm-4">
                                     {!! Form::label('email', trans('forms.fields.email'), ['class' => 'control-label']) !!} <sup class="text-danger">*</sup>
                                 </div>
                                 <div class="col-sm-8">

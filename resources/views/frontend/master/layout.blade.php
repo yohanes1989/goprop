@@ -45,14 +45,14 @@
                     <a href="{{ route('frontend.page.home') }}"><img src="{{ asset('assets/frontend/images/logo.png') }}" class="img-responsive" alt=""></a>
                 </div>
                 <div class="col-sm-4 col-xs-6 responsive-btn-area">
-                    <a href="javascript:;" class="responsive-btn">
+                    <a href="javascript:;" id="responsive-btn">
                         <span></span>
                         <span></span>
                         <span></span>
                     </a>
                 </div>
                 <div class="col-sm-9 col-xs-12">
-                    <div class="menu-section hidden-xs">
+                    <div class="menu-section">
                         @if(\Illuminate\Support\Facades\Auth::check())
                         <ul class="list-inline">
                             <li class="text-yellow">{{ trans('account.interface.greeting') }} <a href="{{ route('frontend.account.dashboard') }}"><strong>{{ \Illuminate\Support\Facades\Auth::user()->username }}</strong></a></li>

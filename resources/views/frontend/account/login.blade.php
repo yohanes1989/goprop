@@ -49,10 +49,9 @@
                     </div>
                     -->
                     <div class="login-form-area">
-                        <p>&nbsp;</p>
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <div class="col-sm-4 align-right">
+                                <div class="col-sm-4">
                                     {!! Form::label('username', trans('forms.fields.username'), ['class' => 'control-label']) !!} <sup class="text-danger">*</sup>
                                 </div>
                                 <div class="col-sm-8">
@@ -61,7 +60,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-4 align-right">
+                                <div class="col-sm-4">
                                     {!! Form::label('password', trans('forms.fields.password'), ['class' => 'control-label']) !!} <sup class="text-danger">*</sup>
                                 </div>
                                 <div class="col-sm-8">

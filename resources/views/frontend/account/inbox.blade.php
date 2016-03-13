@@ -39,7 +39,7 @@
                                 @if($conversation || \Illuminate\Support\Facades\Request::get('new'))
                                 <div class="chat-inner-wrapper">
                                     <div class="chat-top">
-                                        <div class="col-xs-5 user-info">
+                                        <div class="col-xs-12 user-info">
                                             <div class="row">
                                                 <div class="icon">
                                                     <img src="{{ asset('assets/frontend/images/user-icon.png') }}" alt="">

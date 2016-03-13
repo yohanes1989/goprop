@@ -10,6 +10,39 @@ body, html {
 h1, h2, h3, h4, h5, h6 {
 	font-family: $font-primary;
 	font-weight: 700;
+    line-height: 1.25em;
+}
+
+h1{
+  @media screen and (max-width: $tablet-size){
+    font-size: 28px;
+  }
+}
+
+h2{
+  @media screen and (max-width: $tablet-size){
+    font-size: 24px;
+  }
+}
+
+h3{
+  @media screen and (max-width: $tablet-size){
+    font-size: 20px;
+  }
+}
+
+dl.dl-horizontal{
+  @media screen and (max-width: $mobile-size){
+    dt{
+      clear: left;
+      float: left;
+      margin-right: 0.5em;
+    }
+
+    dd{
+
+    }
+  }
 }
 
 a {
@@ -56,6 +89,12 @@ sup.text-danger {
 
 .ajax-message{
   margin: 1em 0;
+}
+
+.container{
+  @media screen and (max-width: $tablet-size){
+    padding: 0;
+  }
 }
 
 // Iframe Responsive
@@ -131,7 +170,7 @@ ol.faq-list {
     background-color: $color-white;
     ul {
       margin: 0;
-      margin-right: 5px;
+
       li {
         padding: 5px 0;
       }
@@ -147,7 +186,7 @@ ol.faq-list {
 		li {
 			display: inline-block;
 			padding: 5px 0 15px;
-            margin: 0 8px 0 0;
+          margin-right: 8px;
 
 			&.socialShare-to {
 				position: relative;
@@ -254,6 +293,11 @@ ol.faq-list {
 	&.btn-transparent {
 		background-color: transparent;
 	}
+
+  @media screen and (max-width: $mobile-size){
+    font-size: 14px;
+    padding: 5px 8px;
+  }
 }
 
 // Label Icon
@@ -307,8 +351,22 @@ ol.faq-list {
 
 // Tabs 
 .custom-tabs {
+    .nav-title{
+      display: none;
+      padding: 0.5em;
+      background-color: $color-grey-light;
+
+      &::after{
+        content: "\f0d7";
+        font-family: 'FontAwesome';
+        margin-left: 0.5em;
+        float: right;
+      }
+    }
+
 	.nav-tabs {
 		border-bottom: none;
+
 		& > li {
 			float: none;
 			display: inline-block;
@@ -332,8 +390,31 @@ ol.faq-list {
 	.tab-content {
 		background-color: #f3f3f3;
 		@include border-radius(3px);
-		padding: 20px;
+		padding: 20px 10px;
 	}
+
+  @media screen and (max-width: $mobile-size){
+    .nav-title{
+      display: block;
+    }
+
+    .nav-tabs {
+      display: none;
+
+      & > li {
+        display: block;
+
+        a {
+          margin: 0;
+          font-size: 12px;
+          background-color: transparent;
+        }
+      }
+    }
+    .tab-content {
+      padding: 10px;
+    }
+  }
 }
 
 // Table
@@ -353,13 +434,11 @@ ol.faq-list {
 	}
 }
 .table.table-custom {
-	margin-top: 30px;
 	.text {
 		text-align: right;
 	}
 	.checkbox {
-      padding: 0 20px;
-		text-align: right;
+		text-align: center;
 
       label{
         display: block;
@@ -368,7 +447,6 @@ ol.faq-list {
 
 		input[type="checkbox"] {
           position: static;
-          float: left;
           margin: 5px 0;
 		}
 	}
@@ -380,9 +458,10 @@ ol.faq-list {
 				vertical-align: middle;
 				font-size: 18px;
 				font-style: italic;
+
 				&.colored {
 					color: $color-white; 
-					padding: 15px 15px;
+					padding: 15px 5px;
 				}
 				&.blue { background-color: $color-blue; }
 				&.red { background-color: $color-red; }
@@ -447,6 +526,16 @@ ol.faq-list {
 	.checkbox {
 		margin: 0;
 	}
+
+  @media screen and (max-width: $mobile-size){
+    thead{
+      tr{
+        th{
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }
 
 // Bootstrap Slider Custom
@@ -513,8 +602,7 @@ ol.faq-list {
 	right: 10px;
 	width: 29px;
 	height: 30px;
-	background-image: url(../images/icon-close.jpg);
-	background-repeat: no-repeat;
+	background: url(../images/icon-close.jpg) center center no-repeat;
 }
 
 // Custom Pagination
@@ -660,5 +748,32 @@ ol.faq-list {
     &.active, &:hover{
       border-color: $color-yellow;
     }
+  }
+}
+
+.collapsible-panel{
+  .panel-title{
+    cursor: pointer;
+    padding: 0 1em;
+    margin-bottom: 1em;
+    color: $color-yellow;
+
+    &::after{
+      content: "\f0d7";
+      font-family: 'FontAwesome';
+      margin-left: 0.5em;
+    }
+  }
+
+  @media screen and (max-width: $mobile-size){
+    .panel-content{
+      display: none;
+    }
+  }
+}
+
+.actions{
+  .btn{
+    margin-bottom: 1em;
   }
 }
