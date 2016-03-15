@@ -3,6 +3,7 @@
 namespace GoProp\Http\Controllers\Frontend;
 
 use Carbon\Carbon;
+use GoProp\Events\PropertyEvent;
 use GoProp\Facades\AddressHelper;
 use GoProp\Facades\ProjectHelper;
 use GoProp\Facades\PropertyCompareHelper;
@@ -21,6 +22,7 @@ use GoProp\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Lang;
 use Proengsoft\JsValidation\Facades\JsValidatorFacade;
 use Webpresso\MyShortCart\Facades\MyShortCart;
@@ -805,6 +807,8 @@ class PropertyController extends Controller
                 'status' => Property::STATUS_REVIEW,
                 'checkout_at' => Carbon::now()
             ]);
+
+            Event::fire(new PropertyEvent($property, 'new'));
         }
 
         if($order->total_amount <= 0){

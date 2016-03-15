@@ -3,9 +3,11 @@
 namespace GoProp\Helpers;
 
 use GoProp\Models\Property;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
 use GoProp\Models\Order;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ProjectHelper
 {
@@ -174,5 +176,20 @@ class ProjectHelper
         }
 
         return $return;
+    }
+
+    public function sendMail($to, $subject, $template, $data, $preview=FALSE)
+    {
+        if(!$preview){
+            $result = Mail::send($template, $data, function ($message) use ($data, $subject, $to) {
+                $message->from(config('app.system_email_from'), config('app.system_email_from_name'));
+                $message->to($to);
+                $message->subject($subject);
+            });
+        }else{
+            $result = view($template, $data);
+        }
+
+        return $result;
     }
 }

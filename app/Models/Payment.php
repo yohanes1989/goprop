@@ -36,11 +36,13 @@ class Payment extends Model
                 'label' => trans('forms.fields.payments.'.self::METHOD_BANK_TRANSFER),
                 'description' => trans('forms.fields.payments.'.self::METHOD_BANK_TRANSFER.'_description').'<br/>BCA: 1234567',
             ],
+            /*
             self::METHOD_DOKU_CREDIT_CARD => [
                 'machine_name' => self::METHOD_DOKU_CREDIT_CARD,
                 'label' => trans('forms.fields.payments.'.self::METHOD_DOKU_CREDIT_CARD),
                 'description' => trans('forms.fields.payments.'.self::METHOD_DOKU_CREDIT_CARD.'_description'),
             ],
+            */
         ];
 
         if($all){

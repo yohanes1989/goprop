@@ -24,6 +24,10 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+    protected $subscribe = [
+        'GoProp\Listeners\NotificationEventListener'
+    ];
+
     /**
      * Register any other events for your application.
      *

@@ -213,6 +213,7 @@ return [
         'MyShortCart' => Webpresso\MyShortCart\Facades\MyShortCart::class,
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'ProjectHelper' => \GoProp\Facades\ProjectHelper::class,
+        'AddressHelper' => \GoProp\Facades\AddressHelper::class,
         'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
     ],
 
@@ -227,4 +228,6 @@ return [
     'contact_from_email' => env('FROM_EMAIL'),
     'contact_from_name' => env('FROM_NAME'),
     'contact_destination' => explode(',', env('CONTACT_EMAILS')),
+    'system_email_from_name' => 'GoProp',
+    'system_email_from' => 'admin@goprop.co.id'
 ];
