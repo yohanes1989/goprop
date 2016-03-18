@@ -29,7 +29,7 @@
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="form-group col-sm-3">
-                            {!! Form::select('search[for]', ['' => trans('forms.fields.all')] + \GoProp\Models\Property::getForLabel(), [\Illuminate\Support\Facades\Request::input('search.for')], ['class' => 'form-control']) !!}
+                            {!! Form::select('search[for]', ['all' => trans('forms.fields.all')] + \GoProp\Models\Property::getForLabel(), [\Illuminate\Support\Facades\Request::input('search.for')], ['class' => 'form-control']) !!}
                         </div>
                         <div class="form-group col-sm-3">
                             {!! Form::text('search[keyword]',  \Illuminate\Support\Facades\Request::input('search.keyword'), ['class' => 'form-control', 'placeholder' => trans('forms.fields.keyword'), 'id' => 'keyword']) !!}

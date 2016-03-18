@@ -641,4 +641,18 @@ class Property extends Model
 
         return (isset($array[$option]))?$array[$option]:$array;
     }
+
+    protected static function boot() {
+        parent::boot();
+
+        static::saving(function($model) {
+            if(!$model->for_sell){
+                $model->sell_price = 0;
+            }
+
+            if(!$model->for_rent){
+                $model->rent_price = 0;
+            }
+        });
+    }
 }

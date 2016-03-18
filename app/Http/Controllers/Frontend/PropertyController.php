@@ -76,9 +76,6 @@ class PropertyController extends Controller
     public function getSearch(Request $request)
     {
         $for = $request->input('search.for');
-        if(empty($for)){
-            $for = 'sell';
-        }
 
         $priceDefaultFrom = 100000000;
         $priceDefaultTo = 100000000000;
@@ -172,27 +169,32 @@ class PropertyController extends Controller
 
         $resultCount = $qb->count();
 
+        //By exclusive
+        $qb->selectRaw('properties.*, IF(Pac.slug = \'exclusive\', 1, 0) as is_exclusive');
+        $qb->leftJoin('package_property AS PP', 'PP.property_id', '=', 'properties.id')
+            ->leftJoin('packages AS Pac', 'PP.package_id', '=', 'Pac.id');
+
+        $qb->orderBy('is_exclusive', 'DESC');
+
         //Sorts
-        if($request->has('sort')){
-            $sortKeys = explode('_', $request->input('sort'));
+        $sortKeys = explode('_', $request->input('sort', 'date_desc'));
 
-            if($sortKeys[0] == 'price'){
-                if($for != 'all'){
-                    $sortColumn = $for.'_'.$sortKeys[0];
-                }
+        if($sortKeys[0] == 'price'){
+            if($for != 'all'){
+                $sortColumn = $for.'_'.$sortKeys[0];
             }else{
-                //By exclusive if newest or oldest
-                $qb->selectRaw('properties.*, IF(Pac.slug = \'exclusive\', 1, 0) as is_exclusive');
-                $qb->leftJoin('package_property AS PP', 'PP.property_id', '=', 'properties.id')
-                    ->leftJoin('packages AS Pac', 'PP.package_id', '=', 'Pac.id');
-
-                $qb->orderBy('is_exclusive', 'DESC');
-
-                $sortColumn = 'checkout_at';
+                $sortColumn = 'all_price';
             }
+        }else{
+            $sortColumn = 'checkout_at';
+        }
 
-            $sortOrder = isset($sortKeys[1])?$sortKeys[1]:'desc';
+        $sortOrder = isset($sortKeys[1])?$sortKeys[1]:'desc';
 
+        if($sortColumn == 'all_price'){
+            $qb->orderBy('sell_price', $sortOrder);
+            $qb->orderBy('rent_price', $sortOrder);
+        }else{
             $qb->orderBy($sortColumn, $sortOrder);
         }
 
@@ -202,11 +204,9 @@ class PropertyController extends Controller
         $sorts = [
             'date_desc' => trans('property.index.sort_by.date_desc'),
             'date_asc' => trans('property.index.sort_by.date_asc'),
+            'price_asc' => trans('property.index.sort_by.price_asc'),
+            'price_desc' => trans('property.index.sort_by.price_desc'),
         ];
-        if($for != 'all') {
-            $sorts['price_asc'] = trans('property.index.sort_by.price_asc');
-            $sorts['price_desc'] = trans('property.index.sort_by.price_desc');
-        }
 
         return view('frontend.property.public.search', [
             'for' => $for,

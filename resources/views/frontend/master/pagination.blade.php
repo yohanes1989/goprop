@@ -2,7 +2,7 @@
     <nav class="paginate-custom">
         <ul class="pagination">
             <li class="previous {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
-                <a href="{{ $paginator->url(1) }}">Previous</a>
+                <a href="{{ $paginator->url(1) }}"><i class="fa fa-angle-left"></i></a>
             </li>
             @for ($i = 1; $i <= $paginator->lastPage(); $i++)
                 <li class="{{ ($paginator->currentPage() == $i) ? ' active' : '' }}">
