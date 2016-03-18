@@ -219,7 +219,7 @@ return [
 
     'default_title' => 'GoProp',
 
-    'google_map_embed_key' => 'AIzaSyC_DzcWAU0DmcZ0vZu1LEtaaGRPPUFjqS8',
+    'google_map_embed_key' => 'AIzaSyDXstGeSC8ssWiZyAGYVc_sLHwhdfpQz9I',
     'default_latitude' => '-6.229519',
     'default_longitude' => '106.805748',
 
