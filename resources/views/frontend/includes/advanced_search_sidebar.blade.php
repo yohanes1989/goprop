@@ -25,9 +25,9 @@
                     {!! Form::select('search[rooms]', ['' => trans('forms.fields.min_rooms')] + \GoProp\Models\Property::getBedroomsLabel(), \Illuminate\Support\Facades\Request::input('search.room', null), ['class' => 'form-control', 'id' => 'rooms']) !!}
                 </div>
                 <div class="form-group">
-                    <div>{{ trans('property.index.price_range') }}: <strong>IDR <span id="price-from">100000000</span> - IDR <span id="price-to">100000000000</span></strong></div>
-                    <input type="text" id="inputPriceRange" name="search[price]" value="" data-min="100000000" data-max="100000000000"
-                           data-step="50000000" data-from="100000000" data-to="100000000000" />
+                    <div>{{ trans('property.index.price_range') }}: <strong>IDR <span id="price-from">50000000</span> - IDR <span id="price-to">100000000000</span></strong></div>
+                    <input type="text" id="inputPriceRange" name="search[price]" value="" data-min="50000000" data-max="100000000000"
+                           data-step="50000000" data-from="50000000" data-to="100000000000" />
                 </div>
                 <div class="form-group">
                     <button class="btn btn-yellow btn-shadow btn-submit">{{ trans('property.index.search_property') }}</button>

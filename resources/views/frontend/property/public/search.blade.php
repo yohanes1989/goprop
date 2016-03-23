@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group col-sm-6">
                             <div>{{ trans('property.index.price_range') }}: <strong>IDR <span id="price-from">{{ $priceDefaultFrom }}</span> - IDR <span id="price-to">{{ $priceDefaultTo }}</span></strong></div>
-                            <input type="text" id="inputPriceRange" name="search[price]" value="" data-min="100000000" data-max="100000000000"
+                            <input type="text" id="inputPriceRange" name="search[price]" value="" data-min="50000000" data-max="100000000000"
                                    data-step="50000000" data-from="{{ $priceDefaultFrom }}" data-to="{{ $priceDefaultTo }}" />
                         </div>
                     </div>
