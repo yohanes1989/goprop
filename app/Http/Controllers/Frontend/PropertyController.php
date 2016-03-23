@@ -172,7 +172,10 @@ class PropertyController extends Controller
         //By exclusive
         $qb->selectRaw('properties.*, IF(Pac.slug = \'exclusive\', 1, 0) as is_exclusive');
         $qb->leftJoin('package_property AS PP', 'PP.property_id', '=', 'properties.id')
-            ->leftJoin('packages AS Pac', 'PP.package_id', '=', 'Pac.id');
+            ->leftJoin('packages AS Pac', 'PP.package_id', '=', 'Pac.id')
+            ->leftJoin('package_categories AS PC', 'PC.id', '=', 'Pac.package_category_id');
+
+        $qb->groupBy('properties.id');
 
         $qb->orderBy('is_exclusive', 'DESC');
 
