@@ -93,6 +93,7 @@ class MemberController extends Controller
 
         $user->username = $request->input('username');
         $user->status = $request->input('status');
+        $user->email = $request->input('email');
 
         if($request->input('remove_profile_picture') == 1){
             $user->profile->removeProfilePicture();
@@ -131,6 +132,7 @@ class MemberController extends Controller
 
     public function findAutocomplete(Request $request)
     {
+        $roles = $request->get('roles', ['authenticated_user']);
         $term = $request->get('term', '');
 
         $return = [];
@@ -142,8 +144,8 @@ class MemberController extends Controller
                     ->orWhere('email', 'LIKE', '%'.$term.'%');
             });
 
-            $qb->whereHas('roles', function($query){
-                $query->where('slug', 'authenticated_user');
+            $qb->whereHas('roles', function($query) use ($roles){
+                $query->whereIn('slug', $roles);
             });
 
             $results = $qb->get();

@@ -59,7 +59,7 @@ class Property extends Model
 
     public function agent()
     {
-        return $this->belongsTo('GoProp\Models\User');
+        return $this->belongsTo('GoProp\Models\User', 'agent_id');
     }
 
     public function type()

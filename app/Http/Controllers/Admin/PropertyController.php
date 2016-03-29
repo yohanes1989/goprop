@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Session;
 
 class PropertyController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
@@ -30,10 +30,62 @@ class PropertyController extends Controller
             $qb->where('user_id', $user->id);
         }
 
+        if($request->has('search')){
+            if($request->has('search.keyword')){
+                $qb->where(function($query) use ($request){
+                    $query
+                        ->orWhere('address', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('description', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('property_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('province_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('city_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('subdistrict_name', 'LIKE', '%'.$request->input('search.keyword').'%');
+                });
+            }
+
+            if($request->has('search.for')){
+                $qb->where('for_'.$request->input('search.for'), 1);
+            }
+
+            if($request->has('search.owner')){
+                $qb->whereHas('user', function($query) use ($request){
+                    $query->where('email', $request->input('search.owner'));
+                });
+            }
+
+            if($request->has('search.agent')){
+                if($request->input('search.agent') == 'unassigned'){
+                    $qb->whereNull('agent_id');
+                }else{
+                    $qb->whereHas('agent', function($query) use ($request){
+                        $query->where('id', $request->input('search.agent'));
+                    });
+                }
+            }
+
+            if($request->has('search.status')){
+                $qb->where('status', $request->input('search.status'));
+            }
+        }
+
         $properties = $qb->paginate(50);
 
+        $forOptions = [
+            '' => 'For',
+            'sell' => 'Sell',
+            'rent' => 'Rent'
+        ];
+
+        $agentOptions = AgentHelper::getAgentOptions();
+        $agentOptions = ['unassigned' => 'Unassigned'] + $agentOptions;
+        $statusOptions = ['' => 'Status'] + Property::getStatusLabel();
+        unset($statusOptions[Property::STATUS_DRAFT]);
+
         return view('admin.property.index', [
-            'properties' => $properties
+            'properties' => $properties,
+            'forOptions' => $forOptions,
+            'statusOptions' => $statusOptions,
+            'agentOptions' => $agentOptions
         ]);
     }
 
@@ -209,7 +261,7 @@ class PropertyController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.property.index')->with('messages', ['Property is successfully saved.']);
+        return redirect($request->input('backUrl'))->with('messages', ['Property is successfully saved.']);
     }
 
     public function delete(Request $request, $id)
@@ -338,8 +390,11 @@ class PropertyController extends Controller
     public function assignToAgent(Request $request, $id)
     {
         $property = Property::findOrFail($id);
+        $backUrl = $request->get('backUrl', route('admin.property.index'));
 
         if($request->isMethod('POST')){
+            $backUrl = $request->input('backUrl', route('admin.property.index'));
+
             //Get remaining schedules for this property
             $viewingSchedules = $property->viewingSchedules()->where('viewing_from', '>', Carbon::now())->get();
             $conversations = $property->conversations;
@@ -378,14 +433,15 @@ class PropertyController extends Controller
 
             $property->save();
 
-            return redirect($request->get('backUrl', route('admin.property.index')))->with('messages', [$message]);
+            return redirect($backUrl)->with('messages', [$message]);
         }
 
         $agentOptions = AgentHelper::getAgentOptions();
 
         return view('admin.property.assign_to_agent', [
             'property' => $property,
-            'agentOptions' => $agentOptions
+            'agentOptions' => $agentOptions,
+            'backUrl' => $backUrl
         ]);
     }
 

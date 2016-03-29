@@ -25,11 +25,11 @@
     <div class="form-group">
         {!! Form::label('location', 'Location *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::select('province', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getProvinces(true), null, ['class' => 'form-control form-address-selector-province', 'id' => 'province']) !!}
+            {!! Form::select('province', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getProvinces(true), null, ['class' => 'form-control form-address-selector-province select-chosen', 'id' => 'province']) !!}
             <div style="height: 10px;"></div>
-            {!! Form::select('city', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getCities(old('province', $property->province), true), null, ['class' => 'form-control form-address-selector-city', 'id' => 'city']) !!}
+            {!! Form::select('city', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getCities(old('province', $property->province), true), null, ['class' => 'form-control form-address-selector-city select-chosen', 'id' => 'city']) !!}
             <div style="height: 10px;"></div>
-            {!! Form::select('subdistrict', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getSubdistricts(old('city', $property->city), true), null, ['class' => 'form-control form-address-selector-subdistrict', 'id' => 'subdistrict']) !!}
+            {!! Form::select('subdistrict', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getSubdistricts(old('city', $property->city), true), null, ['class' => 'form-control form-address-selector-subdistrict select-chosen', 'id' => 'subdistrict']) !!}
         </div>
     </div>
 
@@ -319,6 +319,7 @@
 
 <div class="form-group">
     <div class="col-md-12">
+        {!! Form::hidden('backUrl', Request::get('backUrl', route('admin.property.index'))) !!}
         {!! Form::submit('Save',array('class'=>'btn btn-primary')) !!}
         {!! Form::reset('Reset',array('class'=>'btn btn-default')) !!}
 

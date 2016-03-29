@@ -8,7 +8,8 @@
 
 @section('content')
     <?php
-    $canAssign = \Illuminate\Support\Facades\Auth::user()->is('administrator');
+    $isAdmin = \Illuminate\Support\Facades\Auth::user()->is('administrator');
+    $canAssign = $isAdmin;
     ?>
     <div class="block">
         <div class="block-title">
@@ -21,6 +22,29 @@
             <h4>Properties</h4>
         </div>
 
+        {!! Form::open(['class' => 'form-horizontal form-grid', 'method' => 'GET']) !!}
+            <div class="form-group">
+                <div class="col-sm-6 col-md-3">
+                    {!! Form::text('search[keyword]', Request::input('search.keyword'), ['class' => 'form-control', 'placeholder' => 'Keyword (Name, Location, Description)', 'id' => 'search-keyword']) !!}
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    {!! Form::select('search[for]', $forOptions, [Request::input('search.for')], ['class' => 'form-control select-chosen', 'id' => 'search-for']) !!}
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    {!! Form::text('search[owner]', Request::input('search.owner'), ['class' => 'form-control', 'placeholder' => 'Owner', 'id' => 'search-owner', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent', 'authenticated_user']])]) !!}
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    {!! Form::select('search[agent]', $agentOptions, [Request::input('search.agent')], ['class' => 'form-control select-chosen', 'placeholder' => 'Agent', 'id' => 'search-agent']) !!}
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    {!! Form::select('search[status]', $statusOptions, [Request::input('search.status')], ['class' => 'form-control select-chosen', 'id' => 'search-status']) !!}
+                </div>
+                <div class="col-sm-6 col-md-1">
+                    {!! Form::button('Filter', ['type' => 'submit', 'class' => 'btn btn-info']) !!}
+                </div>
+            </div>
+        {!! Form::close() !!}
+
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-condensed table-hover">
                 <thead>
@@ -30,8 +54,8 @@
                         <th>Location</th>
                         <th>For</th>
                         <th>Owner</th>
-                        <th>Status</th>
                         <th>Agent</th>
+                        <th>Status</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -49,10 +73,10 @@
                         <td>{{ $property->user->profile->singleName }}
                             <br/>{{ $property->user->profile->mobile_phone_number }}</td>
                         <td>
-                            {{ \GoProp\Models\Property::getStatusLabel($property->status) }}
+                            {{ $property->agent?$property->agent->profile->singleName:'Unassigned' }}
                         </td>
                         <td>
-                            {{ $property->agent?$property->agent->profile->singleName:'Unassigned' }}
+                            {{ \GoProp\Models\Property::getStatusLabel($property->status) }}
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">

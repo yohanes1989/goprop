@@ -82,6 +82,7 @@
                                 value = idx;
                             }
                             $('.form-address-selector-city', context).append('<option value="' + value + '">' + data[idx] + '</option>');
+                            $('.form-address-selector-city', context).trigger("chosen:updated");
                         }
                     }
                 });
@@ -104,6 +105,7 @@
                                 value = idx;
                             }
                             $('.form-address-selector-subdistrict', context).append('<option value="' + value + '">' + data[idx] + '</option>');
+                            $('.form-address-selector-subdistrict', context).trigger("chosen:updated");
                         }
                     }
                 });
