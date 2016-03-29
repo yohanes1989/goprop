@@ -27,7 +27,8 @@ class PropertyController extends Controller
         AddressHelper::addAddressQueryScope($qb);
 
         if($user->is('agent')){
-            $qb->where('user_id', $user->id);
+            $qb->where('properties.agent_id', $user->id);
+            $agentOptionsQb = clone $qb;
         }
 
         if($request->has('search')){
@@ -87,11 +88,21 @@ class PropertyController extends Controller
         $statusOptions = ['' => 'Status'] + Property::getStatusLabel();
         unset($statusOptions[Property::STATUS_DRAFT]);
 
+        $ownerOptions = [];
+        if($user->is('agent')){
+            $agentOptionsQb->leftJoin('users AS U', 'U.id', '=', 'properties.user_id')
+                ->leftJoin('profiles AS P', 'P.user_id', '=', 'U.id')
+                ->selectRaw('properties.*, U.email, CONCAT(P.first_name, \' \', P.last_name) AS full_name')
+                ->groupBy('properties.user_id');
+            $ownerOptions = $agentOptionsQb->get()->pluck('full_name', 'email')->all();
+        }
+
         return view('admin.property.index', [
             'properties' => $properties,
             'forOptions' => $forOptions,
             'statusOptions' => $statusOptions,
-            'agentOptions' => $agentOptions
+            'agentOptions' => $agentOptions,
+            'ownerOptions' => $ownerOptions
         ]);
     }
 

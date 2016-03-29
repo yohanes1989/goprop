@@ -58,7 +58,7 @@
                 {!! Form::select('search[for]', $forOptions, [Request::input('search.for')], ['class' => 'form-control select-chosen', 'id' => 'search-for']) !!}
             </div>
             <div class="col-sm-6 col-md-2">
-                {!! Form::text('search[owner]', Request::input('search.owner'), ['class' => 'form-control', 'placeholder' => 'Owner', 'id' => 'search-owner', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent', 'authenticated_user']])]) !!}
+                {!! Form::select('search[owner]', $ownerOptions, [Request::input('search.owner')], ['class' => 'form-control select-chosen', 'placeholder' => 'Owner', 'id' => 'search-owner']) !!}
             </div>
             <div class="col-sm-6 col-md-2">
                 {!! Form::select('search[status]', $statusOptions, [Request::input('search.status')], ['class' => 'form-control select-chosen', 'id' => 'search-status']) !!}
