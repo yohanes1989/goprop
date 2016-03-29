@@ -53,6 +53,11 @@ class PropertyController extends Controller
                 });
             }
 
+            if($request->has('search.upload_date')){
+                $uploadDateFilter = Carbon::createFromFormat('d-m-Y', $request->input('search.upload_date'));
+                $qb->where('checkout_at', '>=', $uploadDateFilter->format('Y-m-d'));
+            }
+
             if($request->has('search.agent')){
                 if($request->input('search.agent') == 'unassigned'){
                     $qb->whereNull('agent_id');

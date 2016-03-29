@@ -323,7 +323,7 @@
         {!! Form::submit('Save',array('class'=>'btn btn-primary')) !!}
         {!! Form::reset('Reset',array('class'=>'btn btn-default')) !!}
 
-        <a href="{{ route('admin.property.index') }}" class="btn btn-warning">Cancel</a>
+        <a href="{{ Request::get('backUrl', route('admin.property.index')) }}" class="btn btn-warning">Cancel</a>
     </div>
 </div>
 

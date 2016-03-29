@@ -27,7 +27,7 @@
                 <div class="col-sm-6 col-md-3">
                     {!! Form::text('search[keyword]', Request::input('search.keyword'), ['class' => 'form-control', 'placeholder' => 'Keyword (Name, Location, Description)', 'id' => 'search-keyword']) !!}
                 </div>
-                <div class="col-sm-6 col-md-2">
+                <div class="col-sm-6 col-md-1">
                     {!! Form::select('search[for]', $forOptions, [Request::input('search.for')], ['class' => 'form-control select-chosen', 'id' => 'search-for']) !!}
                 </div>
                 <div class="col-sm-6 col-md-2">
@@ -36,8 +36,11 @@
                 <div class="col-sm-6 col-md-2">
                     {!! Form::select('search[agent]', $agentOptions, [Request::input('search.agent')], ['class' => 'form-control select-chosen', 'placeholder' => 'Agent', 'id' => 'search-agent']) !!}
                 </div>
-                <div class="col-sm-6 col-md-2">
+                <div class="col-sm-6 col-md-1">
                     {!! Form::select('search[status]', $statusOptions, [Request::input('search.status')], ['class' => 'form-control select-chosen', 'id' => 'search-status']) !!}
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    {!! Form::text('search[upload_date]', Request::input('search.upload_date'), ['class' => 'form-control input-datepicker-close', 'data-date-format' => 'dd-mm-yyyy', 'placeholder' => 'Upload Date', 'id' => 'search-upload-date']) !!}
                 </div>
                 <div class="col-sm-6 col-md-1">
                     {!! Form::button('Filter', ['type' => 'submit', 'class' => 'btn btn-info']) !!}
@@ -56,6 +59,7 @@
                         <th>Owner</th>
                         <th>Agent</th>
                         <th>Status</th>
+                        <th>Upload Date</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -78,6 +82,7 @@
                         <td>
                             {{ \GoProp\Models\Property::getStatusLabel($property->status) }}
                         </td>
+                        <td>{{ $property->checkout_at?$property->checkout_at->format('d M Y H:i'):null }}</td>
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
                                 @if($canAssign)
