@@ -22,6 +22,7 @@
             <h4>Properties</h4>
         </div>
 
+        @if($isAdmin)
         {!! Form::open(['class' => 'form-horizontal form-grid', 'method' => 'GET']) !!}
             <div class="form-group">
                 <div class="col-sm-6 col-md-3">
@@ -47,6 +48,30 @@
                 </div>
             </div>
         {!! Form::close() !!}
+        @else
+        {!! Form::open(['class' => 'form-horizontal form-grid', 'method' => 'GET']) !!}
+        <div class="form-group">
+            <div class="col-sm-6 col-md-3">
+                {!! Form::text('search[keyword]', Request::input('search.keyword'), ['class' => 'form-control', 'placeholder' => 'Keyword (Name, Location, Description)', 'id' => 'search-keyword']) !!}
+            </div>
+            <div class="col-sm-6 col-md-2">
+                {!! Form::select('search[for]', $forOptions, [Request::input('search.for')], ['class' => 'form-control select-chosen', 'id' => 'search-for']) !!}
+            </div>
+            <div class="col-sm-6 col-md-2">
+                {!! Form::text('search[owner]', Request::input('search.owner'), ['class' => 'form-control', 'placeholder' => 'Owner', 'id' => 'search-owner', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent', 'authenticated_user']])]) !!}
+            </div>
+            <div class="col-sm-6 col-md-2">
+                {!! Form::select('search[status]', $statusOptions, [Request::input('search.status')], ['class' => 'form-control select-chosen', 'id' => 'search-status']) !!}
+            </div>
+            <div class="col-sm-6 col-md-2">
+                {!! Form::text('search[upload_date]', Request::input('search.upload_date'), ['class' => 'form-control input-datepicker-close', 'data-date-format' => 'dd-mm-yyyy', 'placeholder' => 'Upload Date', 'id' => 'search-upload-date']) !!}
+            </div>
+            <div class="col-sm-6 col-md-1">
+                {!! Form::button('Filter', ['type' => 'submit', 'class' => 'btn btn-info']) !!}
+            </div>
+        </div>
+        {!! Form::close() !!}
+        @endif
 
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-condensed table-hover">
