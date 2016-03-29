@@ -156,6 +156,7 @@ return [
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         Dimsav\Translatable\TranslatableServiceProvider::class,
         Proengsoft\JsValidation\JsValidationServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class
     ],
 
     /*
@@ -215,6 +216,7 @@ return [
         'ProjectHelper' => \GoProp\Facades\ProjectHelper::class,
         'AddressHelper' => \GoProp\Facades\AddressHelper::class,
         'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+        'Excel'      => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
     'default_title' => 'GoProp',

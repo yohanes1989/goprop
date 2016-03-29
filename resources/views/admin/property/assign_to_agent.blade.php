@@ -17,7 +17,7 @@
             <div class="form-group">
                 {!! Form::label('agent', 'Choose Agent', array('class'=>'col-md-2 control-label')) !!}
                 <div class="col-md-10">
-                    {!! Form::select('agent', ['' => 'Select Agent'] + $agentOptions, $property->agent?[$property->agent->id]:[], ['id' => 'agent', 'class' => 'select-chosen form-control']) !!}
+                    {!! Form::select('agent', ['' => 'Select Agent'] + $agentOptions, $property->agentList?[$property->agentList->id]:[], ['id' => 'agent', 'class' => 'select-chosen form-control']) !!}
                 </div>
             </div>
 

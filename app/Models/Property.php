@@ -57,9 +57,24 @@ class Property extends Model
         return $this->belongsTo('GoProp\Models\User');
     }
 
-    public function agent()
+    public function agentList()
     {
-        return $this->belongsTo('GoProp\Models\User', 'agent_id');
+        return $this->belongsTo('GoProp\Models\User', 'agent_list_id');
+    }
+
+    public function agentSell()
+    {
+        return $this->belongsTo('GoProp\Models\User', 'agent_sell_id');
+    }
+
+    public function referralList()
+    {
+        return $this->belongsTo('GoProp\Models\User', 'referral_list_id');
+    }
+
+    public function referralSell()
+    {
+        return $this->belongsTo('GoProp\Models\User', 'referral_sell_id');
     }
 
     public function type()
@@ -224,6 +239,15 @@ class Property extends Model
     }
 
     //Methods
+    public function getPackage($for)
+    {
+        $qb = $this->packages()->leftJoin('package_categories AS PC', 'PC.id', '=', 'package_category_id')->where('PC.slug', $for);
+
+        $package = $qb->first();
+
+        return $package;
+    }
+
     public function isOwner($user)
     {
         return ($this->user && $user)?($user->id == $this->user->id):FALSE;

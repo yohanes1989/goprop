@@ -116,6 +116,9 @@
                                             @endif
                                         </div>
                                         <div class="col-sm-4">
+                                            @if($property->furnishing)
+                                                <p><strong>{{ trans('forms.fields.property.furnishing') }}:</strong> {{ trans('property.furnishing.'.$property->furnishing) }}</p>
+                                            @endif
                                             <p><strong>{{ trans('forms.fields.property.bedrooms') }}:</strong> {{ $property->rooms }}</p>
                                             @if($property->maid_rooms)
                                                 <p><strong>{{ trans('forms.fields.property.maid_bedrooms') }}:</strong> {{ $property->maid_rooms }}</p>

@@ -8,6 +8,27 @@
     </div>
 
     <div class="form-group">
+        {!! Form::label('listing_referral', 'Listing Referral', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::text('listing_referral', old('listing_referral', $property->referralList?$property->referralList->email:''), ['class' => 'form-control', 'id' => 'listing_referral', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent']])]) !!}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('selling_agent', 'Selling Agent', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::text('selling_agent', old('selling_agent', $property->agentSell?$property->agentSell->email:''), ['class' => 'form-control', 'id' => 'selling_agent', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent']])]) !!}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {!! Form::label('selling_referral', 'Selling Referral', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::text('selling_referral', old('selling_referral', $property->referralSell?$property->referralSell->email:''), ['class' => 'form-control', 'id' => 'selling_referral', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent']])]) !!}
+        </div>
+    </div>
+
+    <div class="form-group">
         {!! Form::label('status', 'Status *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::select('status', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getStatusLabel(), null, ['class' => 'form-control', 'id' => 'status']) !!}

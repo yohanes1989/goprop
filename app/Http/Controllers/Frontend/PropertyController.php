@@ -974,8 +974,8 @@ class PropertyController extends Controller
 
         $viewingSchedule = ViewingSchedule::where('user_id', $user->id)->where('property_id', $property->id)->first();
 
-        if($property->agent){
-            $agent = $property->agent;
+        if($property->agentList){
+            $agent = $property->agentList;
         }else{
             $agent = ProjectHelper::getDefaultAgent();
         }

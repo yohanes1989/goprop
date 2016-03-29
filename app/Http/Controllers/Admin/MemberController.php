@@ -141,7 +141,8 @@ class MemberController extends Controller
             $qb = User::whereHas('profile', function($query) use ($term){
                 $query->where('first_name', 'LIKE', '%'.$term.'%')
                     ->orWhere('last_name', 'LIKE', '%'.$term.'%')
-                    ->orWhere('email', 'LIKE', '%'.$term.'%');
+                    ->orWhere('email', 'LIKE', '%'.$term.'%')
+                    ->orWhere('username', 'LIKE', '%'.$term.'%');
             });
 
             $qb->whereHas('roles', function($query) use ($roles){
@@ -152,7 +153,7 @@ class MemberController extends Controller
 
             foreach($results as $result){
                 $return[] = [
-                    'label' => $result->profile->first_name.' '.$result->profile->last_name.' ('.$result->email.')',
+                    'label' => $result->username.' - '.$result->profile->first_name.' '.$result->profile->last_name.' ('.$result->email.')',
                     'value' => $result->email
                 ];
             }

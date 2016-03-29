@@ -16,6 +16,7 @@ use GoProp\Facades\AddressHelper;
 use GoProp\Facades\AgentHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PropertyController extends Controller
 {
@@ -23,11 +24,11 @@ class PropertyController extends Controller
     {
         $user = Auth::user();
 
-        $qb = Property::with(['agent'])->whereNotNull('checkout_at')->orderBy('checkout_at', 'DESC');
+        $qb = Property::with(['agentList'])->whereNotNull('checkout_at')->orderBy('checkout_at', 'DESC');
         AddressHelper::addAddressQueryScope($qb);
 
         if($user->is('agent')){
-            $qb->where('properties.agent_id', $user->id);
+            $qb->where('properties.agent_list_id', $user->id);
             $agentOptionsQb = clone $qb;
         }
 
@@ -60,12 +61,42 @@ class PropertyController extends Controller
                 $qb->where('checkout_at', '<', $uploadDateFilter->modify('+1 day')->format('Y-m-d'));
             }
 
-            if($request->has('search.agent')){
-                if($request->input('search.agent') == 'unassigned'){
-                    $qb->whereNull('agent_id');
+            if($request->has('search.agentList')){
+                if($request->input('search.agentList') == 'unassigned'){
+                    $qb->whereNull('agent_list_id');
                 }else{
-                    $qb->whereHas('agent', function($query) use ($request){
-                        $query->where('id', $request->input('search.agent'));
+                    $qb->whereHas('agentList', function($query) use ($request){
+                        $query->where('id', $request->input('search.agentList'));
+                    });
+                }
+            }
+
+            if($request->has('search.agentSell')){
+                if($request->input('search.agentSell') == 'unassigned'){
+                    $qb->whereNull('agent_sell_id');
+                }else{
+                    $qb->whereHas('agentSell', function($query) use ($request){
+                        $query->where('id', $request->input('search.agentSell'));
+                    });
+                }
+            }
+
+            if($request->has('search.referralList')){
+                if($request->input('search.referralList') == 'unassigned'){
+                    $qb->whereNull('referral_list_id');
+                }else{
+                    $qb->whereHas('referralList', function($query) use ($request){
+                        $query->where('id', $request->input('search.referralList'));
+                    });
+                }
+            }
+
+            if($request->has('search.referralSell')){
+                if($request->input('search.referralSell') == 'unassigned'){
+                    $qb->whereNull('referral_sell_id');
+                }else{
+                    $qb->whereHas('referralSell', function($query) use ($request){
+                        $query->where('id', $request->input('search.referralSell'));
                     });
                 }
             }
@@ -76,6 +107,22 @@ class PropertyController extends Controller
         }
 
         $properties = $qb->paginate(50);
+
+        if($request->has('export_xls')){
+            $data = [
+                'properties' => $qb->get()
+            ];
+
+            Excel::create('Property Export', function($excel) use ($data) {
+
+                // Set the title
+                $excel->setTitle('Property Export');
+
+                $excel->sheet('Sheet 1', function($sheet) use ($data) {
+                    $sheet->loadView('admin.property.export.property', $data);
+                });
+            })->download('xlsx');
+        }
 
         $forOptions = [
             '' => 'For',
@@ -159,8 +206,23 @@ class PropertyController extends Controller
 
         $property->user()->associate($owner);
 
+        if($request->has('listing_referral')){
+            $listingReferral = User::where('email', $request->input('listing_referral'))->firstOrFail();
+            $property->referralList()->associate($listingReferral);
+        }
+
+        if($request->has('selling_agent')){
+            $agentSelling = User::where('email', $request->input('selling_agent'))->firstOrFail();
+            $property->agentSell()->associate($agentSelling);
+        }
+
+        if($request->has('selling_referral')){
+            $agentReferral = User::where('email', $request->input('selling_referral'))->firstOrFail();
+            $property->referralSell()->associate($agentReferral);
+        }
+
         if($user->is('agent')){
-            $property->agent()->associate($owner);
+            $property->agentList()->associate($owner);
             $property->status = Property::STATUS_INACTIVE;
         }
 
@@ -248,6 +310,21 @@ class PropertyController extends Controller
         $owner = User::where('email', $ownerEmail)->firstOrFail();
 
         $property->user()->associate($owner);
+
+        if($request->has('listing_referral')){
+            $listingReferral = User::where('email', $request->input('listing_referral'))->firstOrFail();
+            $property->referralList()->associate($listingReferral);
+        }
+
+        if($request->has('selling_agent')){
+            $agentSelling = User::where('email', $request->input('selling_agent'))->firstOrFail();
+            $property->agentSell()->associate($agentSelling);
+        }
+
+        if($request->has('selling_referral')){
+            $agentReferral = User::where('email', $request->input('selling_referral'))->firstOrFail();
+            $property->referralSell()->associate($agentReferral);
+        }
 
         $data = $request->all();
         if($request->input('point_map') != 1){
@@ -419,7 +496,7 @@ class PropertyController extends Controller
             if($request->has('agent')){
                 $agent = User::findOrFail($request->input('agent'));
 
-                $property->agent()->associate($agent);
+                $property->agentList()->associate($agent);
 
                 foreach($viewingSchedules as $viewingSchedule){
                     $viewingSchedule->agent()->associate($agent);
@@ -433,7 +510,7 @@ class PropertyController extends Controller
 
                 $message = 'Property, Viewing Schedules and Conversation have been assigned to '.$agent->profile->singleName.'.';
             }else{
-                $property->agent()->dissociate();
+                $property->agentList()->dissociate();
 
                 foreach($viewingSchedules as $viewingSchedule){
                     $viewingSchedule->agent()->dissociate();
