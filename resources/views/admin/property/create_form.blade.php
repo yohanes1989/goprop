@@ -138,7 +138,16 @@
             {!! Form::textarea('short_note', null, ['class' => 'form-control', 'rows' => 3, 'id' => 'short_note']) !!}
         </div>
     </div>
+
+    <div class="form-group">
+        {!! Form::label('personal_note', 'Personal Note', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::textarea('personal_note', null, ['class' => 'form-control', 'rows' => 3, 'id' => 'personal_note']) !!}
+        </div>
+    </div>
 </div>
+
+<div class="clearfix"></div>
 
 <div class="row">
     <div class="col-md-6">
