@@ -106,8 +106,6 @@ class PropertyController extends Controller
             }
         }
 
-        $properties = $qb->paginate(50);
-
         if($request->has('export_xls')){
             $data = [
                 'properties' => $qb->get()
@@ -123,6 +121,8 @@ class PropertyController extends Controller
                 });
             })->download('xlsx');
         }
+
+        $properties = $qb->paginate(50);
 
         $forOptions = [
             '' => 'For',
