@@ -60,7 +60,7 @@
                 {{ $rentPackage?$rentPackage->name:'' }}
                 @endif
             </td>
-            <td>Listing Code</td>
+            <td>{{ $property->listing_code }}</td>
             <td>{{ \GoProp\Models\Property::getStatusLabel($property->status) }}</td>
             <td>{{ $property->user->profile->singleName }}</td>
             <td>{{ $property->user->profile->mobile_phone_number }}</td>
