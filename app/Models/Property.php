@@ -145,7 +145,7 @@ class Property extends Model
         $getLastProperty = Property::withTrashed()
             ->hasCheckout()
             ->whereNotNull('listing_code')
-            ->orderBy(DB::raw('CAST(listing_code as UNSIGNED)'), 'DESC')
+            ->orderBy(DB::raw('CAST(SUBSTR(listing_code, 6) as UNSIGNED)'), 'DESC')
             ->whereRaw("DATE_FORMAT(checkout_at, '%m-%Y') = ?", [$this->checkout_at->format('m-Y')])
             ->first();
 

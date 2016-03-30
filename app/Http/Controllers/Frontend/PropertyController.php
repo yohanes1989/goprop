@@ -806,10 +806,12 @@ class PropertyController extends Controller
         }
 
         if($property->status == Property::STATUS_DRAFT){
-            $property->update([
+            $property->fill([
                 'status' => Property::STATUS_REVIEW,
                 'checkout_at' => Carbon::now()
             ]);
+            $property->generateListingCode();
+            $property->save();
 
             Event::fire(new PropertyEvent($property, 'new'));
         }
