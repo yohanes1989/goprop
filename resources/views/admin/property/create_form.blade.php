@@ -10,7 +10,7 @@
     <div class="form-group">
         {!! Form::label('owner', 'Owner *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::text('owner', old('owner', isset($owner)?$owner:''), ['class' => 'form-control', 'id' => 'owner', 'data-autocomplete' => route('admin.member.find.auto_complete')]) !!}
+            {!! Form::text('owner', old('owner', isset($owner)?$owner:''), ['class' => 'form-control', 'id' => 'owner', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent', 'authenticated_user']])]) !!}
         </div>
     </div>
 
