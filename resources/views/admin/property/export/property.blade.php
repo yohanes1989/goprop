@@ -62,8 +62,8 @@
             </td>
             <td>{{ $property->listing_code }}</td>
             <td>{{ \GoProp\Models\Property::getStatusLabel($property->status) }}</td>
-            <td>{{ $property->user->profile->singleName }}</td>
-            <td>{{ $property->user->profile->mobile_phone_number }}</td>
+            <td>{{ $property->user?$property->user->profile->singleName:'' }}</td>
+            <td>{{ $property->user?$property->user->profile->mobile_phone_number:'' }}</td>
             <td>{{ $property->property_name }}</td>
             <td>{!! nl2br($property->address) !!}</td>
             <td>{{ $property->province_name }}</td>
