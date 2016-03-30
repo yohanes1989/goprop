@@ -260,7 +260,7 @@ class PropertyController extends Controller
     public function edit($id)
     {
         $property = Property::findOrFail($id);
-        $owner = $property->user->email;
+        $owner = $property->user?$property->user->email:'';
 
         $defaultLatitude = empty($property->latitude)?config('app.default_latitude'):$property->latitude;
         $defaultLongitude = empty($property->longitude)?config('app.default_longitude'):$property->longitude;
