@@ -36,6 +36,7 @@ class PropertyController extends Controller
             if($request->has('search.keyword')){
                 $qb->where(function($query) use ($request){
                     $query
+                        ->orWhere('listing_code', 'LIKE', '%'.$request->input('search.keyword').'%')
                         ->orWhere('address', 'LIKE', '%'.$request->input('search.keyword').'%')
                         ->orWhere('description', 'LIKE', '%'.$request->input('search.keyword').'%')
                         ->orWhere('property_name', 'LIKE', '%'.$request->input('search.keyword').'%')
