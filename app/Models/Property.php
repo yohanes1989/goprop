@@ -154,9 +154,11 @@ class Property extends Model
             $lastListingNumber = 0;
         }
 
+        $listingNumber = $lastListingNumber + 1;
+
         $currentDateCode = $this->checkout_at->format('ym');
 
-        $this->listing_code = 'GO'.$currentDateCode.str_pad($lastListingNumber+1, 2, 0, STR_PAD_LEFT);
+        $this->listing_code = 'GO'.$currentDateCode.str_pad($listingNumber, 2, 0, STR_PAD_LEFT);
     }
 
     //Accessors
