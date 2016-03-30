@@ -1,4 +1,11 @@
 <div class="col-md-6">
+    <div class="form-group">
+        {!! Form::label('listing_code', 'Listing Code', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            <h5><strong>{{ $property->listing_code }}</strong></h5>
+        </div>
+    </div>
+
     @if(Auth::user()->is('administrator'))
     <div class="form-group">
         {!! Form::label('owner', 'Owner *', array('class'=>'col-md-4 control-label')) !!}
