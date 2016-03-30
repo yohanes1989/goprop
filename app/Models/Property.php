@@ -158,7 +158,7 @@ class Property extends Model
 
         $currentDateCode = $this->checkout_at->format('ym');
 
-        $this->listing_code = 'GO'.$currentDateCode.str_pad($listingNumber, 2, 0, STR_PAD_LEFT);
+        $this->listing_code = 'GO'.$currentDateCode.str_pad($listingNumber, 2, '0', STR_PAD_LEFT);
     }
 
     //Accessors
