@@ -118,8 +118,8 @@
                             @if($property->for_rent == 1)<div>For Rent</div>@endif
                             @if($property->for_sell == 1)<div>For Sell</div>@endif
                         </td>
-                        <td>{{ $property->user->profile->singleName }}
-                            <br/>{{ $property->user->profile->mobile_phone_number }}</td>
+                        <td>{{ $property->user?$property->user->profile->singleName:'' }}
+                            <br/>{{ $property->user?$property->user->profile->mobile_phone_number:'' }}</td>
                         <td>
                             {{ \GoProp\Models\Property::getStatusLabel($property->status) }}
                         </td>
