@@ -36,7 +36,6 @@
         <th>Referral Listing</th>
         <th>Agent Selling</th>
         <th>Referral Selling</th>
-        <th>Komisi</th>
     </tr>
 
     @foreach($properties as $idx=>$property)
@@ -106,7 +105,6 @@
             <td>{{ $property->referralList?$property->referralList->profile->singleName:'' }}</td>
             <td>{{ $property->agentSell?$property->agentSell->profile->singleName:'' }}</td>
             <td>{{ $property->referralSell?$property->referralSell->profile->singleName:'' }}</td>
-            <td>Komisi</td>
         </tr>
     @endforeach
 </table>

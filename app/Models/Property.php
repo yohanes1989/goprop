@@ -3,11 +3,14 @@
 namespace GoProp\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class Property extends Model
 {
+    use SoftDeletes;
+
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
     const STATUS_BLOCKED = 'blocked';
@@ -46,10 +49,10 @@ class Property extends Model
     public static $availableElectricity = [450, 900, 1300, 2200, 3500, 4400, 5500, 6600, 7600, 7700, 8000, 9000, 10000, 10600, 11000, 12700, 13200, 13300, 13900, 16500, 17600, 19000, 22000, 23000, 24000, 30500, 38100, 41500, 47500, 53000, 61000, 66000, 76000, 82500, 85000, 95000];
 
     protected $dates = ['deleted_at', 'checkout_at'];
-    protected $fillable = ['property_name', 'province', 'city', 'subdistrict', 'address', 'postal_code',
+    protected $fillable = ['property_name', 'listing_code', 'province', 'city', 'subdistrict', 'address', 'postal_code',
         'property_type_id', 'parking', 'garage_size', 'carport_size', 'rooms', 'bathrooms', 'maid_rooms', 'maid_bathrooms', 'for_sell', 'sell_price',
         'for_rent', 'rent_price', 'rent_price_type', 'land_size', 'land_dimension', 'building_size', 'building_dimension', 'floors', 'orientation', 'phone_lines', 'electricity', 'certificate', 'description',
-        'virtual_tour_url', 'latitude', 'longitude', 'status', 'checkout_at', 'furnishing', 'short_note'];
+        'virtual_tour_url', 'latitude', 'longitude', 'status', 'checkout_at', 'furnishing', 'short_note', 'personal_note'];
 
     //Relations
     public function user()
@@ -130,6 +133,30 @@ class Property extends Model
     public function viewingSchedules()
     {
         return $this->hasMany('GoProp\Models\ViewingSchedule');
+    }
+
+    public function generateListingCode()
+    {
+        if(empty($this->checkout_at) || !empty($this->listing_code)){
+            abort(403, 'Can\'t generate listing code action.');
+        }
+
+        $getLastProperty = Property::withTrashed()
+            ->hasCheckout()
+            ->whereNotNull('listing_code')
+            ->orderBy('listing_code', 'DESC')
+            ->whereRaw("DATE_FORMAT(checkout_at, '%m-%Y') = ?", [$this->checkout_at->format('m-Y')])
+            ->first();
+
+        if($getLastProperty){
+            $lastListingNumber = intval(substr($getLastProperty->listing_code, 6));
+        }else{
+            $lastListingNumber = 0;
+        }
+
+        $currentDateCode = $this->checkout_at->format('ym');
+
+        $this->listing_code = 'GO'.$currentDateCode.str_pad($lastListingNumber+1, 2, 0, STR_PAD_LEFT);
     }
 
     //Accessors
@@ -236,6 +263,11 @@ class Property extends Model
     public function scopeActive($query)
     {
         $query->where($this->getTable().'.status', self::STATUS_ACTIVE);
+    }
+
+    public function scopeHasCheckout($query)
+    {
+        $query->whereNotNull($this->getTable().'.checkout_at');
     }
 
     //Methods

@@ -234,6 +234,7 @@ class PropertyController extends Controller
 
         $property->fill($data);
         $property->checkout_at = Carbon::now();
+        $property->generateListingCode();
         $property->processViewingSchedule($request->all());
         $property->save();
 

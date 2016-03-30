@@ -90,6 +90,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
+                        <th>Code</th>
                         <th>Name</th>
                         <th>Location</th>
                         <th>For</th>
@@ -110,6 +111,7 @@
                     @foreach($properties as $idx=>$property)
                     <tr>
                         <td class="text-center">{{ $idx + 1 + (($properties->currentPage() - 1) * $properties->perPage()) }}</td>
+                        <td>{{ $property->listing_code }}</td>
                         <td>{{ $property->property_name }}</td>
                         <td>{{ $property->subdistrict_name.', '. $property->city_name }}</td>
                         <td>
