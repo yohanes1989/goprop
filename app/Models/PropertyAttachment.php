@@ -29,7 +29,7 @@ class PropertyAttachment extends Model
         });
         $img->save($folder.'original/'.$this->filename);
 
-        $this->createWatermarkedImage();
+        $this->createWatermarkedImage('default');
 
         return $img;
     }
@@ -48,7 +48,7 @@ class PropertyAttachment extends Model
 
         $img->save($folder.'original/'.$this->filename);
 
-        $this->createWatermarkedImage();
+        $this->createWatermarkedImage('default');
 
         return $img;
     }
@@ -65,14 +65,21 @@ class PropertyAttachment extends Model
         return $folder;
     }
 
-    protected function createWatermarkedImage()
+    public function createWatermarkedImage($watermark, $width = 1200, $quality=60, $folder=null)
     {
-        $folder = $this->getFolder();
+        if(empty($folder)){
+            $folder = $this->getFolder();
+        }
 
-        $img = Image::make($folder.'original/'.$this->filename)->widen(1200);
-        $img->insert(asset('assets/frontend/images/watermark.png'), 'center');
+        $img = Image::make($this->getFolder().'original/'.$this->filename)->widen($width);
 
-        return $img->save($folder.$this->filename, 60);
+        if($watermark == 'logo_only'){
+            $img->insert(asset('assets/frontend/images/watermark_logo_only.png'), 'center');
+        }else{
+            $img->insert(asset('assets/frontend/images/watermark.png'), 'center');
+        }
+
+        return $img->save($folder.$this->filename, $quality);
     }
 
     //Statics

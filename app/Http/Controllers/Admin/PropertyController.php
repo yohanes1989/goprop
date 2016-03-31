@@ -406,6 +406,26 @@ class PropertyController extends Controller
         return response()->json($uploadedPhotos);
     }
 
+    public function photosDownload($id, $type)
+    {
+        $property = Property::findOrFail($id);
+
+        if($file = $property->downloadPhoto($type)){
+            return response()->download($file);
+        }else{
+            return redirect()->back()->withErrors(['Not available for download']);
+        }
+    }
+
+    public function photosDownloadClear($id, $type)
+    {
+        $property = Property::findOrFail($id);
+
+        $property->deleteDownloadPhoto($type);
+
+        return redirect()->back()->with('messages', ['Download material deletion is successful.']);
+    }
+
     public function photosDelete(Request $request, $id, $attachment_id)
     {
         $property = Property::findOrFail($id);

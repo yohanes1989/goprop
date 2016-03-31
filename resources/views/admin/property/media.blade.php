@@ -41,6 +41,21 @@
                     {!! Form::close() !!}
                 </div>
             </div>
+
+            <div class="form-group">
+                <div class="btn-group">
+                    @if($property->photos->count() > 0)
+                    <a href="{{ route('admin.property.media.download', ['id' => $property->id, 'type' => 'photo']) }}" class="btn btn-xs btn-info">Download</a>
+                    @endif
+                    @if($property->downloadFolderExists('photo'))
+                    <a href="{{ route('admin.property.media.download.clear', ['id' => $property->id, 'type' => 'photo']) }}" class="btn btn-xs btn-default">Clear Download</a>
+                    @endif
+                </div>
+
+                @if($property->downloadFolderExists('photo'))
+                <div class="help-block"><strong>Clear Download</strong> after the download has finished so it won't consume website storage.</div>
+                @endif
+            </div>
         </div>
         <div class="col-md-6">
             <div class="block">
@@ -68,6 +83,21 @@
                     </div>
                     {!! Form::close() !!}
                 </div>
+            </div>
+
+            <div class="form-group">
+                <div class="btn-group">
+                    @if($property->floorplans->count() > 0)
+                        <a href="{{ route('admin.property.media.download', ['id' => $property->id, 'type' => 'floorplan']) }}" class="btn btn-xs btn-info">Download</a>
+                    @endif
+                    @if($property->downloadFolderExists('floorplan'))
+                        <a href="{{ route('admin.property.media.download.clear', ['id' => $property->id, 'type' => 'floorplan']) }}" class="btn btn-xs btn-default">Clear Download</a>
+                    @endif
+                </div>
+
+                @if($property->downloadFolderExists('floorplan'))
+                <div class="help-block"><strong>Clear Download</strong> after the download has finished so it won't consume website storage.</div>
+                @endif
             </div>
         </div>
     </div>

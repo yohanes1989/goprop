@@ -421,6 +421,73 @@ class Property extends Model
         return $propertyAttachment;
     }
 
+    public function downloadPhoto($type)
+    {
+        if($type == 'floorplan'){
+            $photos = $this->floorplans;
+        }else{
+            $photos = $this->photos;
+        }
+
+        if($photos->count() < 1){
+            return false;
+        }
+
+        $folder = $photos->first()->getFolder().'download_'.$this->id.'/';
+
+        File::deleteDirectory($folder, true);
+
+        if (!File::exists( $folder.$type )) {
+            File::makeDirectory($folder . $type, 0755, true);
+        }
+
+        $zipFileName = $this->listing_code.'_'.$type.'.zip';
+
+        $zip = new \ZipArchive;
+        $zip->open($folder.$zipFileName, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        foreach($photos as $photo){
+            $file = $photo->createWatermarkedImage('logo_only', 1200, 80, $folder.$type.'/');
+
+            if($file){
+                $zip->addFile( $file->dirname.'/'.$file->basename, $file->basename );
+            }
+        }
+
+        $zip->close();
+
+        return $folder.$zipFileName;
+    }
+
+    public function deleteDownloadPhoto($type)
+    {
+        if($type == 'floorplan'){
+            $photos = $this->floorplans;
+        }else{
+            $photos = $this->photos;
+        }
+
+        $folder = $photos->first()->getFolder().'download_'.$this->id.'/';
+
+        File::deleteDirectory($folder, true);
+    }
+
+    public function downloadFolderExists($type)
+    {
+        if($type == 'floorplan'){
+            $photos = $this->floorplans;
+        }else{
+            $photos = $this->photos;
+        }
+
+        if($photos->count() < 1){
+            return false;
+        }
+
+        $folder = $photos->first()->getFolder().'download_'.$this->id.'/';
+        return File::exists( $folder.$type );
+    }
+
     public function getCartOrder()
     {
         return $this->orders()->where('status', Order::STATUS_CART)->first();

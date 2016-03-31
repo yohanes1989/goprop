@@ -167,6 +167,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                     'uses' => 'PropertyController@photosUpload'
                 ]);
 
+                Route::get('/{id}/media/download/{type}', [
+                    'as' => 'admin.property.media.download',
+                    'uses' => 'PropertyController@photosDownload'
+                ]);
+
+                Route::get('/{id}/media/download/{type}/clear', [
+                    'as' => 'admin.property.media.download.clear',
+                    'uses' => 'PropertyController@photosDownloadClear'
+                ]);
+
                 Route::post('/{id}/media/delete/{attachment_id}', [
                     'as' => 'admin.property.media.delete',
                     'uses' => 'PropertyController@photosDelete'
