@@ -68,7 +68,7 @@ var app = {
               autoplayTimeout:5000,
               smartSpeed: 1500,
               items: 1,
-              loop: true,
+              loop: false,
               nav:true,
               navText: [
                   "<i class='fa fa-chevron-left icon-white'></i>",

@@ -1,8 +1,9 @@
+<?php
+$exclusiveProperties = \GoProp\Facades\ProjectHelper::getExclusiveProperties(5);
+?>
+@if(count($exclusiveProperties) > 0)
 <div class="exclusive-property-carousel">
     <div id="exclusivePropertyWidget-list">
-        <?php
-            $exclusiveProperties = \GoProp\Facades\ProjectHelper::getExclusiveProperties(5);
-        ?>
         @foreach($exclusiveProperties as $exclusiveProperty)
         <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->exclusive_type }}">
             <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id]) }}">
@@ -21,3 +22,4 @@
         @endforeach
     </div>
 </div>
+@endif
