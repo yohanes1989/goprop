@@ -1,3 +1,7 @@
+<?php
+$exclusiveProperties = \GoProp\Facades\ProjectHelper::getExclusiveProperties(5);
+?>
+@if(count($exclusiveProperties) > 0)
 <section class="exclusive-property-columns">
     <div class="container">
         <header class="header-area">
@@ -6,9 +10,6 @@
         <div class="entry-content">
             <div class="exclusive-property-carousel">
                 <div id="exclusiveProperty-list">
-                    <?php
-                    $exclusiveProperties = \GoProp\Facades\ProjectHelper::getExclusiveProperties(5);
-                    ?>
                     @foreach($exclusiveProperties as $exclusiveProperty)
                         <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->exclusive_type }}">
                             <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id]) }}">
@@ -29,3 +30,4 @@
         </div>
     </div>
 </section>
+@endif
