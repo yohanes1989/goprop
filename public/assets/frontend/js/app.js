@@ -12,62 +12,70 @@ var app = {
       });
 
       // Javascript for Owl Carousel
-      $('#partner-carousel', context).owlCarousel({
-          autoplay:true,
-          autoplayTimeout: 1000,
-          smartSpeed: 500,
-          items: 1,
-          loop: true,
-          responsive: {
-              640: {
-                  items: 3
-              },
-              1024: {
-                  items: 4
+      if($('#partner-carousel', context).length > 0){
+          $('#partner-carousel', context).owlCarousel({
+              autoplay:true,
+              autoplayTimeout: 1000,
+              smartSpeed: 500,
+              items: 1,
+              loop: true,
+              responsive: {
+                  640: {
+                      items: 3
+                  },
+                  1024: {
+                      items: 4
+                  }
               }
-          }
-      });
+          });
+      }
 
-      $('#testimonial-carousel', context).owlCarousel({
-          autoplay:true,
-          autoplayTimeout:5000,
-          items: 1,
-          loop: true
-      });
+      if($('#testimonial-carousel', context).length > 0){
+          $('#testimonial-carousel', context).owlCarousel({
+              autoplay:true,
+              autoplayTimeout:5000,
+              items: 1,
+              loop: true
+          });
+      }
 
-      $('#exclusiveProperty-list', context).owlCarousel({
-          autoplay:true,
-          autoplayTimeout:5000,
-          smartSpeed: 1500,
-          items: 1,
-          loop: true,
-          nav:true,
-          navText: [
-              "<i class='fa fa-chevron-left icon-white'></i>",
-              "<i class='fa fa-chevron-right icon-white'></i>"
-          ],
-          responsive: {
-              640: {
-                  items: 2
-              },
-              768: {
-                  items: 3
+      if($('#exclusiveProperty-list', context).length > 0){
+          $('#exclusiveProperty-list', context).owlCarousel({
+              autoplay:true,
+              autoplayTimeout:5000,
+              smartSpeed: 1500,
+              items: 1,
+              loop: true,
+              nav:true,
+              navText: [
+                  "<i class='fa fa-chevron-left icon-white'></i>",
+                  "<i class='fa fa-chevron-right icon-white'></i>"
+              ],
+              responsive: {
+                  640: {
+                      items: 2
+                  },
+                  768: {
+                      items: 3
+                  }
               }
-          }
-      });
+          });
+      }
 
-      $('#exclusivePropertyWidget-list', context).owlCarousel({
-          autoplay:true,
-          autoplayTimeout:5000,
-          smartSpeed: 1500,
-          items: 1,
-          loop: true,
-          nav:true,
-          navText: [
-              "<i class='fa fa-chevron-left icon-white'></i>",
-              "<i class='fa fa-chevron-right icon-white'></i>"
-          ]
-      });
+      if($('#exclusivePropertyWidget-list', context).length > 0){
+          $('#exclusivePropertyWidget-list', context).owlCarousel({
+              autoplay:true,
+              autoplayTimeout:5000,
+              smartSpeed: 1500,
+              items: 1,
+              loop: true,
+              nav:true,
+              navText: [
+                  "<i class='fa fa-chevron-left icon-white'></i>",
+                  "<i class='fa fa-chevron-right icon-white'></i>"
+              ]
+          });
+      }
 
       // Javascript for Image Preview when Upload Files
       function readURL(input) {
