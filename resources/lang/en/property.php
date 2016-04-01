@@ -39,7 +39,9 @@ return [
     'certificate' => [
         'strata_title' => 'Strata Title',
         'hgb' => 'Hak Guna Bangunan',
-        'hm' => 'Hak Milik'
+        'hm' => 'Hak Milik',
+        'ppjb' => 'PPJB',
+        'hpl' => 'HPL'
     ],
     'create' => [
         'page_title' => 'Main Details',
@@ -90,7 +92,7 @@ return [
     'property_type' => [
         'house' => 'House',
         'apartment' => 'Apartment',
-        'shophouse' => 'Shophouse',
+        'shophouse' => 'Shophouse (Ruko)',
         'commercial' => 'Commercial',
         'factory' => 'Factory',
         'land' => 'Land',

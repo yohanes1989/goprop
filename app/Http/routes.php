@@ -11,6 +11,18 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             'uses' => 'HomeController@dashboard'
         ]);
 
+        Route::group(['prefix' => '/account'], function(){
+            Route::get('/update', [
+                'as' => 'admin.account.update',
+                'uses' => 'AccountController@account_update'
+            ]);
+
+            Route::post('/save', [
+                'as' => 'admin.account.save',
+                'uses' => 'AccountController@account_save'
+            ]);
+        });
+
         //Admin
         Route::group(['prefix' => '/members', 'is' => 'administrator'], function(){
             Route::get('/index', [

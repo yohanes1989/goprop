@@ -70,6 +70,8 @@ class MenuMiddleware
                         $menu->add('User Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'user']])->prepend('<i class="fa fa-comments"></i> ');
                     }
 
+                    $menu->raw('<h2 class="sidebar-header">Account</h2>');
+                    $menu->add('Profile Update', ['route' => ['admin.account.update']])->prepend('<i class="fa fa-user"></i> ');
 
                     /*
                     $menu->add('Products', ['route' => ['admin.product.index']])->prepend('<i class="gi gi-tags"></i> ');

@@ -43,6 +43,8 @@ class Property extends Model
 
     const CERTIFICATE_STRATA_TITLE = 'strata_title';
     const CERTIFICATE_HGB = 'hgb';
+    const CERTIFICATE_PPJB = 'ppjb';
+    const CERTIFICATE_HPL = 'hpl';
     const CERTIFICATE_HM = 'hm';
 
     public static $residentialSlugs = ['house', 'apartment', 'townhouse'];
@@ -594,6 +596,8 @@ class Property extends Model
             self::CERTIFICATE_STRATA_TITLE => trans('property.certificate.'.self::CERTIFICATE_STRATA_TITLE),
             self::CERTIFICATE_HGB => trans('property.certificate.'.self::CERTIFICATE_HGB),
             self::CERTIFICATE_HM => trans('property.certificate.'.self::CERTIFICATE_HM),
+            self::CERTIFICATE_HPL => trans('property.certificate.'.self::CERTIFICATE_HPL),
+            self::CERTIFICATE_PPJB => trans('property.certificate.'.self::CERTIFICATE_PPJB),
         ];
 
         if(empty($option)){

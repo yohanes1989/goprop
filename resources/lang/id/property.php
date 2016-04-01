@@ -39,7 +39,9 @@ return [
     'certificate' => [
         'strata_title' => 'Strata Title',
         'hgb' => 'Hak Guna Bangunan',
-        'hm' => 'Hak Milik'
+        'hm' => 'Hak Milik',
+        'ppjb' => 'PPJB',
+        'hpl' => 'HPL'
     ],
     'create' => [
         'page_title' => 'Detail Utama',
