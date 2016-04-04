@@ -239,6 +239,14 @@ class PropertyController extends Controller
         $property->processViewingSchedule($request->all());
         $property->save();
 
+        foreach($request->input('property_portals', []) as $checkedPortal){
+            $checkedPortals[$checkedPortal] = [
+                'user_id' => $user->id
+            ];
+        }
+
+        $property->propertyPortals()->sync($checkedPortals);
+
         if($request->has('sell_package')){
             $property->packages()->attach([
                 $request->input('sell_package') => [
@@ -338,6 +346,14 @@ class PropertyController extends Controller
 
         $property->processViewingSchedule($request->all());
         $property->save();
+
+        foreach($request->input('property_portals', []) as $checkedPortal){
+            $checkedPortals[$checkedPortal] = [
+                'user_id' => $user->id
+            ];
+        }
+
+        $property->propertyPortals()->sync($checkedPortals);
 
         //Clear all packages
         $property->packages()->detach();

@@ -118,6 +118,11 @@ class Property extends Model
         return $this->belongsToMany('GoProp\Models\Package')->withPivot(['addons']);
     }
 
+    public function propertyPortals()
+    {
+        return $this->belongsToMany('GoProp\Models\PropertyPortal')->withTimestamps()->withPivot(['user_id']);
+    }
+
     public function likedBy()
     {
         return $this->belongsToMany('GoProp\Models\User', 'liked_properties');

@@ -85,6 +85,7 @@
         {!! Form::close() !!}
         @endif
 
+        <?php $allPortals = \GoProp\Models\PropertyPortal::getAllPortals(); ?>
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-condensed table-hover">
                 <thead>
@@ -98,10 +99,9 @@
                         <th>Status</th>
                         <th>Upload Date</th>
                         @if($isAdmin)
-                        <th>Listing Agent</th>
-                        <th>Listing Referral</th>
-                        <th>Selling Agent</th>
-                        <th>Selling Referral</th>
+                        <th>Portals</th>
+                        <th>Listing</th>
+                        <th>Selling</th>
                         @endif
                         <th class="text-center">Actions</th>
                     </tr>
@@ -126,16 +126,17 @@
                         <td>{{ $property->checkout_at?$property->checkout_at->format('d M Y H:i'):null }}</td>
                         @if($isAdmin)
                         <td>
-                            {{ $property->agentList?$property->agentList->profile->singleName:'Unassigned' }}
+                            @foreach($allPortals as $portal)
+                                <div>{!! '<i class="fa fa-'.(in_array($portal->id, $property->propertyPortals->pluck('id')->all())?'check':'times').'"></i> '.$portal->name !!}</div>
+                            @endforeach
                         </td>
                         <td>
-                            {{ $property->referralList?$property->referralList->profile->singleName:'Unassigned' }}
+                            <p>Agent: {{ $property->agentList?$property->agentList->profile->singleName:'Unassigned' }}</p>
+                            <p>Referral: {{ $property->referralList?$property->referralList->profile->singleName:'Unassigned' }}</p>
                         </td>
                         <td>
-                            {{ $property->agentSell?$property->agentSell->profile->singleName:'Unassigned' }}
-                        </td>
-                        <td>
-                            {{ $property->referralSell?$property->referralSell->profile->singleName:'Unassigned' }}
+                            <p>Agent: {{ $property->agentSell?$property->agentSell->profile->singleName:'Unassigned' }}</p>
+                            <p>Referral: {{ $property->referralSell?$property->referralSell->profile->singleName:'Unassigned' }}</p>
                         </td>
                         @endif
                         <td class="text-center">

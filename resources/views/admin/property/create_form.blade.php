@@ -354,6 +354,17 @@
     </div>
 </div>
 
+<h4 class="sub-header">Property Portals</h4>
+
+<div class="row">
+    <?php $allPortals = \GoProp\Models\PropertyPortal::getAllPortals(); ?>
+    @foreach($allPortals as $portal)
+        <div class="col-md-2">
+        <label>{!! Form::checkbox('property_portals[]', $portal->id, in_array($portal->id, $property->propertyPortals->pluck('id')->all())) !!} {{ $portal->name }}</label>
+        </div>
+    @endforeach
+</div>
+
 <div class="form-group">
     <div class="col-md-12">
         {!! Form::hidden('backUrl', Request::get('backUrl', route('admin.property.index'))) !!}
