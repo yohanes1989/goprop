@@ -239,6 +239,7 @@ class PropertyController extends Controller
         $property->processViewingSchedule($request->all());
         $property->save();
 
+        $checkedPortals = [];
         foreach($request->input('property_portals', []) as $checkedPortal){
             $checkedPortals[$checkedPortal] = [
                 'user_id' => $user->id
@@ -347,6 +348,7 @@ class PropertyController extends Controller
         $property->processViewingSchedule($request->all());
         $property->save();
 
+        $checkedPortals = [];
         foreach($request->input('property_portals', []) as $checkedPortal){
             $checkedPortals[$checkedPortal] = [
                 'user_id' => $user->id
