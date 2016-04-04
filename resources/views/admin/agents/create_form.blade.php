@@ -1,3 +1,5 @@
+<?php $isAdmin = \Illuminate\Support\Facades\Auth::user()->is('administrator'); ?>
+
 <div class="col-md-4">
     <!--
     <div class="form-group">
@@ -73,12 +75,14 @@
         </div>
     </div>
 
+    @if($isAdmin)
     <div class="form-group">
         {!! Form::label('occupation', 'Occupation', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::text('profile[occupation]', null, array('class'=>'form-control' , 'id' => 'occupation' ,'placeholder'=>'GoProp Agent')) !!}
         </div>
     </div>
+    @endif
 
     <div class="form-group">
         {!! Form::label('mobile_phone_number', 'Mobile Phone Number *', array('class'=>'col-md-4 control-label')) !!}

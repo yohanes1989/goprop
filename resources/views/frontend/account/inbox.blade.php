@@ -50,8 +50,7 @@
                                                     @else
                                                         <h5 class="entry-title">{{ $conversation->recipient->profile->singleName }}</h5>
                                                         <p class="entry-desc">
-                                                            <a href="tel:{{ $conversation->recipient->profile->mobile_phone_number }}"><i class="fa fa-mobile"></i> {{ $conversation->recipient->profile->mobile_phone_number }}</a><br/>
-                                                            {{ $conversation->recipient->profile->occupation }}
+                                                            <a href="tel:{{ $conversation->recipient->profile->mobile_phone_number }}"><i class="fa fa-mobile"></i> {{ $conversation->recipient->profile->mobile_phone_number }}</a>
                                                         </p>
                                                     @endif
                                                 </header>

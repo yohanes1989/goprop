@@ -124,6 +124,7 @@ class PropertyController extends Controller
         }
 
         $properties = $qb->paginate(50);
+        $properties->appends(['search' => $request->input('search')]);
 
         $forOptions = [
             '' => 'For',
