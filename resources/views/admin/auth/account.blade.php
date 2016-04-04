@@ -7,6 +7,8 @@
 @endsection
 
 @section('content')
+    <?php $isAdmin = \Illuminate\Support\Facades\Auth::user()->is('administrator'); ?>
+
     <div class="block">
         <div class="block-title">
             <h4>Update Account</h4>
@@ -76,13 +78,6 @@
                 {!! Form::label('last_name', 'Last Name', array('class'=>'col-md-4 control-label')) !!}
                 <div class="col-md-8">
                     {!! Form::text('profile[last_name]', null, array('class'=>'form-control' , 'id' => 'last_name' ,'placeholder'=>'Last Name')) !!}
-                </div>
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('occupation', 'Occupation', array('class'=>'col-md-4 control-label')) !!}
-                <div class="col-md-8">
-                    {!! Form::text('profile[occupation]', null, array('class'=>'form-control' , 'id' => 'occupation' ,'placeholder'=>'GoProp Agent')) !!}
                 </div>
             </div>
 
