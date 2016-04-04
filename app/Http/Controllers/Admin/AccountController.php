@@ -4,6 +4,7 @@ namespace GoProp\Http\Controllers\Admin;
 
 use GoProp\Http\Controllers\Controller;
 use GoProp\Http\Requests\Admin\AccountFormRequest;
+use GoProp\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
@@ -12,6 +13,11 @@ class AccountController extends Controller
     {
         $user = Auth::user();
         $user->load(['profile']);
+
+        if(empty($user->profile)){
+            $user->profile()->save(new Profile());
+            $user->load(['profile']);
+        }
 
         return view('admin.auth.account', [
             'user' => $user
