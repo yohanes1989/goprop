@@ -35,7 +35,7 @@ var app = {
               autoplay:true,
               autoplayTimeout:5000,
               items: 1,
-              loop: true
+              loop: ($('#testimonial-carousel .testimonial-item', context).length > 1),
           });
       }
 
@@ -43,9 +43,9 @@ var app = {
           $('#exclusiveProperty-list', context).owlCarousel({
               autoplay:true,
               autoplayTimeout:5000,
-              smartSpeed: 1500,
+              smartSpeed: 1000,
               items: 1,
-              loop: false,
+              loop: ($('#exclusiveProperty-list .exclusiveProperty-item', context).length > 1),
               nav:true,
               navText: [
                   "<i class='fa fa-chevron-left icon-white'></i>",
@@ -66,9 +66,9 @@ var app = {
           $('#exclusivePropertyWidget-list', context).owlCarousel({
               autoplay:true,
               autoplayTimeout:5000,
-              smartSpeed: 1500,
+              smartSpeed: 1000,
               items: 1,
-              loop: false,
+              loop: ($('#exclusivePropertyWidget-list .exclusiveProperty-item', context).length > 1),
               nav:true,
               navText: [
                   "<i class='fa fa-chevron-left icon-white'></i>",

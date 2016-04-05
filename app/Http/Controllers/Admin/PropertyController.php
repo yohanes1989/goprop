@@ -155,6 +155,51 @@ class PropertyController extends Controller
         ]);
     }
 
+    public function view($id)
+    {
+        $property = Property::findOrFail($id);
+        $owner = $property->user?$property->user->email:'';
+
+        $defaultLatitude = empty($property->latitude)?config('app.default_latitude'):$property->latitude;
+        $defaultLongitude = empty($property->longitude)?config('app.default_longitude'):$property->longitude;
+
+        if(empty($property->latitude) || empty($property->longitude)){
+            $mapDefault = true;
+        }else{
+            $mapDefault = false;
+        }
+
+        $sellPackage = old('sell_package')?Package::findOrFail(old('sell_package')):null;
+        $rentPackage = old('rent_package')?Package::findOrFail(old('rent_package')):null;
+
+        $packages = $property->packages()->with('category')->get();
+        foreach($packages as $package){
+            if($package->category->slug == 'rent' && !$rentPackage){
+                $rentPackage = $package;
+            }elseif($package->category->slug == 'sell' && !$sellPackage){
+                $sellPackage = $package;
+            }
+        }
+
+        $viewData = [
+            'owner' => $owner,
+            'property' => $property,
+            'defaultLatitude' => $defaultLatitude,
+            'defaultLongitude' => $defaultLongitude,
+            'mapDefault' => $mapDefault,
+            'sellPackage' => $sellPackage,
+            'rentPackage' => $rentPackage
+        ];
+
+        foreach(PackageCategory::all() as $packageCategory){
+            ${$packageCategory->slug.'PackageOptions'} = $packageCategory->packages->pluck('name', 'id')->all();
+
+            $viewData[$packageCategory->slug.'PackageOptions'] = ${$packageCategory->slug.'PackageOptions'};
+        }
+
+        return view('admin.property.view', $viewData);
+    }
+
     public function create()
     {
         $property = new Property();
@@ -360,7 +405,7 @@ class PropertyController extends Controller
 
         //Clear all packages
         $property->packages()->detach();
-        if($request->has('sell_package')){
+        if($request->input('for_sell') && $request->has('sell_package')){
             $property->packages()->attach([
                 $request->input('sell_package') => [
                     'addons' => implode('|', $request->input('features.sell', []))
@@ -368,7 +413,7 @@ class PropertyController extends Controller
             ]);
         }
 
-        if($request->has('rent_package')){
+        if($request->input('for_rent') && $request->has('rent_package')){
             $property->packages()->attach([
                 $request->input('rent_package') => [
                     'addons' => implode('|', $request->input('features.rent', []))

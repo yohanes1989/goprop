@@ -107,13 +107,13 @@ class AccountController extends Controller
         $this->validate($request, $rules);
 
         $property = Property::find($property_id);
-        $property->load('agent');
+        $property->load('agentList');
 
         $user = Auth::user();
 
 
-        if($property->agent){
-            $agent = $property->agent;
+        if($property->agentList){
+            $agent = $property->agentList;
         }else{
             $agent = ProjectHelper::getDefaultAgent();
         }

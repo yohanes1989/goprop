@@ -31,7 +31,8 @@
                         <td class="text-center">{{ $idx + 1 + (($viewingSchedules->currentPage() - 1) * $viewingSchedules->perPage()) }}</td>
                         <td><strong>{{ $viewingSchedule->user->profile->singleName }}</strong><br/>
                             {{ $viewingSchedule->user->username }}<br/>
-                            {{ $viewingSchedule->user->email }}
+                            {{ $viewingSchedule->user->email }}<br/>
+                            {{ $viewingSchedule->user->profile->mobile_phone_number }}
                         </td>
                         <td>
                             <strong>{{ $viewingSchedule->property->property_name }}</strong><br/>

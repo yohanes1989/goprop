@@ -91,13 +91,13 @@ class User extends Model implements AuthenticatableContract,
 
     public function createPropertyConversation($property, $agent = NULL)
     {
-        if(!$property->relationLoaded('agent')){
-            $property->load('agent');
+        if(!$property->relationLoaded('agentList')){
+            $property->load('agentList');
         }
 
         if(!$agent){
-            if($property->agent){
-                $agent = $property->agent;
+            if($property->agentList){
+                $agent = $property->agentList;
             }
         }
 

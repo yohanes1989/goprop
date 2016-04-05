@@ -4,6 +4,7 @@ namespace GoProp\Http\Controllers\Frontend;
 
 use Carbon\Carbon;
 use GoProp\Events\PropertyEvent;
+use GoProp\Events\ViewingScheduleEvent;
 use GoProp\Facades\AddressHelper;
 use GoProp\Facades\ProjectHelper;
 use GoProp\Facades\PropertyCompareHelper;
@@ -955,7 +956,7 @@ class PropertyController extends Controller
     {
         $user = Auth::user();
         $property = Property::findOrFail($id);
-        $property->load('agent');
+        $property->load('agentList');
 
         $allowedTime = array_keys(Property::getViewingTimeLabel());
         $rules = [
@@ -1003,6 +1004,12 @@ class PropertyController extends Controller
 
         $viewingSchedule->status = ViewingSchedule::STATUS_PENDING;
         $viewingSchedule->save();
+
+        if($reschedule){
+            Event::fire(new ViewingScheduleEvent($viewingSchedule, 'reschedule'));
+        }else{
+            Event::fire(new ViewingScheduleEvent($viewingSchedule, 'new'));
+        }
 
         $conversation = $user->getPropertyConversation($property);
         if(!$conversation){

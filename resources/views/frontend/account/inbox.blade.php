@@ -39,7 +39,7 @@
                                 @if($conversation || \Illuminate\Support\Facades\Request::get('new'))
                                 <div class="chat-inner-wrapper">
                                     <div class="chat-top">
-                                        <div class="col-xs-12 user-info">
+                                        <div class="col-xs-12 col-sm-5 user-info">
                                             <div class="row">
                                                 <div class="icon">
                                                     <img src="{{ asset('assets/frontend/images/user-icon.png') }}" alt="">
@@ -58,7 +58,7 @@
                                         </div>
 
                                         @if($confirmedViewingSchedule)
-                                        <div class="col-xs-7 button-area">
+                                        <div class="col-xs-12 col-sm-7 button-area">
                                             <h6 class="entry-date">
                                                 <div class="btn btn-yellow"><img src="{{ asset('assets/frontend/images/icon-user-viewings.png') }}" /> <span>{{ trans('property.viewings.scheduled_label') }}:</span> {{ $confirmedViewingSchedule->viewing_from->format('D, d M Y  H:i') }}</div>
                                             </h6>
