@@ -30,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('frontend.property.compare_bar', 'GoProp\ViewComposers\PropertyComposer');
 
         view()->composer('frontend.master.layout_with_slider', 'GoProp\ViewComposers\MainBannerComposer');
+
+        require base_path() . '/resources/macros/xml_macro.php';
     }
 
     /**

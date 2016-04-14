@@ -229,6 +229,7 @@ return [
 
     'contact_from_email' => env('FROM_EMAIL'),
     'contact_from_name' => env('FROM_NAME'),
+    'contact_number' => '+62 878 8733 2268',
     'contact_destination' => explode(',', env('CONTACT_EMAILS')),
     'system_email_from_name' => 'GoProp',
     'system_email_from' => 'admin@goprop.co.id'

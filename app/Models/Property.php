@@ -98,6 +98,11 @@ class Property extends Model
         return $this->hasMany('GoProp\Models\PropertyAttachment')->where('type', 'floorplan')->orderBy('sort_order', 'ASC');
     }
 
+    public function hasFloorplan()
+    {
+        return $this->floorplans->count() > 0;
+    }
+
     public function attachments()
     {
         return $this->hasMany('GoProp\Models\PropertyAttachment');
@@ -308,11 +313,16 @@ class Property extends Model
 
     public function getPhotoThumbnail()
     {
-        if($this->photos->count() > 0){
+        if($this->hasThumbnail()){
             return $this->photos->first()->filename;
         }
 
         return 'property-default.jpg';
+    }
+
+    public function hasThumbnail()
+    {
+        return $this->photos->count() > 0;
     }
 
     public function getMetaDescription()

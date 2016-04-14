@@ -755,6 +755,11 @@ Route::group([
             'as' => 'frontend.property.success',
             'uses' => 'PropertyController@getPropertySuccess'
         ]);
+
+        Route::get('/xml/lamudi', [
+            'as' => 'frontend.property.xml.lamudi',
+            'uses' => 'PortalController@getXMLLamudi'
+        ]);
     });
 
     //Pages

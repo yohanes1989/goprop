@@ -133,11 +133,25 @@
                                         </div>
                                         @endif
 
+                                        @if($property->land_dimension['length'] && $property->land_dimension['width'])
+                                        <div class="featureChild">
+                                            <span class="name">{{ trans('forms.fields.property.land_dimension') }}:</span>
+                                            <span class="desc">{{ $property->landDimensionWithUnit }}</span>
+                                        </div>
+                                        @endif
+
                                         @if(!empty($property->building_size+0))
-                                            <div class="featureChild">
-                                                <span class="name">{{ trans('forms.fields.property.building_size') }}:</span>
-                                                <span class="desc">{!! $property->building_size.' m<sup>2</sup>' !!}</span>
-                                            </div>
+                                        <div class="featureChild">
+                                            <span class="name">{{ trans('forms.fields.property.building_size') }}:</span>
+                                            <span class="desc">{!! $property->building_size.' m<sup>2</sup>' !!}</span>
+                                        </div>
+                                        @endif
+
+                                        @if($property->building_dimension['length'] && $property->building_dimension['width'])
+                                        <div class="featureChild">
+                                            <span class="name">{{ trans('forms.fields.property.building_dimension') }}:</span>
+                                            <span class="desc">{{ $property->buildingDimensionWithUnit }}</span>
+                                        </div>
                                         @endif
 
                                         @if($property->isResidential())
