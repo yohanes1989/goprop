@@ -140,6 +140,8 @@
                                         </div>
                                         @endif
 
+                                        <div class="clearfix"></div>
+
                                         @if(!empty($property->building_size+0))
                                         <div class="featureChild">
                                             <span class="name">{{ trans('forms.fields.property.building_size') }}:</span>
