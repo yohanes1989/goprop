@@ -292,7 +292,7 @@
         <div data-field-dependent="for_sell|1" class="form-group">
             {!! Form::label('sell_price', 'Sell Price *', ['class' => 'col-md-4 control-label']) !!}
             <div class="col-md-8">
-                {!! Form::text('sell_price', null, ['class' => 'form-control', 'id' => 'sell_price']) !!}
+                {!! Form::text('sell_price', null, ['class' => 'form-control', 'id' => 'sell_price', 'data-inputmask' => '\'alias\': \'decimal\', \'groupSeparator\': \',\', \'autoGroup\': true, \'autoUnmask\': true, \'removeMaskOnSubmit\': true, \'rightAlign\': false']) !!}
             </div>
         </div>
 
@@ -333,7 +333,7 @@
         <div data-field-dependent="for_rent|1" class="form-group">
             {!! Form::label('rent_price', 'Rent Price *', ['class' => 'col-md-4 control-label']) !!}
             <div class="col-md-8">
-                {!! Form::text('rent_price', null, ['class' => 'form-control', 'id' => 'rent_price']) !!}
+                {!! Form::text('rent_price', null, ['class' => 'form-control', 'id' => 'rent_price', 'data-inputmask' => '\'alias\': \'decimal\', \'groupSeparator\': \',\', \'autoGroup\': true, \'autoUnmask\': true, \'removeMaskOnSubmit\': true, \'rightAlign\': false']) !!}
                 {!! Form::select('rent_price_type', \GoProp\Models\Property::getRentTypeLabel(), null, ['class' => 'form-control', 'id' => 'rent_price_type']) !!}
             </div>
         </div>

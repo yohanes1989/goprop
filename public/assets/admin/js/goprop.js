@@ -184,6 +184,9 @@
                     }
                 });
             });
+
+            //Input mask
+            $('input[data-inputmask]', context).inputmask();
         }
     };
 

@@ -596,6 +596,9 @@ var app = {
               }
           });
       });
+
+      //Input mask
+      $('input[data-inputmask]', context).inputmask();
   },
     calculateCommission: function(price, package)
     {

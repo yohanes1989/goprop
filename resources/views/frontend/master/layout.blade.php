@@ -194,6 +194,7 @@
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-pager.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/lightGallery/dist/js/lg-thumbnail.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/vendor/ion.rangeSlider/js/ion.rangeSlider.js') }}"></script>
+        <script src="{{ asset('assets/frontend/vendor/jquery-inputmask/jquery.inputmask.bundle.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('assets/frontend/js/app.js') }}"></script>
         @show
     </body>
