@@ -702,6 +702,7 @@ $tablet-size: 1024px;
 						font-size: 32px;
 						margin: 0 0 5px;
 						letter-spacing: 2px;
+                        @include single-text-shadow(2px, 2px, 3px, 8px, rgba(0,0,0,0.5));
 					}
 					.entry-desc {
 						font-size: 14px;
