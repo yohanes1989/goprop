@@ -20,7 +20,7 @@ Response::macro('xml', function(array $vars, $status = 200, array $header = [], 
                 Response::xml($value, $status, $header, $rootElement, $xml->addChild($key));
             }
         } else {
-            $xml->addChild($key, $value);
+            $xml->addChild($key, htmlspecialchars($value));
         }
     }
     if (empty($header)) {
