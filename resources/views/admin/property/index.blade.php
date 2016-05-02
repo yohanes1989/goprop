@@ -41,7 +41,12 @@
                     {!! Form::text('search[upload_date]', Request::input('search.upload_date'), ['class' => 'form-control input-datepicker-close', 'data-date-format' => 'dd-mm-yyyy', 'placeholder' => 'Upload Date', 'id' => 'search-upload-date']) !!}
                 </div>
                 <div class="clearfix"></div>
-                <div class="col-xs-6 col-md-4"></div>
+                <div class="col-xs-6 col-md-4">
+                    <div class="form-control">
+                        {!! Form::checkbox('search[deleted]', 1, Request::input('search.deleted', false), ['id' => 'search-deleted']) !!}
+                        {!! Form::label('search-deleted', 'Only trashed') !!}
+                    </div>
+                </div>
                 <div class="col-xs-6 col-md-2">
                     {!! Form::select('search[agentList]', $agentOptions, [Request::input('search.agentList')], ['class' => 'form-control select-chosen', 'placeholder' => 'Agent List', 'id' => 'search-agentList']) !!}
                 </div>
@@ -141,14 +146,21 @@
                         @endif
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
-                                <a href="{{ route('admin.property.view', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                @if($canAssign)
-                                    <a href="{{ route('admin.property.assign_to_agent', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="open-modal btn btn-default" data-original-title="Assign To Agent"><i class="fa fa-users"></i></a>
+                                @if(!$property->trashed())
+                                    <a href="{{ route('admin.property.view', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="View"><i class="fa fa-eye"></i></a>
+                                    @if($canAssign)
+                                        <a href="{{ route('admin.property.assign_to_agent', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="open-modal btn btn-default" data-original-title="Assign To Agent"><i class="fa fa-users"></i></a>
+                                    @endif
+                                    @if($isAdmin || $property->isOwner(\Illuminate\Support\Facades\Auth::user()))
+                                    <a href="{{ route('admin.property.edit', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                    <a href="{{ route('admin.property.media', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Media"><i class="gi gi-picture"></i></a>
+                                    {!! Form::open(['route' => ['admin.property.delete', 'id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete"><i class="fa fa-times"></i></button>{!! Form::close() !!}
+                                    @endif
                                 @endif
-                                @if($isAdmin || $property->isOwner(\Illuminate\Support\Facades\Auth::user()))
-                                <a href="{{ route('admin.property.edit', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                <a href="{{ route('admin.property.media', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Media"><i class="gi gi-picture"></i></a>
-                                {!! Form::open(['route' => ['admin.property.delete', 'id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete"><i class="fa fa-times"></i></button>{!! Form::close() !!}
+
+                                @if($isAdmin && $property->trashed())
+                                    {!! Form::open(['route' => ['admin.property.restore', 'id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Restore"><i class="fa fa-undo"></i></button>{!! Form::close() !!}
+                                    {!! Form::open(['route' => ['admin.property.delete.force', 'id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete from Trash"><i class="fa fa-trash"></i></button>{!! Form::close() !!}
                                 @endif
                             </div>
                         </td>

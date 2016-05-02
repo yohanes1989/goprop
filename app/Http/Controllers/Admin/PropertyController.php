@@ -33,6 +33,10 @@ class PropertyController extends Controller
         }
 
         if($request->has('search')){
+            if($request->input('search.deleted', false)){
+                $qb->onlyTrashed();
+            }
+
             if($request->has('search.keyword')){
                 $qb->where(function($query) use ($request){
                     $query
@@ -429,7 +433,23 @@ class PropertyController extends Controller
         $property = Property::findOrFail($id);
 
         $property->delete();
-        return redirect()->route('admin.property.index')->with('messages', ['Property is successfully deleted.']);
+        return redirect()->back()->with('messages', ['Property is successfully deleted.']);
+    }
+
+    public function deleteForce(Request $request, $id)
+    {
+        $property = Property::withTrashed()->findOrFail($id);
+
+        $property->forceDelete();
+        return redirect()->back()->with('messages', ['Property is successfully deleted from Trash.']);
+    }
+
+    public function restore(Request $request, $id)
+    {
+        $property = Property::withTrashed()->findOrFail($id);
+
+        $property->restore();
+        return redirect()->back()->with('messages', ['Property is successfully restored.']);
     }
 
     public function media($id)

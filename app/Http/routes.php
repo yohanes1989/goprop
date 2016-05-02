@@ -162,7 +162,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                 'uses' => 'PropertyController@store'
             ]);
 
-            Route::group(['middleware' => ['admin.can_edit']], function(){
+            Route::group(['middleware' => ['can' => 'admin.can_edit']], function(){
                 Route::get('/{id}/edit', [
                     'as' => 'admin.property.edit',
                     'uses' => 'PropertyController@edit',
@@ -225,6 +225,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             Route::any('/{id}/assign-to-agent', [
                 'as' => 'admin.property.assign_to_agent',
                 'uses' => 'PropertyController@assignToAgent'
+            ]);
+
+            Route::post('/{id}/delete/force', [
+                'as' => 'admin.property.delete.force',
+                'uses' => 'PropertyController@deleteForce'
+            ]);
+
+            Route::post('/{id}/restore', [
+                'as' => 'admin.property.restore',
+                'uses' => 'PropertyController@restore'
             ]);
         });
 
