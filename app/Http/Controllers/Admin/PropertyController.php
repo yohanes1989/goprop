@@ -161,7 +161,7 @@ class PropertyController extends Controller
 
     public function view($id)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
         $owner = $property->user?$property->user->email:'';
 
         $defaultLatitude = empty($property->latitude)?config('app.default_latitude'):$property->latitude;
@@ -319,7 +319,7 @@ class PropertyController extends Controller
 
     public function edit($id)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
         $owner = $property->user?$property->user->email:'';
 
         $defaultLatitude = empty($property->latitude)?config('app.default_latitude'):$property->latitude;
@@ -365,7 +365,7 @@ class PropertyController extends Controller
     public function update(PropertyFormRequest $request, $id)
     {
         $user = Auth::user();
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
 
         $ownerEmail = $request->get('owner', $user->email);
         $owner = User::where('email', $ownerEmail)->firstOrFail();
@@ -454,7 +454,7 @@ class PropertyController extends Controller
 
     public function media($id)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
 
         return view('admin.property.media', [
             'property' => $property
@@ -463,7 +463,7 @@ class PropertyController extends Controller
 
     public function photosUpload(Request $request, $id, $type)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
 
         $max = 5096;
         if($type == 'floorplan'){
@@ -492,7 +492,7 @@ class PropertyController extends Controller
 
     public function photosDownload($id, $type)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
 
         if($file = $property->downloadPhoto($type)){
             return response()->download($file);
@@ -503,7 +503,7 @@ class PropertyController extends Controller
 
     public function photosDownloadClear($id, $type)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
 
         $property->deleteDownloadPhoto($type);
 
@@ -512,7 +512,7 @@ class PropertyController extends Controller
 
     public function photosDelete(Request $request, $id, $attachment_id)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
 
         $this->attachmentBelongsToProperty($attachment_id, $property);
 
@@ -528,7 +528,7 @@ class PropertyController extends Controller
 
     public function photosDeleteAll(Request $request, $id, $type)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
 
         $photos = [];
 
@@ -547,7 +547,7 @@ class PropertyController extends Controller
 
     public function photosReorder(Request $request, $id)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
         $allowedAttachments = $property->attachments()->lists('id')->all();
 
         $count = 1;
@@ -572,7 +572,7 @@ class PropertyController extends Controller
 
     public function photosRotate(Request $request, $id, $dir='right', $attachment_id)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::withTrashed()->findOrFail($id);
 
         $this->attachmentBelongsToProperty($attachment_id, $property);
 

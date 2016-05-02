@@ -36,7 +36,7 @@ class CanEdit
     public function handle($request, Closure $next)
     {
         $propertyId = $request->route('id');
-        $property = Property::findOrFail($propertyId);
+        $property = Property::withTrashed()->findOrFail($propertyId);
 
         if($this->auth->user()->is('agent') && $property->user_id != $this->auth->user()->id){
             if ($request->ajax()) {
