@@ -23,7 +23,48 @@
         </div>
 
         @if($isAdmin)
-        
+        {!! Form::open(['class' => 'form-horizontal form-grid', 'method' => 'GET']) !!}
+            <div class="form-group">
+                <div class="col-xs-6 col-md-4">
+                    {!! Form::text('search[keyword]', Request::input('search.keyword'), ['class' => 'form-control', 'placeholder' => 'Keyword (Name, Location, Description)', 'id' => 'search-keyword']) !!}
+                </div>
+                <div class="col-xs-6 col-md-2">
+                    {!! Form::select('search[for]', $forOptions, [Request::input('search.for')], ['class' => 'form-control select-chosen', 'id' => 'search-for']) !!}
+                </div>
+                <div class="col-xs-6 col-md-2">
+                    {!! Form::text('search[owner]', Request::input('search.owner'), ['class' => 'form-control', 'placeholder' => 'Owner', 'id' => 'search-owner', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent', 'authenticated_user']])]) !!}
+                </div>
+                <div class="col-xs-6 col-md-2">
+                    {!! Form::select('search[status]', $statusOptions, [Request::input('search.status')], ['class' => 'form-control select-chosen', 'id' => 'search-status']) !!}
+                </div>
+                <div class="col-xs-6 col-md-2">
+                    {!! Form::text('search[upload_date]', Request::input('search.upload_date'), ['class' => 'form-control input-datepicker-close', 'data-date-format' => 'dd-mm-yyyy', 'placeholder' => 'Upload Date', 'id' => 'search-upload-date']) !!}
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-xs-6 col-md-4">
+                    <div class="form-control">
+                        {!! Form::checkbox('search[deleted]', 1, Request::input('search.deleted', false), ['id' => 'search-deleted']) !!}
+                        {!! Form::label('search-deleted', 'Only trashed') !!}
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-2">
+                    {!! Form::select('search[agentList]', $agentOptions, [Request::input('search.agentList')], ['class' => 'form-control select-chosen', 'placeholder' => 'Agent List', 'id' => 'search-agentList']) !!}
+                </div>
+                <div class="col-xs-6 col-md-2">
+                    {!! Form::select('search[referralList]', $agentOptions, [Request::input('search.referralList')], ['class' => 'form-control select-chosen', 'placeholder' => 'Referral List', 'id' => 'search-referralList']) !!}
+                </div>
+                <div class="col-xs-6 col-md-2">
+                    {!! Form::select('search[agentSell]', $agentOptions, [Request::input('search.agentSell')], ['class' => 'form-control select-chosen', 'placeholder' => 'Agent Sell', 'id' => 'search-agentSell']) !!}
+                </div>
+                <div class="col-xs-6 col-md-2">
+                    {!! Form::select('search[referralSell]', $agentOptions, [Request::input('search.referralSell')], ['class' => 'form-control select-chosen', 'placeholder' => 'Referral Sell', 'id' => 'search-referralSell']) !!}
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    {!! Form::button('Filter', ['type' => 'submit', 'class' => 'btn btn-success']) !!}
+                    {!! Form::submit('Export to XLS', ['name' => 'export_xls', 'type' => 'submit', 'class' => 'btn btn-info']) !!}
+                </div>
+            </div>
+        {!! Form::close() !!}
         @else
         {!! Form::open(['class' => 'form-horizontal form-grid', 'method' => 'GET']) !!}
         <div class="form-group">
@@ -103,26 +144,7 @@
                             <p>Referral: {{ $property->referralSell?$property->referralSell->profile->singleName:'Unassigned' }}</p>
                         </td>
                         @endif
-                        <td class="text-center">
-                            <div class="btn-group btn-group-xs">
-                                <a href="{{ route('admin.property.view', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                <a href="{{ route('admin.property.edit', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                <a href="{{ route('admin.property.media', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Media"><i class="gi gi-picture"></i></a>
-                                @if(!$property->trashed())
-                                @if($canAssign)
-                                    <a href="{{ route('admin.property.assign_to_agent', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="open-modal btn btn-default" data-original-title="Assign To Agent"><i class="fa fa-users"></i></a>
-                                @endif
-                                @if($isAdmin || $property->isOwner(\Illuminate\Support\Facades\Auth::user()))
-                                {!! Form::open(['route' => ['admin.property.delete', 'id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete"><i class="fa fa-times"></i></button>{!! Form::close() !!}
-                                @endif
-                                @endif
-
-                                @if($isAdmin && $property->trashed())
-                                    {!! Form::open(['route' => ['admin.property.restore', 'id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Restore"><i class="fa fa-undo"></i></button>{!! Form::close() !!}
-                                    {!! Form::open(['route' => ['admin.property.delete.force', 'id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete from Trash"><i class="fa fa-trash"></i></button>{!! Form::close() !!}
-                                @endif
-                            </div>
-                        </td>
+                        
                     </tr>
                     @endforeach
                 </tbody>
