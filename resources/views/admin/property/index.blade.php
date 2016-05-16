@@ -129,6 +129,7 @@
                             {{ \GoProp\Models\Property::getStatusLabel($property->status) }}
                         </td>
                         <td>{{ $property->checkout_at?$property->checkout_at->format('d M Y H:i'):null }}</td>
+                        {{ dd('test') }}
                         @if($isAdmin)
                         <td>
                             @foreach($allPortals as $portal)
@@ -144,7 +145,6 @@
                             <p>Referral: {{ $property->referralSell?$property->referralSell->profile->singleName:'Unassigned' }}</p>
                         </td>
                         @endif
-                        {{ dd('test') }}
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
                                 <a href="{{ route('admin.property.view', ['id' => $property->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="View"><i class="fa fa-eye"></i></a>
