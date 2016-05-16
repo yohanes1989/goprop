@@ -125,9 +125,8 @@
                         </td>
                         <td>{{ $property->user?$property->user->profile->singleName:'Unassigned' }}
                             <br/>{{ $property->user?$property->user->profile->mobile_phone_number:'' }}</td>
-                        {{ dd('test') }}
                         <td>
-                            {{ \GoProp\Models\Property::getStatusLabel($property->status) }}
+                            {{ $property->status?\GoProp\Models\Property::getStatusLabel($property->status):'' }}
                         </td>
                         <td>{{ $property->checkout_at?$property->checkout_at->format('d M Y H:i'):null }}</td>
                         @if($isAdmin)
