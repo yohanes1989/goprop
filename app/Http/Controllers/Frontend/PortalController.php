@@ -116,7 +116,7 @@ class PortalController extends Controller
             'BuildingName' => null,
             'BuildingSize' => !empty(intval($property->building_size))?$property->building_size:$property->building_size,
             'LandSize' => !empty(intval($property->land_size))?$property->land_size:$property->land_size,
-            'PropertyPrice' => ($for == 'sell')?$property->getPrice('sell'):$this->getPrice('rent')*12,
+            'PropertyPrice' => ($for == 'sell')?$property->getPrice('sell'):$property->getPrice('rent')*12,
             'Bedrooms' => $property->rooms,
             'Bathrooms' => $property->bathrooms,
             'OfferType' => ($for == 'sell')?$this->getListingType('sell'):$this->getListingType('rent'),
