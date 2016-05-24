@@ -35,27 +35,37 @@ class PortalController extends Controller
             }
         }
 
+        $rentProperties = $qb->where('for_rent', 1)->get();
+
+        foreach($rentProperties as $property){
+            if($property->hasThumbnail() || $property->hasFloorplan()){
+                $propertyData = $this->generatePropertyData($property, 'rent');
+
+                $return[] = $propertyData;
+            }
+        }
+
         return response()->xml($return, 200, [], 'Properties', null, 'Data');
     }
 
     protected function getPropertyType($type)
     {
         $data = [
-            'apartment' => 1,
-            'shophouse' => 2,
-            'working-space' => 2,
-            'condominium' => 3,
-            'house' => 4,
-            'villa' => 4,
-            'industrial' => 5,
-            'factory' => 5,
-            'warehouse' => 5,
-            'beach-resort' => 6,
-            'land' => 7,
-            'residential-lot' => 12,
-            'properties' => 13,
-            'island' => 14,
-            'retail' => 11,
+            'apartment' => 'Apartment',
+            'shophouse' => 'Commercial',
+            'working-space' => 'Commercial',
+            'condominium' => 'Condo',
+            'house' => 'House',
+            'villa' => 'House',
+            'industrial' => 'Industrial',
+            'factory' => 'Industrial',
+            'warehouse' => 'Industrial',
+            'beach-resort' => 'Beach Resort (Private)',
+            'land' => 'Land',
+            'residential-lot' => 'Residential Lot',
+            'properties' => 'Properties',
+            'island' => 'Island',
+            'retail' => 'Retail',
         ];
 
         return $data[$type];
@@ -65,8 +75,8 @@ class PortalController extends Controller
     {
         $data = [
             'foreclosure' => 1,
-            'rent' => 2,
-            'sell' => 3,
+            'rent' => 'rent',
+            'sell' => 'buy',
             'new-home' => 4
         ];
 
@@ -76,15 +86,26 @@ class PortalController extends Controller
     protected function getPropertyStatus($status)
     {
         $data = [
-            'undefined' => 0,
-            Property::STATUS_ACTIVE => 1,
-            'offer' => 2,
-            'contract' => 3,
-            Property::STATUS_INACTIVE => 4,
-            Property::STATUS_BLOCKED => 5
+            'undefined' => 'inactive',
+            Property::STATUS_ACTIVE => 'active',
+            'offer' => 'active',
+            'contract' => 'inactive',
+            Property::STATUS_INACTIVE => 'inactive',
+            Property::STATUS_BLOCKED => 'inactive'
         ];
 
         return $data[$status];
+    }
+
+    protected function getFurnishing($furnishing)
+    {
+        $data = [
+            Property::FURNISHING_FURNISHED => 'yes',
+            Property::FURNISHING_PART_FURNISHED => 'semi',
+            Property::FURNISHING_UNFURNISHED => 'no',
+        ];
+
+        return $data[$furnishing];
     }
 
     protected function generatePropertyData($property, $for)
@@ -93,16 +114,19 @@ class PortalController extends Controller
             'Reference_ID' => $property->listing_code,
             'PropertyTitle' => $property->property_name,
             'BuildingName' => null,
-            'Area' => !empty(intval($property->building_size))?$property->building_size:$property->land_size,
-            'LotSize' => $property->garage_size + $property->carport_size,
-            'PropertyPrice' => $property->getPrice('sell'),
+            'BuildingSize' => !empty(intval($property->building_size))?$property->building_size:$property->building_size,
+            'LandSize' => !empty(intval($property->land_size))?$property->land_size:$property->land_size,
+            'PropertyPrice' => ($for == 'sell')?$property->getPrice('sell'):$this->getPrice('rent')*12,
             'Bedrooms' => $property->rooms,
             'Bathrooms' => $property->bathrooms,
-            'ListingType' => ($for == 'sell')?$this->getListingType('sell'):$this->getListingType('rent')*12,
-            'City' => $property->city_name,
+            'OfferType' => ($for == 'sell')?$this->getListingType('sell'):$this->getListingType('rent'),
+            'ListingRegion' => $property->province_name,
+            'ListingCity' => $property->city_name,
             'PropertyDesc' => '<![CDATA['.nl2br($property->description).']]>',
             'PropertyType' => $this->getPropertyType($property->type->slug),
             'PropertyStatus' => $this->getPropertyStatus($property->status),
+            'Floor' => $property->floors,
+            'Furnished' => $this->getFurnishing($property->furnishing),
             'ContactPerson' => [
                 'listingFirstName' => 'GoProp',
                 'listingLastName' => 'Indonesia',
