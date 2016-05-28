@@ -189,7 +189,7 @@
                             @endforeach
                         </div>
 
-                        {!! $properties->render() !!}
+                        {!! $paginator->render() !!}
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-3">
