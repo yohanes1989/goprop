@@ -189,7 +189,7 @@
                             @endforeach
                         </div>
 
-                        @include('frontend.master.pagination')
+                        {!! $properties->render() !!}
                     </div>
                 </div>
                 <div class="col-sm-4 col-md-3">
