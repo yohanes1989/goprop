@@ -168,7 +168,7 @@ class ProjectHelper
                 $return = url('https://twitter.com/intent/tweet?text='.$options['title'].'&url='.$options['url'].'&via='.$this->getSiteName());
                 break;
             case 'whatsapp':
-                $return = 'whatsapp://send?text='.$options['title'].' ('.$options['url'].')';
+                $return = 'whatsapp://send?text='.$options['title'].' - '.$options['url'];
                 break;
             case 'googleplus':
                 $return = url('https://plus.google.com/share?url='.$options['url']);
