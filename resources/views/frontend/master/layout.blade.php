@@ -68,7 +68,7 @@
                     <div class="menu-section">
                         @if(\Illuminate\Support\Facades\Auth::check())
                         <ul class="list-inline">
-                            <li class="text-yellow">{{ trans('account.interface.greeting') }} <a href="{{ route('frontend.account.dashboard') }}"><strong>{{ \Illuminate\Support\Facades\Auth::user()->username }}</strong></a></li>
+                            <li class="text-yellow">{{ trans('account.interface.greeting') }} <a href="{{ route('frontend.account.dashboard') }}"><strong>{{ \Illuminate\Support\Facades\Auth::user()->getName() }}</strong></a></li>
                             <li><a href="{{ route('frontend.account.logout') }}" class="btn btn-yellow btn-transparent btn-xs text-uppercase">{{ trans('account.interface.logout_btn') }}</a></li>
                         </ul>
                         @else

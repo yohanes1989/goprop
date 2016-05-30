@@ -31,7 +31,7 @@ class Profile extends Model
     //Accessors
     public function getSingleNameAttribute()
     {
-        return $this->first_name.' '.$this->last_name;
+        return implode(' ', [$this->first_name, $this->last_name]);
     }
 
     //Methods

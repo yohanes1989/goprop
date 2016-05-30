@@ -28,6 +28,17 @@ class User extends Model implements AuthenticatableContract,
         return $this->properties()->incomplete()->get();
     }
 
+    public function getName()
+    {
+        $fullName = $this->profile->singleName;
+
+        if(empty($fullName)){
+            $fullName = $this->username;
+        }
+
+        return $fullName;
+    }
+
     //Relations
     public function profile()
     {
