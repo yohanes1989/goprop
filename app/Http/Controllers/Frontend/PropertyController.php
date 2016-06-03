@@ -78,7 +78,7 @@ class PropertyController extends Controller
     {
         $for = $request->input('search.for');
 
-        $priceDefaultFrom = 50000000;
+        $priceDefaultFrom = 10000000;
         $priceDefaultTo = 100000000000;
 
         $qb = Property::active();
