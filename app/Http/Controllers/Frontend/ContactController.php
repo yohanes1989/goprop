@@ -22,7 +22,7 @@ class ContactController extends Controller
             $this->validate($request, $rules);
 
             $messageVars = [
-                'name' => $request->input('name'),
+                'name' => $request->input('fullname'),
                 'email' => $request->input('email'),
                 'phone' => $request->input('contact_number'),
                 'subject' => $request->input('subject'),

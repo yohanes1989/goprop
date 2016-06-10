@@ -783,6 +783,11 @@ Route::group([
         'uses' => 'ContactController@contact'
     ]);
 
+    Route::any('referral-listing', [
+        'as' => 'frontend.page.referral_listing',
+        'uses' => 'PageController@referralListing'
+    ]);
+
     Route::get('resources', [
         'as' => 'frontend.page.resources',
         'uses' => 'PageController@resources'

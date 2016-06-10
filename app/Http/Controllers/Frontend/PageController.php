@@ -5,6 +5,7 @@ namespace GoProp\Http\Controllers\Frontend;
 use GoProp\Http\Controllers\Controller;
 use GoProp\Models\Category;
 use GoProp\Models\CategoryTranslation;
+use GoProp\Models\FormSubmission;
 use GoProp\Models\PackageCategory;
 use GoProp\Models\Page;
 use GoProp\Models\Post;
@@ -12,6 +13,8 @@ use GoProp\Models\PostTranslation;
 use GoProp\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Proengsoft\JsValidation\Facades\JsValidatorFacade;
+use Illuminate\Support\Facades\Mail;
 
 class PageController extends Controller
 {
@@ -81,6 +84,55 @@ class PageController extends Controller
             'post' => $post,
             'categories' => $categories,
             'title' => $title
+        ]);
+    }
+
+    public function referralListing(Request $request)
+    {
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|email',
+            'contact_number' => 'required',
+            'address' => 'required|min:10',
+            'city' => 'required',
+        ];
+
+        if($request->isMethod('POST')){
+
+            $this->validate($request, $rules);
+
+            $formSubmission = new FormSubmission();
+            $formSubmission->fill([
+                'email' => $request->input('email'),
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->header('User-Agent'),
+            ]);
+            $formSubmission->saveData([$request->all()]);
+            $formSubmission->save();
+
+            $messageVars = [
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('contact_number'),
+                'address' => $request->input('address'),
+                'city' => $request->input('city'),
+            ];
+
+            Mail::send('frontend.emails.referral_listing', $messageVars, function ($m){
+                $m->from(config('app.contact_from_email'), config('app.contact_from_name'));
+                $m->to(config('app.contact_destination'))->subject('Referral Listing Registration');
+            });
+
+            return redirect()->refresh()->with('messages', [trans('contact.referral_listing_registration_msg')]);
+        }
+
+        $validator = JsValidatorFacade::make($rules);
+
+        $content = Page::where('identifier', 'referral-listing')->first();
+
+        return view('frontend.page.referral_listing', [
+            'validator' => $validator,
+            'content' => $content
         ]);
     }
 }

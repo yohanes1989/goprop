@@ -219,7 +219,7 @@
         <div class="form-group">
             {!! Form::label('electricity', 'Electricity', ['class' => 'control-label col-md-3']) !!}
             <div class="col-md-9">
-                {!! Form::select('electricity', ['' => trans('forms.please_select')] + \GoProp\Models\Property::getElectricityLabel(), null, ['class' => 'form-control', 'id' => 'electricity']) !!}
+                {!! Form::text('electricity', null, ['class' => 'form-control', 'id' => 'electricity']) !!}
             </div>
         </div>
 

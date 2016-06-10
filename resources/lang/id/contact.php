@@ -8,6 +8,7 @@ return [
     'phone' => 'Nomor Telepon',
     'required' => 'harus diisi',
     'success_message' => 'Terima kasih. Kami akan segera menghubungi anda.',
+    'referral_listing_registration_msg' => 'Terima kasih telah mendaftar. Kami akan review data anda dan menghubungi anda secepatnya.',
     'contact_form_title' => 'Anda punya pertanyaan?<br/>Silahkan isi formulir berikut',
     'form' => [
         'fullname' => 'Nama Lengkap',
@@ -16,5 +17,8 @@ return [
         'subject' => 'Judul Pesan',
         'message' => 'Pesan',
         'send_btn' => 'Kirim Pesan',
+        'register_btn' => 'Daftar Sekarang',
+        'address' => 'Alamat',
+        'city' => 'Kota',
     ]
 ];
