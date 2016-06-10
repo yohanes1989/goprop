@@ -3,7 +3,7 @@
 @section('page_title', ProjectHelper::formatTitle($content->title))
 
 @section('content')
-    <section class="page-columns">
+    <section class="post-columns">
         {!! $content->content !!}
         <p>&nbsp;</p>
 
