@@ -107,7 +107,7 @@ class PageController extends Controller
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->header('User-Agent'),
             ]);
-            $formSubmission->saveData([$request->all()]);
+            $formSubmission->saveData([$request->except('_token')]);
             $formSubmission->save();
 
             $messageVars = [
