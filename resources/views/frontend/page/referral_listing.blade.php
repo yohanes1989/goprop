@@ -7,7 +7,7 @@
         {!! $content->content !!}
         <p>&nbsp;</p>
 
-        <div class="row">
+        <div class="container">
             <div class="col-md-3">&nbsp;</div>
 
             <div class="col-md-6">
