@@ -1,6 +1,9 @@
 @extends('frontend.account.logged_in.layout')
 
 @section('content')
+    <p>{{ trans('account.interface.greeting') }} {{ Auth::user()->getName() }}</p>
+
+    @if($sellProperties->count() > 0 || $leaseProperties->count() > 0 || $likedProperties->count() > 0)
     <!-- Custom Tabs -->
     <div class="custom-tabs">
         <!-- Nav tabs -->
@@ -63,4 +66,5 @@
             @endif
         </div>
     </div>
+    @endif
 @endsection

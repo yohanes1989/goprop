@@ -450,45 +450,7 @@ $tablet-size: 1024px;
 		.login-form-wrapper {
 			border-bottom: 1px solid $color-grey-light;
 			padding-bottom: 30px;
-			.login-with-area {
-				margin-top: 30px;
-				.loginwith-child {
-					overflow: hidden;
-					clear: both;
-					color: $color-grey;
-					margin-left: -15px;
-					margin-right: -15px;
-					margin-bottom: 20px;
-					a {
-						display: block;
-						text-align: left;
-						clear: both;
-						@include border-radius(3px);
-						span {
-							float: left;
-							display: block;
-							color: $color-white;
-							padding: 8px;
-							&.icon {
-								width: 15%;
-								@include box-shadow(inset -1px 0 0 0 rgba(255,255,255,.3));
-								text-align: center;
-							}
-							&.text {
-								width: 85%;
-								font-size: 17px;
-								text-align: center;
-							}
-						}
-						&.with-facebook {
-							background-color: #3b5998;
-						}
-						&.with-google {
-							background-color: #f0311d;
-						}
-					}
-				}
-			}
+
 			.login-form-area {
 				.form-submit {
 					text-align: center;
@@ -2190,6 +2152,48 @@ $tablet-size: 1024px;
 
     .flex-prev:hover, .flex-next:hover {
 
+    }
+  }
+}
+
+//Login With
+.login-with-area {
+  margin-top: 30px;
+  .loginwith-child {
+    overflow: hidden;
+    clear: both;
+    color: $color-grey;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: 20px;
+    a {
+      width: 250px;
+      display: inline-block;
+      text-align: left;
+      clear: both;
+      @include border-radius(3px);
+      span {
+        float: left;
+        display: block;
+        color: $color-white;
+        padding: 8px;
+        &.icon {
+          width: 15%;
+          @include box-shadow(inset -1px 0 0 0 rgba(255,255,255,.3));
+          text-align: center;
+        }
+        &.text {
+          width: 85%;
+          font-size: 17px;
+          text-align: center;
+        }
+      }
+      &.with-facebook {
+        background-color: #3b5998;
+      }
+      &.with-google {
+        background-color: #f0311d;
+      }
     }
   }
 }

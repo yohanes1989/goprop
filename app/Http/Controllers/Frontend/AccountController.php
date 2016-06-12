@@ -270,6 +270,7 @@ class AccountController extends Controller
             $user->password = bcrypt($data['password']);
         }
 
+        $user->email = $data['email'];
         $user->save();
 
         $user->profile->fill($data['profile']);

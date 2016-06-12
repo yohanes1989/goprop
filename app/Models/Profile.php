@@ -5,6 +5,7 @@ namespace GoProp\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class Profile extends Model
 {
@@ -41,6 +42,22 @@ class Profile extends Model
 
         Storage::disk('local')->put($this->uploadPath.'/'.$fileName, File::get($profilePicture));
         $this->removeProfilePicture();
+
+        return $fileName;
+    }
+
+    public function saveRemoteProfilePicture($profilePicture)
+    {
+        $image = Image::make($profilePicture);
+
+        $fileName = $this->user->id.'_'.time().'.jpg';
+        $filePath = storage_path('tmp').'/'.$fileName;
+        $image->save($filePath);
+
+        Storage::disk('local')->put($this->uploadPath.'/'.$fileName, File::get($filePath));
+        $this->removeProfilePicture();
+
+        File::delete($filePath);
 
         return $fileName;
     }

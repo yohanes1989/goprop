@@ -19,35 +19,23 @@
             <div class="row">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-6">
-                    <!--
-                    <div class="login-with-area">
-                        <div class="loginwith-child">
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-8">
-                                <a href="" class="with-facebook clearfix">
-                                    <span class="icon"><i class="fa fa-facebook"></i></span>
-                                    <span class="text">Sign in with Facebook</span>
-                                </a>
+                    <div class="form-group">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-8">
+                            <div class="login-with-area text-center">
+                                <div class="loginwith-child">
+                                    <a href="{{ route('frontend.account.auth.facebook') }}" class="with-facebook clearfix">
+                                        <span class="icon"><i class="fa fa-facebook"></i></span>
+                                        <span class="text">Sign in with Facebook</span>
+                                    </a>
+                                </div>
+                                <div class="loginwith-child">
+                                    or
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
-                        <div class="loginwith-child">
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-8">
-                                <a href="" class="with-google clearfix">
-                                    <span class="icon"><i class="fa fa-google-plus"></i></span>
-                                    <span class="text">Sign in with Google</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="loginwith-child">
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-8">
-                                <div class="text-center">or</div>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
                     </div>
-                    -->
                     <div class="login-form-area">
                         <form class="form-horizontal" id="login-form">
                             <div class="form-group">

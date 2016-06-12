@@ -19,7 +19,8 @@
         "intervention/imagecache": "^2.3",
         "dimsav/laravel-translatable": "^5.4",
         "proengsoft/laravel-jsvalidation": "~1.1",
-        "maatwebsite/excel": "~2.1.0"
+        "maatwebsite/excel": "~2.1.0",
+        "laravel/socialite": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

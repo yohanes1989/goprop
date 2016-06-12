@@ -18,7 +18,7 @@ class User extends Model implements AuthenticatableContract,
     const STATUS_INACTIVE = 'inactive';
     const STATUS_BLOCKED = 'blocked';
 
-    protected $fillable = ['email', 'username', 'password', 'status'];
+    protected $fillable = ['email', 'username', 'facebook_id', 'password', 'status'];
 
     protected $hidden = ['password', 'remember_token'];
 

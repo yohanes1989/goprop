@@ -541,6 +541,16 @@ Route::group([
             'uses' => 'Auth\AuthController@getLogout'
         ]);
 
+        Route::get('/auth/facebook', [
+            'as' => 'frontend.account.auth.facebook',
+            'uses' => 'Auth\AuthController@authFacebook'
+        ]);
+
+        Route::get('/auth/facebook/handle', [
+            'as' => 'frontend.account.auth.facebook.handle',
+            'uses' => 'Auth\AuthController@authFacebookHandle'
+        ]);
+
         Route::group(['middleware' => ['auth']], function(){
             Route::get('/dashboard', [
                 'as' => 'frontend.account.dashboard',

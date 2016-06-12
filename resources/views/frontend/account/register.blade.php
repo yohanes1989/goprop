@@ -16,6 +16,19 @@
                 </div>
             </div>
             <div class="col-xs-12 register-form-wrapper">
+                <div class="login-with-area text-center">
+                    <div class="loginwith-child">
+                        <a href="{{ route('frontend.account.auth.facebook') }}" class="with-facebook clearfix">
+                            <span class="icon"><i class="fa fa-facebook"></i></span>
+                            <span class="text">Sign up with Facebook</span>
+                        </a>
+                    </div>
+                    <div class="loginwith-child">
+                        or
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
                 {!! Form::model($model, ['route' => 'frontend.account.register.process', 'method' => 'POST', 'files' => true, 'id' => 'register-form']) !!}
                 <div class="row">
                     <div class="col-md-2">&nbsp;</div>

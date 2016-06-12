@@ -8,7 +8,10 @@ use GoProp\Models\Profile;
 use GoProp\Models\Subscription;
 use GoProp\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Laravel\Socialite\Facades\Socialite;
 use Proengsoft\JsValidation\Facades\JsValidatorFacade;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Validator;
 use Illuminate\Http\Request;
 use GoProp\Http\Controllers\Controller;
@@ -85,9 +88,29 @@ class AuthController extends Controller
         return view('frontend.account.login');
     }
 
+    public function authFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function authFacebookHandle()
+    {
+        try {
+            $user = Socialite::driver('facebook')->user();
+        } catch (Exception $e) {
+            return redirect()->route('frontend.account.auth.facebook');
+        }
+
+        $authUser = $this->findOrCreateUser($user);
+
+        Auth::login($authUser, true);
+
+        return redirect(route('frontend.account.dashboard'));
+    }
+
     protected function getRules(array $data)
     {
-        $allowedSubscriptions = Subscription::lists('slug')->all();
+        $allowedSubscriptions = Subscription::all()->pluck('slug')->all();
 
         $rules = [
             //'username' => 'required|max:255|unique:users',
@@ -149,6 +172,53 @@ class AuthController extends Controller
 
             $user->subscriptions()->sync($subscriptions);
         }
+
+        return $user;
+    }
+
+    protected function findOrCreateUser($socialUser)
+    {
+        $authUser = User::where('facebook_id', $socialUser->getId())->orWhere('email', $socialUser->getEmail())->first();
+
+        if ($authUser){
+            return $authUser;
+        }
+
+        $user = User::create([
+            'email' => $socialUser->getEmail(),
+            'facebook_id' => $socialUser->getId(),
+        ]);
+
+        $user->assignRole('authenticated_user');
+
+        //Set Name
+        $exploded = explode(' ', $socialUser->getName());
+
+        $profile = new Profile();
+        $profile->first_name = $exploded[0];
+        unset($exploded[0]);
+
+        if(isset($exploded[1])){
+            $profile->last_name = implode(' ', $exploded);
+        }
+
+        $profile->user()->associate($user);
+
+        /*
+        if(!empty($data['profile']['profile_picture']) && $data['profile']['profile_picture']->isValid()){
+            $profile->profile_picture = $profile->saveProfilePicture($data['profile']['profile_picture']);
+        }
+        */
+
+        $profile->profile_picture = $profile->saveRemoteProfilePicture($socialUser->getAvatar());
+
+        $profile->save();
+
+        $extendedProfile = new ExtendedProfile();
+        $profile->extendedProfile()->save($extendedProfile);
+
+        $subscriptions = Subscription::all()->pluck('id')->all();
+        $user->subscriptions()->sync($subscriptions);
 
         return $user;
     }
