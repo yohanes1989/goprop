@@ -53,7 +53,7 @@ return [
             'partners-notification' => 'I wish to receive news from GoProp\'s selected partners and property related services.'
         ],
         'register_button' => 'Register',
-        'successful_message' => 'Congratulations, your account is successfully created.'
+        'successful_message' => 'Your new account ready. You can now login and advertise your property.'
     ],
     'dashboard'
 ];

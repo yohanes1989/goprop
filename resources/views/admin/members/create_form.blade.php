@@ -1,10 +1,12 @@
 <div class="col-md-4">
+    <!--
     <div class="form-group">
         {!! Form::label('username', 'Username *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
             {!! Form::text('username', null, array('class'=>'form-control', 'id' => 'username', 'placeholder'=>'Username')) !!}
         </div>
     </div>
+    -->
 
     <div class="form-group">
         {!! Form::label('email', 'Email *', array('class'=>'col-md-4 control-label')) !!}

@@ -17,7 +17,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
-    protected $username = 'username';
+    protected $username = 'email';
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
@@ -54,7 +54,19 @@ class AuthController extends Controller
             );
         }
 
-        $user = $this->create($request->all());
+        $requestValues = $request->all();
+        if(isset($requestValues['profile']) && isset($requestValues['profile']['name'])){
+            $exploded = explode(' ', $requestValues['profile']['name']);
+            $requestValues['profile']['first_name'] = $exploded[0];
+            unset($exploded[0]);
+            unset($requestValues['profile']['name']);
+
+            if(isset($exploded[1])){
+                $requestValues['profile']['last_name'] = implode(' ', $exploded);
+            }
+        }
+
+        $user = $this->create($requestValues);
         $user->assignRole('authenticated_user');
 
         $globalCartOrder = ProjectHelper::getGlobalCartOrder();
@@ -64,7 +76,7 @@ class AuthController extends Controller
 
             return redirect()->route('frontend.property.create')->with('messages', [trans('account.register.successful_message')]);
         }else{
-            return redirect()->route('frontend.account.login')->with('messages', [trans('account.register.successful_message')]);
+            return redirect(route('frontend.account.login').'#login-form')->with('messages', [trans('account.register.successful_message')]);
         }
     }
 
@@ -78,14 +90,13 @@ class AuthController extends Controller
         $allowedSubscriptions = Subscription::lists('slug')->all();
 
         $rules = [
-            'username' => 'required|max:255|unique:users',
+            //'username' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-            'profile.first_name' => 'required|min:2',
-            'profile.last_name' => 'min:2',
+            'profile.name' => 'required|min:2',
             'profile.mobile_phone_number' => 'required|min:5',
-            'profile.home_phone_number' => 'min:5',
-            'profile.profile_picture' => 'image|max:500',
+            //'profile.home_phone_number' => 'min:5',
+            //'profile.profile_picture' => 'image|max:500',
             //'profile.address' => 'required',
             //'profile.province' => 'required|not_in:0',
             //'profile.city' => 'required|not_in:0',
@@ -96,11 +107,11 @@ class AuthController extends Controller
             'profile.extendedProfile.referral_source' => 'required',
         ];
 
-        if(isset($data['subscriptions'])){
+        /*if(isset($data['subscriptions'])){
             foreach($data['subscriptions'] as $idx=>$submittedSubscription){
                 $rules['subscriptions.'.$idx] = 'in:'.implode(',', $allowedSubscriptions);
             }
-        }
+        }*/
 
         return $rules;
     }

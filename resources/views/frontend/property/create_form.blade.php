@@ -5,7 +5,7 @@
                 {!! Form::label('property_name', trans('forms.fields.property.property_name')) !!} <sup class="text-danger">*</sup>
             </div>
             <div class="col-xs-12">
-                {!! Form::text('property_name', null, ['class' => 'form-control', 'id' => 'property_name']) !!}
+                {!! Form::text('property_name', null, ['class' => 'form-control', 'placeholder' => trans('forms.fields.property.property_name_placeholder'), 'id' => 'property_name']) !!}
             </div>
         </div>
         <div class="form-group clearfix">

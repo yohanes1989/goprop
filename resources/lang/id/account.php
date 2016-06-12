@@ -53,7 +53,7 @@ return [
             'partners-notification' => 'Saya bersedia menerima berita dan promosi dari partner GoProp'
         ],
         'register_button' => 'Daftar',
-        'successful_message' => 'Selamat, akun anda berhasil dibuat.'
+        'successful_message' => 'Selamat, akun anda berhasil dibuat. Sekarang anda dapat masuk dan mengiklankan properti anda.'
     ],
     'dashboard'
 ];

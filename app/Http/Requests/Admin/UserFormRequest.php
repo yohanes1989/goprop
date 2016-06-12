@@ -32,7 +32,7 @@ class UserFormRequest extends Request
         $routeName = $this->route()->getName();
 
         $rules = [
-            'username' => 'max:255',
+            //'username' => 'max:255',
             'email' => 'required|email|max:255',
             'password' => 'confirmed|min:6',
             'status' => 'required|in:'.implode(',', $allowedStatus),
@@ -49,7 +49,7 @@ class UserFormRequest extends Request
         ];
 
         if($this->get('role') != 'agent'){
-            $rules['username'] .= '|required';
+            //$rules['username'] .= '|required';
         }
 
         if(in_array($routeName, ['admin.member.store', 'admin.member.update'])){
@@ -61,11 +61,11 @@ class UserFormRequest extends Request
         if($this->route()->hasParameter('id')){
             $member = User::findOrFail($this->route('id'));
 
-            $rules['username'] = $rules['username'].'|unique:users,username,'.$member->id;
+            //$rules['username'] = $rules['username'].'|unique:users,username,'.$member->id;
             $rules['email'] = $rules['email'].'|unique:users,email,'.$member->id;
         }else{
             $rules['password'] = $rules['password'].'|required';
-            $rules['username'] = $rules['username'].'|unique:users';
+            //$rules['username'] = $rules['username'].'|unique:users';
             $rules['email'] = $rules['email'].'|unique:users';
         }
 

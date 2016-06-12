@@ -23,7 +23,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th>Username</th>
+                        <!--<th>Username</th>-->
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
@@ -36,7 +36,7 @@
                     @foreach($agents as $idx=>$agent)
                     <tr>
                         <td class="text-center">{{ $idx + 1 + (($agents->currentPage() - 1) * $agents->perPage()) }}</td>
-                        <td>{{ $agent->username }}</td>
+                        <!--<td>{{ $agent->username }}</td>-->
                         <td>{{ $agent->profile->singleName }}<br/>{{ $agent->profile->occupation }}</td>
                         <td>{{ $agent->email }}</td>
                         <td>{{ $agent->profile->mobile_phone_number }}</td>

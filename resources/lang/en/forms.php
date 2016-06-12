@@ -22,6 +22,7 @@ return [
         'password' => 'Password',
         'password_confirmation' => 'Password Confirmation',
         'title' => 'Title',
+        'name' => 'Name',
         'first_name' => 'First Name',
         'last_name' => 'Last Name',
         'mobile_phone_number' => 'Mobile Phone Number',
@@ -42,6 +43,7 @@ return [
         'virtual_tour' => 'Virtual Tour',
         'property' => [
             'property_name' => 'Listing Title',
+            'property_name_placeholder' => '2 Bedrooms Apartment in Jakarta',
             'property_type' => 'Property Type',
             'description' => 'Listing Description',
             'bedrooms' => 'Bedrooms',

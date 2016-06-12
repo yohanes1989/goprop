@@ -33,7 +33,7 @@ class User extends Model implements AuthenticatableContract,
         $fullName = $this->profile->singleName;
 
         if(empty($fullName)){
-            $fullName = $this->username;
+            $fullName = $this->email;
         }
 
         return $fullName;

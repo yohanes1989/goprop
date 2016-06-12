@@ -22,8 +22,9 @@ return [
         'password' => 'Password',
         'password_confirmation' => 'Konfirmasi Password',
         'title' => 'Sapaan',
+        'name' => 'Nama',
         'first_name' => 'Nama Depan',
-        'last_name' => 'Last Name',
+        'last_name' => 'Nama Belakang',
         'mobile_phone_number' => 'Nomor HP',
         'home_phone_number' => 'Nomor Telp. Rumah',
         'address' => 'Alamat',
@@ -42,6 +43,7 @@ return [
         'virtual_tour' => 'Tur Virtual',
         'property' => [
             'property_name' => 'Nama Properti',
+            'property_name_placeholder' => 'Apartemen 2 kamar di Jakarta',
             'property_type' => 'Tipe Properti',
             'description' => 'Deskripsi Properti',
             'bedrooms' => 'Kamar',

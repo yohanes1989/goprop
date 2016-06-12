@@ -15,30 +15,32 @@
                 <div class="row">
                     <div class="form-group clearfix">
                         <div class="col-sm-4">
+                            {!! Form::label('email', trans('forms.fields.email')) !!} <sup class="text-danger">*</sup>
+                        </div>
+                        <div class="col-sm-8">
+                            {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
+                        </div>
+                    </div>
+                    <!--
+                    <div class="form-group clearfix">
+                        <div class="col-sm-4">
                             {!! Form::label('username', trans('forms.fields.username')) !!} <sup class="text-danger">*</sup>
                         </div>
                         <div class="col-sm-8">
                             {!! Form::text('username', null, ['class' => 'form-control', 'id' => 'username']) !!}
-                        </div>
+                            </div>
                     </div>
-                    <div class="form-group clearfix">
-                        <div class="col-sm-4">
-                            {!! Form::label('password', trans('forms.fields.password')) !!}
-                        </div>
-                        <div class="col-sm-8">
-                            {!! Form::password('password', ['class' => 'form-control', 'id' => 'password']) !!}
-                        </div>
-                    </div>
+                        -->
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="row">
                     <div class="form-group clearfix">
                         <div class="col-sm-4">
-                            {!! Form::label('email', trans('forms.fields.email')) !!} <sup class="text-danger">*</sup>
+                            {!! Form::label('password', trans('forms.fields.password')) !!}
                         </div>
                         <div class="col-sm-8">
-                            {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
+                            {!! Form::password('password', ['class' => 'form-control', 'id' => 'password']) !!}
                         </div>
                     </div>
                     <div class="form-group clearfix">

@@ -49,13 +49,13 @@
                     </div>
                     -->
                     <div class="login-form-area">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" id="login-form">
                             <div class="form-group">
                                 <div class="col-sm-4">
-                                    {!! Form::label('username', trans('forms.fields.username'), ['class' => 'control-label']) !!} <sup class="text-danger">*</sup>
+                                    {!! Form::label('email', trans('forms.fields.email'), ['class' => 'control-label']) !!} <sup class="text-danger">*</sup>
                                 </div>
                                 <div class="col-sm-8">
-                                    {!! Form::text('username', null, ['class' => 'form-control', 'id' => 'usernane']) !!}
+                                    {!! Form::email('email', null, ['class' => 'form-control', 'id' => 'email']) !!}
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

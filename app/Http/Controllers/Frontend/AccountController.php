@@ -239,7 +239,7 @@ class AccountController extends Controller
         $allowedSubscriptions = Subscription::lists('slug')->all();
 
         $rules = [
-            'username' => 'required|max:255|unique:users,username,'.Auth::user()->id,
+            //'username' => 'required|max:255|unique:users,username,'.Auth::user()->id,
             'email' => 'required|email|max:255|unique:users,email,'.Auth::user()->id,
             'password' => 'confirmed|min:6',
             'profile.first_name' => 'required|min:2',
