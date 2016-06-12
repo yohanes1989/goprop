@@ -77,6 +77,7 @@ class AgentController extends Controller
         $user->load(['profile', 'profile.extendedProfile']);
 
         //$user->username = $request->input('username');
+        $user->email = $request->input('email');
         $user->status = $request->input('status');
         $user->manage_property = $request->input('manage_property', false);
 
