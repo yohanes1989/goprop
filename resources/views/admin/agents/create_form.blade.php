@@ -35,6 +35,11 @@
             {!! Form::select('status', \GoProp\Models\User::getStatusLabel(), null, array('id' => 'status-select','class'=>'form-control')) !!}
         </div>
     </div>
+
+    <div class="form-group">
+        <div class="col-md-4"></div>
+        <div class="col-md-8"><label>{!! Form::checkbox('manage_property', 1, null) !!} Can Manage Property</label></div>
+    </div>
 </div>
 
 <div class="col-md-4">

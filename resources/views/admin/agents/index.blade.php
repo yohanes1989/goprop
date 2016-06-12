@@ -28,6 +28,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Status</th>
+                        <th>Manage Property</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -43,6 +44,7 @@
                         <td>
                             {{ $agent->getStatusLabel($agent->status) }}
                         </td>
+                        <td><i class="fa fa-{{ $agent->manage_property?'check':'remove' }}"></i></td>
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
                                 <a href="{{ route('admin.agent.edit', ['id' => $agent->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>

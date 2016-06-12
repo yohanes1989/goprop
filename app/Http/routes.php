@@ -147,6 +147,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
                 'uses' => 'PropertyController@index'
             ]);
 
+            Route::get('/{type}/index', [
+                'as' => 'admin.property.index.agent',
+                'uses' => 'PropertyController@indexAgent'
+            ]);
+
             Route::get('/{id}/view', [
                 'as' => 'admin.property.view',
                 'uses' => 'PropertyController@view',

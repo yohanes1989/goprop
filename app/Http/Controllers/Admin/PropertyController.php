@@ -159,6 +159,121 @@ class PropertyController extends Controller
         ]);
     }
 
+    public function indexAgent(Request $request, $type)
+    {
+        $user = $request->user();
+
+        switch($type){
+            case 'referral-listing':
+                $title = 'My Referral Properties';
+                $field = 'referral_list_id';
+                break;
+        }
+
+        $qb = Property::with(['agentList'])->whereNotNull('checkout_at')->orderBy('checkout_at', 'DESC');
+        AddressHelper::addAddressQueryScope($qb);
+
+        $qb->where('properties.'.$field, $user->id);
+
+        if($request->has('search')){
+            if($request->input('search.deleted', false)){
+                $qb->onlyTrashed();
+            }
+
+            if($request->has('search.keyword')){
+                $qb->where(function($query) use ($request){
+                    $query
+                        ->orWhere('listing_code', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('address', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('description', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('property_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('province_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('city_name', 'LIKE', '%'.$request->input('search.keyword').'%')
+                        ->orWhere('subdistrict_name', 'LIKE', '%'.$request->input('search.keyword').'%');
+                });
+            }
+
+            if($request->has('search.for')){
+                $qb->where('for_'.$request->input('search.for'), 1);
+            }
+
+            if($request->has('search.owner')){
+                $qb->whereHas('user', function($query) use ($request){
+                    $query->where('email', $request->input('search.owner'));
+                });
+            }
+
+            if($request->has('search.upload_date')){
+                $uploadDateFilter = Carbon::createFromFormat('d-m-Y', $request->input('search.upload_date'));
+                $qb->where('checkout_at', '>=', $uploadDateFilter->format('Y-m-d'));
+                $qb->where('checkout_at', '<', $uploadDateFilter->modify('+1 day')->format('Y-m-d'));
+            }
+
+            if($request->has('search.agentList')){
+                if($request->input('search.agentList') == 'unassigned'){
+                    $qb->whereNull('agent_list_id');
+                }else{
+                    $qb->whereHas('agentList', function($query) use ($request){
+                        $query->where('id', $request->input('search.agentList'));
+                    });
+                }
+            }
+
+            if($request->has('search.agentSell')){
+                if($request->input('search.agentSell') == 'unassigned'){
+                    $qb->whereNull('agent_sell_id');
+                }else{
+                    $qb->whereHas('agentSell', function($query) use ($request){
+                        $query->where('id', $request->input('search.agentSell'));
+                    });
+                }
+            }
+
+            if($request->has('search.referralList')){
+                if($request->input('search.referralList') == 'unassigned'){
+                    $qb->whereNull('referral_list_id');
+                }else{
+                    $qb->whereHas('referralList', function($query) use ($request){
+                        $query->where('id', $request->input('search.referralList'));
+                    });
+                }
+            }
+
+            if($request->has('search.referralSell')){
+                if($request->input('search.referralSell') == 'unassigned'){
+                    $qb->whereNull('referral_sell_id');
+                }else{
+                    $qb->whereHas('referralSell', function($query) use ($request){
+                        $query->where('id', $request->input('search.referralSell'));
+                    });
+                }
+            }
+
+            if($request->has('search.status')){
+                $qb->where('status', $request->input('search.status'));
+            }
+        }
+
+        $properties = $qb->paginate(50);
+        $properties->appends(['search' => $request->input('search')]);
+
+        $forOptions = [
+            '' => 'For',
+            'sell' => 'Sell',
+            'rent' => 'Rent'
+        ];
+
+        $statusOptions = ['' => 'Status'] + Property::getStatusLabel();
+        unset($statusOptions[Property::STATUS_DRAFT]);
+
+        return view('admin.property.index_agent', [
+            'title' => $title,
+            'properties' => $properties,
+            'forOptions' => $forOptions,
+            'statusOptions' => $statusOptions,
+        ]);
+    }
+
     public function view($id)
     {
         $property = Property::withTrashed()->findOrFail($id);

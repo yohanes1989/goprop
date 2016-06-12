@@ -22,6 +22,10 @@ class User extends Model implements AuthenticatableContract,
 
     protected $hidden = ['password', 'remember_token'];
 
+    protected $casts = [
+        'manage_property' => 'boolean'
+    ];
+
     //Methods
     public function getIncompleteProperties()
     {

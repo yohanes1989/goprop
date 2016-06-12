@@ -45,6 +45,7 @@ class AgentController extends Controller
             'status' => $request->input('status'),
             'password' => bcrypt($request->input('password'))
         ]);
+        $user->manage_property = $request->input('manage_property', false);
         $user->save();
         $user->assignRole('agent');
 
@@ -77,6 +78,7 @@ class AgentController extends Controller
 
         //$user->username = $request->input('username');
         $user->status = $request->input('status');
+        $user->manage_property = $request->input('manage_property', false);
 
         if($request->input('remove_profile_picture') == 1){
             $user->profile->removeProfilePicture();
