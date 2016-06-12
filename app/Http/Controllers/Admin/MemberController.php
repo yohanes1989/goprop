@@ -44,7 +44,7 @@ class MemberController extends Controller
     public function store(UserFormRequest $request)
     {
         $user = new User([
-            'username' => $request->input('username'),
+            //'username' => $request->input('username'),
             'email' => $request->input('email'),
             'status' => $request->input('status'),
             'password' => bcrypt($request->input('password'))
@@ -71,7 +71,7 @@ class MemberController extends Controller
 
         $user->subscriptions()->sync($subscriptions);
 
-        return redirect()->route('admin.member.index')->with('messages', [$user->username.' has been created.']);
+        return redirect()->route('admin.member.index')->with('messages', [$user->getName().' has been created.']);
     }
 
     public function edit($id)
@@ -119,7 +119,7 @@ class MemberController extends Controller
 
         $user->subscriptions()->sync($subscriptions);
 
-        return redirect($request->get('backUrl', route('admin.member.index')))->with('messages', [$user->username.' has been updated.']);
+        return redirect($request->get('backUrl', route('admin.member.index')))->with('messages', [$user->getName().' has been updated.']);
     }
 
     public function delete(Request $request, $id)
@@ -127,7 +127,7 @@ class MemberController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect($request->get('backUrl', route('admin.member.index')))->with('messages', [$user->username.' has been deleted.']);
+        return redirect($request->get('backUrl', route('admin.member.index')))->with('messages', [$user->getName().' has been deleted.']);
     }
 
     public function findAutocomplete(Request $request)
@@ -141,8 +141,8 @@ class MemberController extends Controller
             $qb = User::whereHas('profile', function($query) use ($term){
                 $query->where('first_name', 'LIKE', '%'.$term.'%')
                     ->orWhere('last_name', 'LIKE', '%'.$term.'%')
-                    ->orWhere('email', 'LIKE', '%'.$term.'%')
-                    ->orWhere('username', 'LIKE', '%'.$term.'%');
+                    ->orWhere('email', 'LIKE', '%'.$term.'%');
+                    //->orWhere('username', 'LIKE', '%'.$term.'%');
             });
 
             $qb->whereHas('roles', function($query) use ($roles){

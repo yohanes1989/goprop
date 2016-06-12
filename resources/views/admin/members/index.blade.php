@@ -23,7 +23,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
-                        <th>Username</th>
+                        <!--<th>Username</th>-->
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
@@ -36,7 +36,7 @@
                     @foreach($members as $idx=>$member)
                     <tr>
                         <td class="text-center">{{ $idx + 1 + (($members->currentPage() - 1) * $members->perPage()) }}</td>
-                        <td>{{ $member->username }}</td>
+                        <!--<td>{{ $member->username }}</td>-->
                         <td>{{ $member->profile->singleName }}</td>
                         <td>{{ $member->email }}</td>
                         <td>{{ $member->profile->mobile_phone_number }}</td>
