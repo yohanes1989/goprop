@@ -75,7 +75,7 @@ return [
             'bedroom_count' => '{0}:count Bedroom / Studio|{1}:count Bedroom|[2,Inf] :count Bedrooms',
             'room_count' => '{0}:count Room / Studio|{1}:count Room|[2,Inf]:count Rooms',
             'maid_bedroom_count' => '[0,1]:count Maid Bedroom|[2,Inf]:count Maid Bedrooms',
-            'bathroom_count' => '{1}:count Bathroom|[2,Inf]:count Bathrooms',
+            'bathroom_count' => '[0,1]:count Bathroom|[2,Inf]:count Bathrooms',
             'maid_bathroom_count' => '[0,1]:count Maid Bathroom|[2,Inf]:count Maid Bathrooms',
             'car_count' => '[0,1]:count Car|[2,Inf]:count Cars',
             'phone_line_count' => '[0,1]:count Line|[2,Inf]:count Lines',

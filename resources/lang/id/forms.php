@@ -75,7 +75,7 @@ return [
             'bedroom_count' => '{0}:count Kamar / Studio|{1}:count Kamar|[2,Inf] :count Kamar',
             'room_count' => '{0}:count Ruangan / Studio|{1}:count Ruangan|[2,Inf]:count Ruangan',
             'maid_bedroom_count' => '[0,1]:count Kamar Pembantu|[2,Inf]:count Kamar Pembantu',
-            'bathroom_count' => '{1}:count Kamar Mandi|[2,Inf]:count Kamar Mandi',
+            'bathroom_count' => '[0,1]:count Kamar Mandi|[2,Inf]:count Kamar Mandi',
             'maid_bathroom_count' => '[0,1]:count Kamar Mandi Pembantu|[2,Inf]:count Kamar Mandi Pembantu',
             'car_count' => '[0,1]:count Mobil|[2,Inf]:count Mobil',
             'phone_line_count' => '[0,1]:count Jalur|[2,Inf]:count Jalur',

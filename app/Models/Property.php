@@ -715,7 +715,7 @@ class Property extends Model
     public static function getBathroomsLabel($option=null)
     {
         $array = [];
-        for($i = 1; $i <= 5; $i += 1){
+        for($i = 0; $i <= 5; $i += 1){
             $array[$i] = trans_choice('forms.fields.property.bathroom_count', $i);
         }
 
