@@ -89,6 +89,8 @@
                                 <div class="faqs-answer clearfix" style="display: block;">
                                     <div class="row">
                                         <div class="col-sm-4">
+                                            <p><strong>{{ trans('forms.fields.property.listing_code') }}:</strong> {{ $property->listing_code }}</p>
+
                                             @if($property->for_sell)
                                             <p><strong>{{ trans('forms.fields.property.sell_price') }}:</strong>
                                                 {{ \GoProp\Facades\ProjectHelper::formatNumber($property->getPrice('sell'), true) }}
