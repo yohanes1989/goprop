@@ -43,6 +43,7 @@ return [
         'virtual_tour' => 'Virtual Tour',
         'property' => [
             'property_name' => 'Listing Title',
+            'listing_code' => 'Listing Code',
             'property_name_placeholder' => '2 Bedrooms Apartment in Jakarta',
             'property_type' => 'Property Type',
             'description' => 'Listing Description',

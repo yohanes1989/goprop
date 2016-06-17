@@ -126,6 +126,11 @@
                                     </header>
 
                                     <div class="entry-content">
+                                        <div class="featureChild">
+                                            <span class="name">{{ trans('forms.fields.property.listing_code') }}:</span>
+                                            <span class="desc">{!! $property->listing_code !!}</span>
+                                        </div>
+
                                         @if(!empty($property->land_size+0))
                                         <div class="featureChild">
                                             <span class="name">{{ trans('forms.fields.property.land_size') }}:</span>

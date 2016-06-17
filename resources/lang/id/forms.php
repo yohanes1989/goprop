@@ -43,6 +43,7 @@ return [
         'virtual_tour' => 'Tur Virtual',
         'property' => [
             'property_name' => 'Nama Properti',
+            'listing_code' => 'Kode Listing',
             'property_name_placeholder' => 'Apartemen 2 kamar di Jakarta',
             'property_type' => 'Tipe Properti',
             'description' => 'Deskripsi Properti',
