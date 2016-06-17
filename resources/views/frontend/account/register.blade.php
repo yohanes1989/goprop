@@ -64,18 +64,18 @@
                         </div>
                         <div class="form-group clearfix">
                             <div class="col-sm-4">
-                                {!! Form::label('password_confirmation', trans('forms.fields.password_confirmation')) !!} <sup class="text-danger">*</sup>
-                            </div>
-                            <div class="col-sm-8">
-                                {!! Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'password_confirmation']) !!}
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <div class="col-sm-4">
                                 {!! Form::label('password', trans('forms.fields.password')) !!} <sup class="text-danger">*</sup>
                             </div>
                             <div class="col-sm-8">
                                 {!! Form::password('password', ['class' => 'form-control', 'id' => 'password']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <div class="col-sm-4">
+                                {!! Form::label('password_confirmation', trans('forms.fields.password_confirmation')) !!} <sup class="text-danger">*</sup>
+                            </div>
+                            <div class="col-sm-8">
+                                {!! Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'password_confirmation']) !!}
                             </div>
                         </div>
                         <div class="form-group clearfix">
