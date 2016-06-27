@@ -40,5 +40,6 @@ class Kernel extends HttpKernel
         'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'admin.can_edit' => \GoProp\Http\Middleware\Admin\CanEdit::class,
+        'admin.can_edit_or_owner' => \GoProp\Http\Middleware\Admin\IsAdminOrOwner::class,
     ];
 }

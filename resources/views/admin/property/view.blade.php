@@ -304,6 +304,30 @@
             </div>
 
             <div class="col-md-6">
+                @if($property->photos->count() > 0)
+                <h4 class="sub-header">Photos</h4>
+
+                <div class="row gallery" data-toggle="lightbox-gallery">
+                    @foreach($property->photos as $photo)
+                        <div class="col-md-2 col-sm-4">
+                            <a href="{{ url('images/photo_gallery/'.$photo->filename) }}" class="gallery-link" target="_blank"><img class="img-responsive" src="{{ url('images/photo_thumbnail/'.$photo->filename) }}" /></a>
+                        </div>
+                    @endforeach
+                </div>
+                @endif
+
+                    @if($property->floorplans->count() > 0)
+                        <h4 class="sub-header">Floorplan</h4>
+
+                        <div class="row gallery" data-toggle="lightbox-gallery">
+                            @foreach($property->floorplans as $photo)
+                                <div class="col-md-2 col-sm-4">
+                                    <a href="{{ url('images/photo_gallery/'.$photo->filename) }}" class="gallery-link" target="_blank"><img class="img-responsive" src="{{ url('images/photo_thumbnail/'.$photo->filename) }}" /></a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+
                 <h4 class="sub-header">Maps</h4>
 
                 <div class="form-group">

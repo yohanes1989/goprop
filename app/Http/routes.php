@@ -476,6 +476,41 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             ]);
         });
 
+        //Referrals
+        Route::group(['prefix' => '/referrals', 'is' => 'administrator|agent'], function(){
+            Route::get('index', [
+                'as' => 'admin.referrals.index',
+                'uses' => 'ReferralController@index'
+            ]);
+
+            Route::get('create', [
+                'as' => 'admin.referrals.create',
+                'uses' => 'ReferralController@create'
+            ]);
+
+            Route::post('store', [
+                'as' => 'admin.referrals.store',
+                'uses' => 'ReferralController@store'
+            ]);
+
+            Route::group(['middleware' => ['can' => 'admin.can_edit_or_owner']], function(){
+                Route::get('edit/{id}', [
+                    'as' => 'admin.referrals.edit',
+                    'uses' => 'ReferralController@edit'
+                ]);
+
+                Route::post('update/{id}', [
+                    'as' => 'admin.referrals.update',
+                    'uses' => 'ReferralController@update'
+                ]);
+
+                Route::post('delete/{id}', [
+                    'as' => 'admin.referrals.delete',
+                    'uses' => 'ReferralController@delete'
+                ]);
+            });
+        });
+
         //Others
         Route::get('/members/find/autocomplete', [
             'as' => 'admin.member.find.auto_complete',

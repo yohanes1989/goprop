@@ -2,6 +2,17 @@
 
 @section('page_title', ProjectHelper::formatTitle($content->title))
 
+@section('open_graph')
+    @parent
+
+    <meta property="og:url" content="{{ route('frontend.page.referral_listing') }}" />
+    <meta property="og:title" content="{{ ProjectHelper::formatTitle($content->title) }}" />
+    <meta property="og:description" content="Pendapat bahwa “ tidak ada lagi yang gampang di dunia ini”, belum tentu benar. Jika anda seorang profesional muda yang smart, senang networking, dan ingin maju, dunia properti bisa jadi kunci income tambahan anda." />
+    <meta property="og:image" content="{{ asset('assets/frontend/images/referral_poster.jpg') }}" />
+    <meta property="og:image:width" content="480" />
+    <meta property="og:image:height" content="480" />
+@stop
+
 @section('content')
     <section class="post-columns">
         {!! $content->content !!}

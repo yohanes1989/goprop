@@ -59,6 +59,7 @@ class MenuMiddleware
 
                         $menu->raw('<h2 class="sidebar-header">Operations</h2>');
                         $menu->add('Property Listings', ['route' => ['admin.property.index']])->prepend('<i class="gi gi-home"></i> ');
+                        $menu->add('Referrals Info', ['route' => ['admin.referrals.index']])->prepend('<i class="fa fa-bell-o"></i> ');
                         $menu->add('Viewing Schedules', ['route' => ['admin.viewing_schedule.index']])->prepend('<i class="fa fa-calendar"></i> ');
                         $menu->add('Owner Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'owner']])->prepend('<i class="fa fa-comments"></i> ');
                         $menu->add('User Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'user']])->prepend('<i class="fa fa-comments"></i> ');
@@ -71,7 +72,9 @@ class MenuMiddleware
                             $menu->add('User Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'user']])->prepend('<i class="fa fa-comments"></i> ');
                         }else{
                             $menu->raw('<h2 class="sidebar-header">Properties</h2>');
-                            $menu->add('My Referrals', ['route' => ['admin.property.index.agent', 'type' => 'referral-listing']])->prepend('<i class="gi gi-home"></i> ');
+                            $menu->add('Properties I Refer', ['route' => ['admin.property.index.agent', 'type' => 'referral-listing']])->prepend('<i class="gi gi-home"></i> ');
+                            $menu->add('Add Referral', ['route' => ['admin.referrals.create']])->prepend('<i class="fa fa-plus"></i> ');
+                            $menu->add('My Referrals', ['route' => ['admin.referrals.index']])->prepend('<i class="fa fa-bell-o"></i> ');
                         }
                     }
 
