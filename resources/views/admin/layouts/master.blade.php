@@ -169,6 +169,12 @@
                 </div>
             @endif
 
+            @if(Session::has('status'))
+                <div class="alert alert-info alert-dismissable">
+                    {{ Session::get('status') }}
+                </div>
+            @endif
+
             @if(!empty($errors->all()))
             <div class="alert alert-danger alert-dismissable">
                 <ul>

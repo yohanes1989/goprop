@@ -1,9 +1,31 @@
 <?php
 Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
     //Auth
-    Route::controllers([
-        'auth' => 'Auth\AuthController'
-    ]);
+    Route::group(['prefix' => 'auth'], function(){
+        Route::get('/email', [
+            'as' => 'admin.account.email',
+            'uses' => 'Auth\PasswordController@getEmail'
+        ]);
+
+        Route::post('/email', [
+            'as' => 'admin.account.email.process',
+            'uses' => 'Auth\PasswordController@postEmail'
+        ]);
+
+        Route::get('/reset', [
+            'as' => 'admin.account.reset',
+            'uses' => 'Auth\PasswordController@getReset'
+        ]);
+
+        Route::post('/reset', [
+            'as' => 'admin.account.reset.process',
+            'uses' => 'Auth\PasswordController@postReset'
+        ]);
+
+        Route::controllers([
+            '/' => 'Auth\AuthController'
+        ]);
+    });
 
     Route::group(['prefix' => '/', 'middleware' => ['admin.auth', 'menu', 'acl']], function(){
         Route::get('/', [

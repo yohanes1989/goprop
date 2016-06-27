@@ -14,7 +14,7 @@ return [
     */
 
     'password' => 'Password harus memiliki minimum 6 huruf dan terkonfirmasi.',
-    'reset' => 'Password anda berhasil me-reset ulang!',
+    'reset' => 'Password anda berhasil direset ulang!',
     'sent' => 'Kami telah mengirimkan email berisi instruksi me-reset ulang password anda!',
     'token' => 'Kode password anda salah.',
     'user' => "Alamat email tidak ditemukan.",

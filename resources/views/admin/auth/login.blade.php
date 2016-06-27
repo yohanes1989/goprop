@@ -29,6 +29,12 @@
                     </div>
                 @endif
 
+                @if (Session::has('status'))
+                    <div class="alert alert-info">
+                        {{ Session::get('status') }}
+                    </div>
+                @endif
+
                 <div class="form-group">
                     <div class="col-xs-12">
                         <input value="{{ old('email') }}" type="email" id="login-email" name="email" class="form-control input-lg" placeholder="Email">
@@ -48,6 +54,8 @@
                             <button type="button" class="btn btn-sm btn-default disabled">Remember me?</button>
                             <button type="button" class="btn btn-sm btn-default" data-toggle="button" id="btn-remember"><i class="fa fa-check"></i></button>
                         </div>
+                        <br/>
+                        <a href="{{ route('admin.account.email') }}" class="other-link"><small>Forget your password?</small></a>
                     </div>
                     <div class="col-xs-4 text-right">
                         <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Login</button>
