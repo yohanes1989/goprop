@@ -207,9 +207,9 @@ class PageController extends Controller
             'password' => $password,
         ];
 
-        Mail::send('frontend.emails.new_referral_agent', $messageVars, function ($m){
+        Mail::send('frontend.emails.new_referral_agent', $messageVars, function ($m) use ($user){
             $m->from(config('app.contact_from_email'), config('app.contact_from_name'));
-            $m->to(config('app.contact_destination'))->subject('Referral Listing Registration');
+            $m->to($user->email)->subject('Informasi Login GoProp Referral Agent');
         });
     }
 }

@@ -10,6 +10,7 @@ use GoProp\Http\Requests\Admin\ReferralInformationFormRequest;
 use GoProp\Http\Requests;
 use GoProp\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ReferralController extends Controller
 {
@@ -22,7 +23,7 @@ class ReferralController extends Controller
     {
         $user = Auth::user();
 
-        $qb = ReferralInformation::orderBy('followed_up', 'DESC')->orderBy('created_at', 'DESC');
+        $qb = ReferralInformation::orderBy('created_at', 'DESC');
         AddressHelper::addAddressQueryScope($qb);
 
         if($request->has('search')){
@@ -112,7 +113,16 @@ class ReferralController extends Controller
         $referralInformation->user()->associate($user);
         $referralInformation->save();
 
-        return redirect()->route('admin.referrals.index')->with('messages', ['Thank you for your referral. Please check this page regularly for any update on your referrals.']);
+        $messageVars = [
+            'referralInformation' => $referralInformation,
+        ];
+
+        Mail::send('frontend.emails.new_referral_information', $messageVars, function ($m){
+            $m->from(config('app.contact_from_email'), config('app.contact_from_name'));
+            $m->to(config('app.contact_destination'))->subject('New Referral Listing Information');
+        });
+
+        return redirect()->route('admin.referrals.index')->with('messages', ['Terima kasih untuk referensi properti kamu. Kami akan segera melakukan follow-up kepada Owner properti ini.']);
     }
 
     /**
@@ -158,7 +168,7 @@ class ReferralController extends Controller
         $referralInformation->fill($request->all());
         $referralInformation->save();
 
-        return redirect()->route('admin.referrals.index')->with('messages', ['Referral Information is successfully updated.']);
+        return redirect()->route('admin.referrals.index')->with('messages', ['Informasi referral berhasil dirubah.']);
     }
 
     /**
@@ -177,7 +187,7 @@ class ReferralController extends Controller
 
         $referralInformation->delete();
 
-        return redirect()->route('admin.referrals.index')->with('messages', ['Your Referral has been deleted.']);
+        return redirect()->route('admin.referrals.index')->with('messages', ['Informasi referral dihapus.']);
     }
 
     protected function isEditable($referralInformation)
