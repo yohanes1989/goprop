@@ -65,6 +65,9 @@
                 <thead>
                     <tr>
                         <th class="text-center">#</th>
+                        @if($isAdmin)
+                        <th>Referral Agent</th>
+                        @endif
                         <th>Type</th>
                         <th>Name</th>
                         <th>Contact Number/Email</th>
@@ -80,6 +83,9 @@
                     @foreach($referrals as $idx=>$referral)
                     <tr>
                         <td class="text-center">{{ $idx + 1 + (($referrals->currentPage() - 1) * $referrals->perPage()) }}</td>
+                        @if($isAdmin)
+                        <td>{{ $referral->user->profile->singleName }}</td>
+                        @endif
                         <td>{{ $referral->type->name }}</td>
                         <td>{{ $referral->name }}</td>
                         <td>{{ $referral->contact_number.(!empty($referral->other_contact_number)?', '.$referral->other_contact_number:'') }}<br/>{{ $referral->email }}</td>
