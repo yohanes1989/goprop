@@ -10,7 +10,9 @@ use GoProp\Models\PackageCategory;
 use GoProp\Models\Page;
 use GoProp\Models\Post;
 use GoProp\Models\PostTranslation;
+use GoProp\Models\Profile;
 use GoProp\Models\Testimonial;
+use GoProp\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Proengsoft\JsValidation\Facades\JsValidatorFacade;
@@ -91,7 +93,7 @@ class PageController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'contact_number' => 'required',
             'address' => 'required|min:10',
             'city' => 'required',
@@ -110,6 +112,30 @@ class PageController extends Controller
             $formSubmission->saveData([$request->except('_token')]);
             $formSubmission->save();
 
+            $password = str_random(8);
+
+            $user = new User([
+                'email' => $request->input('email'),
+                'status' => User::STATUS_ACTIVE,
+                'password' => bcrypt($password)
+            ]);
+            $user->manage_property = FALSE;
+            $user->save();
+            $user->assignRole('agent');
+
+            $names = explode(' ', $request->input('name'));
+
+            $profile = new Profile();
+            $profile->fill([
+                'first_name' => array_shift($names),
+                'last_name' => !empty($names)?implode(' ', $names):'',
+                'mobile_phone_number' => $request->input('contact_number'),
+                'address' => $request->input('address').', '.$request->input('city')
+            ]);
+            $profile->user()->associate($user);
+            $profile->save();
+            $user->load('profile');
+
             $messageVars = [
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
@@ -123,6 +149,8 @@ class PageController extends Controller
                 $m->to(config('app.contact_destination'))->subject('Referral Listing Registration');
             });
 
+            $this->notifyReferralAgent($user, $password);
+
             return redirect()->refresh()->with('messages', [trans('contact.referral_listing_registration_msg')]);
         }
 
@@ -134,5 +162,54 @@ class PageController extends Controller
             'validator' => $validator,
             'content' => $content
         ]);
+    }
+
+    public function notifySignedUpReferralAgents()
+    {
+        $submissions = FormSubmission::groupBy('email')->get();
+        dd($submissions);
+
+        foreach($submissions as $submission){
+            if(User::where('email', $submission->email)->count() < 1){
+                $password = str_random(8);
+
+                $user = new User([
+                    'email' => $submission->email,
+                    'status' => User::STATUS_ACTIVE,
+                    'password' => bcrypt($password)
+                ]);
+                $user->manage_property = FALSE;
+                $user->save();
+                $user->assignRole('agent');
+
+                $names = explode(' ', $submission->getData('name'));
+
+                $profile = new Profile();
+                $profile->fill([
+                    'first_name' => array_shift($names),
+                    'last_name' => !empty($names)?implode(' ', $names):'',
+                    'mobile_phone_number' => $submission->getData('contact_number'),
+                    'address' => $submission->getData('address').', '.$submission->getData('city')
+                ]);
+                $profile->user()->associate($user);
+                $profile->save();
+                $user->load('profile');
+
+                $this->notifyReferralAgent($user, $password);
+            }
+        }
+    }
+
+    protected function notifyReferralAgent($user, $password)
+    {
+        $messageVars = [
+            'user' => $user,
+            'password' => $password,
+        ];
+
+        Mail::send('frontend.emails.new_referral_agent', $messageVars, function ($m){
+            $m->from(config('app.contact_from_email'), config('app.contact_from_name'));
+            $m->to(config('app.contact_destination'))->subject('Referral Listing Registration');
+        });
     }
 }

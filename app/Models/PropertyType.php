@@ -50,13 +50,13 @@ class PropertyType extends Model implements SluggableInterface
         $children = $option->children;
 
         if(count($children) > 0){
-            $return[$option->name] = [];
+            $return[trans('property.property_type.'.$option->slug)] = [];
 
             foreach($children as $child){
-                $return[$option->name] += self::processOption($child);
+                $return[trans('property.property_type.'.$option->slug)] += self::processOption($child);
             }
         }else{
-            $return[$option->id] = $option->name;
+            $return[$option->id] = trans('property.property_type.'.$option->slug);
         }
 
         return $return;

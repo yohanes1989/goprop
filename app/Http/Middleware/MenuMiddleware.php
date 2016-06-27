@@ -73,7 +73,7 @@ class MenuMiddleware
                         }else{
                             $menu->raw('<h2 class="sidebar-header">Properties</h2>');
                             $menu->add('Properties I Refer', ['route' => ['admin.property.index.agent', 'type' => 'referral-listing']])->prepend('<i class="gi gi-home"></i> ');
-                            $menu->add('Add Referral', ['route' => ['admin.referrals.create']])->prepend('<i class="fa fa-plus"></i> ');
+                            $menu->add('Referral Form', ['route' => ['admin.referrals.create']])->prepend('<i class="fa fa-plus"></i> ');
                             $menu->add('My Referrals', ['route' => ['admin.referrals.index']])->prepend('<i class="fa fa-bell-o"></i> ');
                         }
                     }

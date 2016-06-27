@@ -8,6 +8,8 @@
 @endsection
 
 @section('content')
+    @include('admin.referrals.help_box')
+
     <div class="block">
         <div class="block-title">
             <h4>Edit Referral Information</h4>

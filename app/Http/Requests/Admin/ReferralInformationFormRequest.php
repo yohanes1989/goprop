@@ -45,6 +45,10 @@ class ReferralInformationFormRequest extends Request
         $rules['postal_code'] = '';
         $rules['property_type_id'] = 'required|in:'.$propertyTypeAllowedValues;
 
+        if(!$user->is('administrator')){
+            $rules['owner_notified'] = 'required|boolean';
+        }
+
         return $rules;
     }
 

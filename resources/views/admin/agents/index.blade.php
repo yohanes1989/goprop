@@ -38,9 +38,13 @@
                     <tr>
                         <td class="text-center">{{ $idx + 1 + (($agents->currentPage() - 1) * $agents->perPage()) }}</td>
                         <!--<td>{{ $agent->username }}</td>-->
-                        <td>{{ $agent->profile->singleName }}<br/>{{ $agent->profile->occupation }}</td>
+                        <td>
+                            @if($agent->profile)
+                            {{ $agent->profile->singleName }}<br/>{{ $agent->profile->occupation }}
+                            @endif
+                        </td>
                         <td>{{ $agent->email }}</td>
-                        <td>{{ $agent->profile->mobile_phone_number }}</td>
+                        <td>{{ $agent->profile?$agent->profile->mobile_phone_number:'' }}</td>
                         <td>
                             {{ $agent->getStatusLabel($agent->status) }}
                         </td>

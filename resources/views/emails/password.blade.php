@@ -6,7 +6,7 @@
     <p class="lead" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17px; line-height: 1.6; margin: 0 0 10px; padding: 0;">Password Reset</p>
 
     <?php
-    if($user->is('administrator|agent')){
+    if($user->hasBackendAccess){
         $resetLink = route('admin.account.reset', ['token' => $token]);
     }else{
         $resetLink = route('frontend.account.reset', ['token' => $token]);

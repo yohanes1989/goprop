@@ -7,6 +7,8 @@
 @endsection
 
 @section('content')
+    @include('admin.referrals.help_box')
+
     <?php
     $isAdmin = \Illuminate\Support\Facades\Auth::user()->is('administrator');
     ?>

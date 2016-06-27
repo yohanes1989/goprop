@@ -860,6 +860,11 @@ Route::group([
         'uses' => 'PageController@referralListing'
     ]);
 
+    Route::get('referral-listing/notify', [
+        'as' => 'frontend.page.referral_listing.notify',
+        'uses' => 'PageController@notifySignedUpReferralAgents'
+    ]);
+
     Route::get('resources', [
         'as' => 'frontend.page.resources',
         'uses' => 'PageController@resources'

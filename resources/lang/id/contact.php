@@ -8,7 +8,7 @@ return [
     'phone' => 'Nomor Telepon',
     'required' => 'harus diisi',
     'success_message' => 'Terima kasih. Kami akan segera menghubungi anda.',
-    'referral_listing_registration_msg' => 'Terima kasih telah mendaftar. Kami akan review data anda dan menghubungi anda secepatnya.',
+    'referral_listing_registration_msg' => 'Pendaftaran Berhasil. Kami telah mengirimkan email ke Email-mu yang berisi cara untuk mereferensikan properti.',
     'contact_form_title' => 'Anda punya pertanyaan?<br/>Silahkan isi formulir berikut',
     'form' => [
         'fullname' => 'Nama Lengkap',

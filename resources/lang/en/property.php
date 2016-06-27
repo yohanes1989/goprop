@@ -90,6 +90,7 @@ return [
         'body_copy' => 'To update your Property package, please contact us.',
     ],
     'property_type' => [
+        'residential' => 'Residential',
         'house' => 'House',
         'apartment' => 'Apartment',
         'shophouse' => 'Shophouse (Ruko)',

@@ -8,7 +8,7 @@ return [
     'phone' => 'Telephone',
     'required' => 'required',
     'success_message' => 'Thank you for contacting us. We will respond to your inquiry soon.',
-    'referral_listing_registration_msg' => 'Thank you for registering. We will review your data and contact you as soon as possible.',
+    'referral_listing_registration_msg' => 'Registration successfull. Do check your email as we have sent instruction on how to refer a Property.',
     'contact_form_title' => 'Have a question to ask?<br/>Please fill in the form below',
     'form' => [
         'fullname' => 'Full Name',

@@ -90,6 +90,7 @@ return [
         'body_copy' => 'Untuk merubah paket anda, mohon hubungi kami.',
     ],
     'property_type' => [
+        'residential' => 'Residensial',
         'house' => 'Rumah',
         'apartment' => 'Apartemen',
         'shophouse' => 'Ruko',

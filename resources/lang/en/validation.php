@@ -89,8 +89,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'owner_notified' => [
+            'required' => 'You have to introduce GoProp and Owner must be willing to be contacted',
         ],
     ],
 
