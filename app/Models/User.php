@@ -43,6 +43,12 @@ class User extends Model implements AuthenticatableContract,
         return $fullName;
     }
 
+    //Accessors
+    public function getHasBackendAccessAttribute()
+    {
+        return $this->is('administrator|agent');
+    }
+
     //Relations
     public function profile()
     {

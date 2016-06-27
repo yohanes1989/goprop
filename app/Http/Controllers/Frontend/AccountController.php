@@ -19,6 +19,11 @@ class AccountController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
+
+        if($user->hasBackendAccess){
+            return redirect()->route('admin.dashboard');
+        }
+
         $rowLimit = 2;
 
         $qb = $user->properties();

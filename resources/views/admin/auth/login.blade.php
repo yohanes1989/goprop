@@ -54,7 +54,7 @@
                             <button type="button" class="btn btn-sm btn-default disabled">Remember me?</button>
                             <button type="button" class="btn btn-sm btn-default" data-toggle="button" id="btn-remember"><i class="fa fa-check"></i></button>
                         </div>
-                        <br/>
+                        <br/><br/>
                         <a href="{{ route('admin.account.email') }}" class="other-link"><small>Forget your password?</small></a>
                     </div>
                     <div class="col-xs-4 text-right">

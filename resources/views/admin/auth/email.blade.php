@@ -44,7 +44,8 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Reset</button>
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Reset</button><br/><br/>
+                    <a href="{{ action('Admin\Auth\AuthController@getLogin') }}">Back to Login</a>
                 </div>
             </form>
             <!-- END Login Form -->
