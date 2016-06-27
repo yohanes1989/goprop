@@ -167,7 +167,6 @@ class PageController extends Controller
     public function notifySignedUpReferralAgents()
     {
         $submissions = FormSubmission::groupBy('email')->get();
-        dd($submissions);
 
         foreach($submissions as $submission){
             if(User::where('email', $submission->email)->count() < 1){
