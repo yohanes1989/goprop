@@ -1,6 +1,6 @@
 @extends('frontend.master.layout_with_slider')
 
-@section('page_title', ProjectHelper::formatTitle(!empty($overviewSection->meta_title)?$overviewSection->meta_title:config('app.default_title')))
+@section('page_title', !empty($overviewSection->meta_title)?$overviewSection->meta_title:config('app.default_title'))
 
 @section('meta_description', !empty($overviewSection->meta_description)?$overviewSection->meta_description:config('app.default_description'))
 
