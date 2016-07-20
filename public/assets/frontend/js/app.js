@@ -12,6 +12,18 @@ var app = {
       });
 
       // Javascript for Owl Carousel
+      if($('#slideshows .slide', context).length > 1){
+          $('#slideshows', context).owlCarousel({
+              autoplay:true,
+              autoplayTimeout: 3000,
+              smartSpeed: 500,
+              items: 1,
+              loop: true,
+              autoplayHoverPause: true,
+              lazyLoad: true
+          });
+      }
+
       if($('#partner-carousel', context).length > 0){
           $('#partner-carousel', context).owlCarousel({
               autoplay:true,

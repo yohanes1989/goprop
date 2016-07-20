@@ -29,10 +29,10 @@ class MainBannerComposer
             $path = str_replace($currentLanguage, '', $path);
         }
 
-        $main_banner = MainBanner::inURL($path)->first();
+        $main_banners = MainBanner::inURL($path)->get();
 
         $view->with([
-            'main_banner' => $main_banner
+            'main_banners' => $main_banners
         ]);
     }
 }

@@ -7,9 +7,10 @@
         Kamu telah terdaftar sebagai Referral Agent dari GoProp!</p>
 
     <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
-        Berikut adalah informasi login ke Portal yang dapat diakses lewat tombol <a href="{{ route('frontend.account.login') }}" style="font-weight: bold; text-decoration: underline;">Login</a> di website GoProp.co.id<br/>
+        Berikut adalah data username & password anda untuk Login<br/>
         <strong>Email: {{ $user->email }}<br/>
-        Password: {{ $password }}</strong>
+        Password: {{ $password }}</strong><br/>
+        Silahkan daftarkan properti referensi anda sekarang lewat <strong>Referral Form</strong> di portal. <a href="{{ route('frontend.account.login') }}" style="font-weight: bold; text-decoration: underline;">Login</a> di website GoProp.co.id<br/>
     </p>
 
     <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">

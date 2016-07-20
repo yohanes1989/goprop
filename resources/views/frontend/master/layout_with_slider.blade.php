@@ -2,12 +2,14 @@
 
 @section('main_wrapper')
     <?php
-    $page_class = 'general-page'.($main_banner?' general-page-slider':'');
+    $page_class = 'general-page'.($main_banners?' general-page-slider':'');
     ?>
     <div class="@yield('page_class', $page_class)">
-        @if($main_banner)
-        <section class="slideshow-columns">
-            <img src="{{ asset('assets/frontend/'.\GoProp\Models\MainBannerTranslation::$photosUploadPath.'/'.$main_banner->image) }}" class="img-responsive" alt="">
+        @if($main_banners)
+        <section class="slideshow-columns" id="slideshows">
+            @foreach($main_banners as $main_banner)
+            <div class="slide"><img src="{{ asset('assets/frontend/'.\GoProp\Models\MainBannerTranslation::$photosUploadPath.'/'.$main_banner->image) }}" class="img-responsive" alt=""></div>
+            @endforeach
         </section>
         @endif
 
