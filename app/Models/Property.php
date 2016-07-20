@@ -2,6 +2,7 @@
 
 namespace GoProp\Models;
 
+use GoProp\Facades\AddressHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
@@ -328,6 +329,10 @@ class Property extends Model
     public function getMetaDescription()
     {
         $content = [];
+
+        $content[] = trans('property.for.'.$this->getViewFor().'_property_title', ['name' => trans('property.property_type.'.$this->type->slug)]).' '.trans('property.view.in_city', ['location' => AddressHelper::getAddressLabel($this->city, 'city')]);
+
+        $content[] = trans('forms.fields.property.listing_code').':'.$this->listing_code;
 
         if(!empty($this->land_size+0)){
             $content[] = trans('forms.fields.property.land_size').':'.$this->land_size.' m2';

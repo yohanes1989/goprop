@@ -1,6 +1,8 @@
 @extends('frontend.master.layout_with_slider')
 
-@section('page_title', ProjectHelper::formatTitle($title))
+@section('page_title', ProjectHelper::formatTitle(!empty($post->meta_title)?$post->meta_title:$post->title))
+
+@section('meta_description', !empty($post->meta_description)?$post->meta_description:str_limit(trim(preg_replace('/\s\s+/', ' ', strip_tags($post->content))), 150))
 
 @section('content')
     <section class="article-columns">

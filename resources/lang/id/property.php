@@ -218,7 +218,8 @@ return [
         'preview_edit' => 'Ubah properti',
         'preview_text' => 'Lihat',
         'virtual_tour' => 'Tur Virtual',
-        'unpublish_confirm' => 'Langkah ini akan menonaktifkan properti. Apakah anda ingin lanjutkan?'
+        'unpublish_confirm' => 'Langkah ini akan menonaktifkan properti. Apakah anda ingin lanjutkan?',
+        'in_city' => 'di :location',
     ],
     'like' => [
         'like_message' => ':property_name sudah dimasukkan ke daftar suka.',

@@ -11,5 +11,5 @@ class Page extends Model
 
     protected $fillable = ['identifier'];
 
-    public $translatedAttributes = ['title', 'slug', 'content'];
+    public $translatedAttributes = ['title', 'slug', 'content', 'meta_title', 'meta_description'];
 }

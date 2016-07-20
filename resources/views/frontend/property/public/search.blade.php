@@ -1,13 +1,15 @@
 @extends('frontend.master.layout')
 
+@section('page_title', ProjectHelper::formatTitle(Request::has('search.for')?trans('property.index.for_'.Request::input('search.for').'_title'):trans('property.index.title')))
+
 @section('content')
     <section class="property-search-columns">
         <div class="top-content">
             <div class="container">
                 <div class="col-sm-12">
                     <header class="header-area">
-                        @if(\Illuminate\Support\Facades\Request::has('for'))
-                            <h3 class="entry-title">{!! trans('property.index.for_'.\Illuminate\Support\Facades\Request::input('for').'_title') !!}{!! !empty($citySearch)?' '.trans('property.index.in_city', ['location' => $citySearch]):'' !!}</h3>
+                        @if(\Illuminate\Support\Facades\Request::has('search.for'))
+                            <h3 class="entry-title">{!! trans('property.index.for_'.\Illuminate\Support\Facades\Request::input('search.for').'_title') !!}{!! !empty($citySearch)?' '.trans('property.index.in_city', ['location' => $citySearch]):'' !!}</h3>
                         @else
                             <h3 class="entry-title">{!! trans('property.index.title') !!}{!! !empty($citySearch)?' '.trans('property.index.in_city', ['location' => $citySearch]):'' !!}</h3>
                         @endif

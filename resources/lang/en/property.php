@@ -218,7 +218,8 @@ return [
         'preview_edit' => 'Edit Property',
         'preview_text' => 'Preview Mode',
         'virtual_tour' => 'Virtual Tour',
-        'unpublish_confirm' => 'This action will unpublish the property. Are you sure you want to do this?'
+        'unpublish_confirm' => 'This action will unpublish the property. Are you sure you want to do this?',
+        'in_city' => 'in :location',
     ],
     'like' => [
         'like_message' => 'You just liked :property_name.',

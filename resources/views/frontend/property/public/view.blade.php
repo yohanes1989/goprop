@@ -1,12 +1,14 @@
 @extends('frontend.master.layout')
 
-@section('page_title', ProjectHelper::formatTitle($property->property_name.', '.trans('property.for.'.$for.'_property_title', ['name' => trans('property.property_type.'.$property->type->slug)])))
+@section('page_title', ProjectHelper::formatTitle($property->property_name))
+
+@section('meta_description', $property->getMetaDescription())
 
 @section('open_graph')
     @parent
 
     <meta property="og:url" content="{{ route('frontend.property.view', ['id' => $property->id]) }}" />
-    <meta property="og:title" content="{{ $property->property_name }}" />
+    <meta property="og:title" content="{{ ProjectHelper::formatTitle($property->property_name) }}" />
     <meta property="og:description" content="{{ $property->getMetaDescription() }}" />
     <meta property="og:image" content="{{ url('images/original/'.$property->getPhotoThumbnail()) }}" />
     <meta property="og:image:width" content="1200" />

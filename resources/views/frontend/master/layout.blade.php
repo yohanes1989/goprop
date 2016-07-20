@@ -9,10 +9,15 @@
         <meta charset="UTF-8">
         <title>@yield('page_title', 'Go Prop')</title>
 
-        <meta name="description" content="@yield('meta_description')">
-        <meta name="keywords" content="@yield('meta_keywords')">
+        <meta name="description" content="@yield('meta_description', config('app.default_description'))">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+        @if($localeCode != LaravelLocalization::getCurrentLocale())
+        <!--<link rel="alternate" hreflang="{{$localeCode}}" href="{{LaravelLocalization::getLocalizedURL($localeCode) }}">-->
+        @endif
+        @endforeach
 
         @section('open_graph')
             <meta property="fb:app_id" content="{{ config('app.fb_app_id') }}" />
@@ -37,6 +42,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/style.css') }}">
         @show
 
+        @if(!env('APP_DEBUG'))
         <!-- Facebook Pixel Code -->
         <script>
             !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -51,6 +57,7 @@
                        src="https://www.facebook.com/tr?id=100791517030051&ev=PageView&noscript=1"
                     /></noscript>
         <!-- End Facebook Pixel Code -->
+        @endif
     </head>
 
     <body class="@yield('body_class')">
@@ -107,7 +114,6 @@
                                 <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'get-started']) }}">{{ trans('menu.get_started') }}</a></li>
                                 <li><a href="{{ route('frontend.property.create') }}">{{ trans('menu.upload_property') }}</a></li>
                                 <li><a href="{{ route('frontend.property.search') }}" data-replace-href="{{ route('frontend.property.simple_search') }}" class="ajax_popup fancybox.ajax">{{ trans('menu.property_search') }}</a></li>
-                                <!--<li><a href="">How It Works</a></li>-->
                                 <li><a href="{{ route('frontend.page.resources') }}">{{ trans('menu.resources') }}</a></li>
                                 <li><a href="{{ route('frontend.page.static_page', ['identifier' => 'about-goprop']) }}">{{ trans('menu.about') }}</a></li>
                                 <li><a href="{{ route('frontend.page.contact') }}">{{ trans('menu.contact') }}</a></li>

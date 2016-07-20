@@ -890,6 +890,34 @@ Route::group([
         'as' => 'frontend.page.property_terms_conditions',
         'uses' => 'PageController@propertyTermsConditions'
     ]);
+
+    //Sitemap
+    Route::group(['prefix' => 'sitemap'], function(){
+        Route::get('sitemap.xml', [
+            'as' => 'frontend.sitemap.home',
+            'uses' => 'SitemapController@home'
+        ]);
+
+        Route::get('pages.xml', [
+            'as' => 'frontend.sitemap.pages',
+            'uses' => 'SitemapController@pages'
+        ]);
+
+        Route::get('properties.xml', [
+            'as' => 'frontend.sitemap.properties',
+            'uses' => 'SitemapController@properties'
+        ]);
+
+        Route::get('resources.xml', [
+            'as' => 'frontend.sitemap.resources',
+            'uses' => 'SitemapController@resources'
+        ]);
+
+        Route::get('resource-categories.xml', [
+            'as' => 'frontend.sitemap.resource_categories',
+            'uses' => 'SitemapController@resourceCategories'
+        ]);
+    });
 });
 
 Route::post('/contact/request-call', [

@@ -221,6 +221,7 @@ return [
     ],
 
     'default_title' => 'GoProp',
+    'default_description' => 'PERTAMA DI INDONESIA! One stop agency property online yang membantu penjualan properti Anda dari awal sampai terjual dengan komisi yang lebih kompetitif.',
 
     'google_map_embed_key' => 'AIzaSyCOYy1T-_At4oh__GXauqfleKa95oyBqIs',
     'default_latitude' => '-6.229519',

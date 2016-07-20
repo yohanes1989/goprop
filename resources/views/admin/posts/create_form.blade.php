@@ -56,6 +56,22 @@
     </div>
 </div>
 
+<hr/>
+
+<div class="form-group">
+    {!! Form::label('meta_title', 'Meta Title ('.$lang.')', array('class'=>'col-md-2 control-label')) !!}
+    <div class="col-md-10">
+        {!! Form::text('meta_title', null, array('class'=>'form-control', 'id' => 'meta_title')) !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('meta_description', 'Meta Description ('.$lang.')', array('class'=>'col-md-2 control-label')) !!}
+    <div class="col-md-10">
+        {!! Form::textarea('meta_description', null, array('class'=>'form-control', 'id' => 'meta_description', 'rows' => 3)) !!}
+    </div>
+</div>
+
 <div class="form-group">
     @if(Request::get('translate') == 1)
         {!! Form::hidden('_translate', 1) !!}

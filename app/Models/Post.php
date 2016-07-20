@@ -14,7 +14,7 @@ class Post extends Model
 
     protected $guarded = [];
 
-    public $translatedAttributes = ['title', 'slug', 'teaser', 'content', 'image'];
+    public $translatedAttributes = ['title', 'slug', 'teaser', 'content', 'image', 'meta_title', 'meta_description'];
 
     //Relations
     public function categories()
