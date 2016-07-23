@@ -122,7 +122,7 @@ class ReferralController extends Controller
             $m->to(config('app.contact_destination'))->subject('New Referral Listing Information');
         });
 
-        return redirect()->route('admin.referrals.index')->with('messages', ['Terima kasih untuk referensi properti kamu. Kami akan segera melakukan follow-up kepada Owner properti ini.']);
+        return redirect()->route($user->backendAccess.'.referrals.index')->with('messages', ['Terima kasih untuk referensi properti kamu. Kami akan segera melakukan follow-up kepada Owner properti ini.']);
     }
 
     /**
@@ -133,10 +133,11 @@ class ReferralController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
         $referralInformation = ReferralInformation::findOrFail($id);
 
         if(!$this->isEditable($referralInformation)){
-            return redirect()->route('admin.referrals.index')->withErrors(['Your referral can\'t be edited because it has been followed up.']);
+            return redirect()->route($user->backendAccess.'.referrals.index')->withErrors(['Your referral can\'t be edited because it has been followed up.']);
         }
 
         $statusOptions = ReferralInformation::getStatusOptions();
@@ -162,13 +163,13 @@ class ReferralController extends Controller
         $referralInformation = ReferralInformation::findOrFail($id);
 
         if(!$this->isEditable($referralInformation)){
-            return redirect()->route('admin.referrals.index')->withErrors(['Your referral can\'t be updated because it has been followed up.']);
+            return redirect()->route($user->backendAccess.'.referrals.index')->withErrors(['Your referral can\'t be updated because it has been followed up.']);
         }
 
         $referralInformation->fill($request->all());
         $referralInformation->save();
 
-        return redirect()->route('admin.referrals.index')->with('messages', ['Informasi referral berhasil dirubah.']);
+        return redirect()->route($user->backendAccess.'.referrals.index')->with('messages', ['Informasi referral berhasil dirubah.']);
     }
 
     /**
@@ -179,19 +180,21 @@ class ReferralController extends Controller
      */
     public function delete($id)
     {
+        $user = Auth::user();
         $referralInformation = ReferralInformation::findOrFail($id);
 
         if(!$this->isEditable($referralInformation)){
-            return redirect()->route('admin.referrals.index')->withErrors(['Your referral can\'t be deleted because it has been followed up.']);
+            return redirect()->route($user->backendAccess.'.referrals.index')->withErrors(['Your referral can\'t be deleted because it has been followed up.']);
         }
 
         $referralInformation->delete();
 
-        return redirect()->route('admin.referrals.index')->with('messages', ['Informasi referral dihapus.']);
+        return redirect()->route($user->backendAccess.'.referrals.index')->with('messages', ['Informasi referral dihapus.']);
     }
 
     protected function isEditable($referralInformation)
     {
-        return !$referralInformation->followed_up;
+        $user = Auth::user();
+        return $user->is('administrator') || !$referralInformation->followed_up;
     }
 }

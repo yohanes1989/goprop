@@ -16,7 +16,7 @@
         <div class="block-title">
             <div class="block-options pull-right">
                 <div class="btn-group btn-group-sm">
-                    <a href="{{ route('admin.referrals.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add Referral Information</a>
+                    <a href="{{ route(Auth::user()->backendAccess.'.referrals.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add Referral Information</a>
                 </div>
             </div>
 
@@ -100,8 +100,8 @@
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
                                 @if(!$referral->followed_up || $isAdmin)
-                                <a href="{{ route('admin.referrals.edit', ['id' => $referral->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                {!! Form::open(['route' => ['admin.referrals.delete', 'id' => $referral->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete"><i class="fa fa-times"></i></button>{!! Form::close() !!}
+                                <a href="{{ route(Auth::user()->backendAccess.'.referrals.edit', ['id' => $referral->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                {!! Form::open(['route' => [Auth::user()->backendAccess.'.referrals.delete', 'id' => $referral->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete"><i class="fa fa-times"></i></button>{!! Form::close() !!}
                                 @endif
                             </div>
                         </td>

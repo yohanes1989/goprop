@@ -14,7 +14,7 @@
             <h4>Update Account</h4>
         </div>
 
-        {!! Form::model($user, array('route' => ['admin.account.save'], 'class' => 'form-horizontal')) !!}
+        {!! Form::model($user, array('route' => ['portal.account.save'], 'class' => 'form-horizontal')) !!}
         <div class="col-md-4">
             <div class="form-group">
             {!! Form::label('user', \Illuminate\Support\Facades\Auth::user()->is('agent')?'Agent Code':'Username', array('class'=>'col-md-4 control-label')) !!}
@@ -127,7 +127,7 @@
             <div class="col-md-12 text-center">
                 {!! Form::submit('Save',array('class'=>'btn btn-primary')) !!}
 
-                <a href="{{ route('admin.dashboard') }}" class="btn btn-warning">Cancel</a>
+                <a href="{{ route('portal.dashboard') }}" class="btn btn-warning">Cancel</a>
             </div>
         </div>
         {!! Form::close() !!}

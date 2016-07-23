@@ -28,6 +28,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \GoProp\Http\Middleware\Authenticate::class,
         'admin.auth' => \GoProp\Http\Middleware\Authenticate::class,
+        'portal.auth' => \GoProp\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \GoProp\Http\Middleware\RedirectIfAuthenticated::class,
         'acl' => \Kodeine\Acl\Middleware\HasPermission::class,
@@ -41,5 +42,6 @@ class Kernel extends HttpKernel
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'admin.can_edit' => \GoProp\Http\Middleware\Admin\CanEdit::class,
         'admin.can_edit_or_owner' => \GoProp\Http\Middleware\Admin\IsAdminOrOwner::class,
+        'appropriate_backend' => \GoProp\Http\Middleware\Admin\AppropriateBackend::class,
     ];
 }

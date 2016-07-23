@@ -27,7 +27,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
         ]);
     });
 
-    Route::group(['prefix' => '/', 'middleware' => ['admin.auth', 'menu', 'acl']], function(){
+    Route::group(['prefix' => '/', 'middleware' => ['admin.auth', 'appropriate_backend', 'menu', 'acl']], function(){
         Route::get('/', [
             'as' => 'admin.dashboard',
             'uses' => 'HomeController@dashboard'
@@ -543,6 +543,99 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             'as' => 'admin.package.features',
             'uses' => 'PackageController@features'
         ]);
+    });
+});
+
+Route::group(['namespace' => 'Portal', 'prefix' => 'portal'], function() {
+    //Auth
+    Route::group(['prefix' => 'auth'], function(){
+        Route::get('/email', [
+            'as' => 'portal.account.email',
+            'uses' => 'Auth\PasswordController@getEmail'
+        ]);
+
+        Route::post('/email', [
+            'as' => 'portal.account.email.process',
+            'uses' => 'Auth\PasswordController@postEmail'
+        ]);
+
+        Route::get('/reset', [
+            'as' => 'portal.account.reset',
+            'uses' => 'Auth\PasswordController@getReset'
+        ]);
+
+        Route::post('/reset', [
+            'as' => 'portal.account.reset.process',
+            'uses' => 'Auth\PasswordController@postReset'
+        ]);
+
+        Route::controllers([
+            '/' => 'Auth\AuthController'
+        ]);
+    });
+});
+
+Route::group(['namespace' => 'Admin', 'prefix' => 'portal'], function() {
+    Route::group(['prefix' => '/', 'middleware' => ['portal.auth', 'appropriate_backend', 'menu', 'acl']], function(){
+        Route::get('/', [
+            'as' => 'portal.dashboard',
+            'uses' => 'HomeController@dashboard'
+        ]);
+
+        Route::group(['prefix' => '/account'], function(){
+            Route::get('/update', [
+                'as' => 'portal.account.update',
+                'uses' => 'AccountController@account_update'
+            ]);
+
+            Route::post('/save', [
+                'as' => 'portal.account.save',
+                'uses' => 'AccountController@account_save'
+            ]);
+        });
+
+        //Properties
+        Route::group(['prefix' => '/properties', 'is' => 'agent'], function() {
+            Route::get('/{type}/index', [
+                'as' => 'portal.property.index.agent',
+                'uses' => 'PropertyController@indexAgent'
+            ]);
+        });
+
+        //Referrals
+        Route::group(['prefix' => '/referrals', 'is' => 'agent'], function(){
+            Route::get('index', [
+                'as' => 'portal.referrals.index',
+                'uses' => 'ReferralController@index'
+            ]);
+
+            Route::get('create', [
+                'as' => 'portal.referrals.create',
+                'uses' => 'ReferralController@create'
+            ]);
+
+            Route::post('store', [
+                'as' => 'portal.referrals.store',
+                'uses' => 'ReferralController@store'
+            ]);
+
+            Route::group(['middleware' => ['can' => 'admin.can_edit_or_owner']], function(){
+                Route::get('edit/{id}', [
+                    'as' => 'portal.referrals.edit',
+                    'uses' => 'ReferralController@edit'
+                ]);
+
+                Route::post('update/{id}', [
+                    'as' => 'portal.referrals.update',
+                    'uses' => 'ReferralController@update'
+                ]);
+
+                Route::post('delete/{id}', [
+                    'as' => 'portal.referrals.delete',
+                    'uses' => 'ReferralController@delete'
+                ]);
+            });
+        });
     });
 });
 

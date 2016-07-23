@@ -20,7 +20,9 @@ class AccountController extends Controller
     {
         $user = Auth::user();
 
-        if($user->hasBackendAccess){
+        if($user->backendAccess == 'portal'){
+            return redirect()->route('portal.dashboard');
+        }else{
             return redirect()->route('admin.dashboard');
         }
 

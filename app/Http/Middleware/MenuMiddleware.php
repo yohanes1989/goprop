@@ -70,11 +70,6 @@ class MenuMiddleware
                             $menu->add('Viewing Schedules', ['route' => ['agent.viewing_schedule.index']])->prepend('<i class="fa fa-calendar"></i> ');
                             $menu->add('Owner Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'owner']])->prepend('<i class="fa fa-comments"></i> ');
                             $menu->add('User Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'user']])->prepend('<i class="fa fa-comments"></i> ');
-                        }else{
-                            $menu->raw('<h2 class="sidebar-header">Properties</h2>');
-                            $menu->add('Properties I Refer', ['route' => ['admin.property.index.agent', 'type' => 'referral-listing']])->prepend('<i class="gi gi-home"></i> ');
-                            $menu->add('Referral Form', ['route' => ['admin.referrals.create']])->prepend('<i class="fa fa-plus"></i> ');
-                            $menu->add('My Referrals', ['route' => ['admin.referrals.index']])->prepend('<i class="fa fa-bell-o"></i> ');
                         }
                     }
 
@@ -121,6 +116,21 @@ class MenuMiddleware
                         ->link->attr(['class' => 'menu-link']);
                     $menu->writerPayments->add('Writer Payments', ['route' => ['admin.writer.payment.index']]);
                     */
+                });
+            }
+
+            if (in_array('portal.auth', $routeAction['middleware'])) {
+                Menu::make('adminMenu', function($menu) {
+                    $menu->raw('<h2 class="sidebar-header">Welcome</h2>');
+                    $menu->add('Dashboard', ['route' => ['admin.dashboard']])->prepend('<i class="fa fa-home"></i> ');
+
+                    $menu->raw('<h2 class="sidebar-header">Properties</h2>');
+                    $menu->add('Properties I Refer', ['route' => ['portal.property.index.agent', 'type' => 'referral-listing']])->prepend('<i class="gi gi-home"></i> ');
+                    $menu->add('Referral Form', ['route' => ['portal.referrals.create']])->prepend('<i class="fa fa-plus"></i> ');
+                    $menu->add('My Referrals', ['route' => ['portal.referrals.index']])->prepend('<i class="fa fa-bell-o"></i> ');
+
+                    $menu->raw('<h2 class="sidebar-header">Account</h2>');
+                    $menu->add('Profile Update', ['route' => ['portal.account.update']])->prepend('<i class="fa fa-user"></i> ');
                 });
             }
         }

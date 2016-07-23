@@ -7,7 +7,7 @@
 
     <?php
     if($user->hasBackendAccess){
-        $resetLink = route('admin.account.reset', ['token' => $token]);
+        $resetLink = route($user->backendAccess.'.account.reset', ['token' => $token]);
     }else{
         $resetLink = route('frontend.account.reset', ['token' => $token]);
     }

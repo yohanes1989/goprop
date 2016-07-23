@@ -3,7 +3,7 @@
 @section('title', 'Edit Referral Information')
 
 @section('breadcrumb_list')
-    <li><a href="{{ URL::route('admin.referrals.index') }}"><i class="fa fa-bell-o"></i> My Referrals</a></li>
+    <li><a href="{{ URL::route(Auth::user()->backendAccess.'.referrals.index') }}"><i class="fa fa-bell-o"></i> My Referrals</a></li>
     <li>Edit Referral Information</li>
 @endsection
 
@@ -15,7 +15,7 @@
             <h4>Edit Referral Information</h4>
         </div>
 
-        {!! Form::model($referralInformation,array('route' => ['admin.referrals.update', 'id' => $referralInformation->id], 'class' => 'form-horizontal')) !!}
+        {!! Form::model($referralInformation,array('route' => [Auth::user()->backendAccess.'.referrals.update', 'id' => $referralInformation->id], 'class' => 'form-horizontal')) !!}
             @include('admin.referrals.create_form')
         {!! Form::close() !!}
     </div>

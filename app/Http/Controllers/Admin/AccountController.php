@@ -19,7 +19,9 @@ class AccountController extends Controller
             $user->load(['profile']);
         }
 
-        return view('admin.auth.account', [
+        $viewName = $user->backendAccess.'.auth.account';
+
+        return view($viewName, [
             'user' => $user
         ]);
     }

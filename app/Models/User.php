@@ -49,6 +49,15 @@ class User extends Model implements AuthenticatableContract,
         return $this->is('administrator|agent');
     }
 
+    public function getBackendAccessAttribute()
+    {
+        if($this->is('agent')){
+            return $this->manage_property?'portal':'admin';
+        }
+
+        return 'admin';
+    }
+
     //Relations
     public function profile()
     {

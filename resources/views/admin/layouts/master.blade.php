@@ -85,7 +85,7 @@
                 <!-- User Info -->
         <div class="user-info">
             <div class="user-details">
-                {{ Auth::user()->name }} (<a href="{{ action('Admin\Auth\AuthController@getLogout') }}">Log out</a>)<br>
+                {{ Auth::user()->name }} (<a href="{{ Auth::user()->backendAccess == 'admin'?action('Admin\Auth\AuthController@getLogout'):action('Portal\Auth\AuthController@getLogout') }}">Log out</a>)<br>
                 <em>{{  Auth::user()->email }}</em>
             </div>
         </div>

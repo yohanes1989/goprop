@@ -43,6 +43,8 @@ class Authenticate
                 if(isset($routeAction['middleware']) && is_array($routeAction['middleware'])){
                     if(in_array('admin.auth', $routeAction['middleware'])){
                         return redirect()->guest(action('Admin\Auth\AuthController@getLogin'));
+                    }elseif(in_array('portal.auth', $routeAction['middleware'])){
+                        return redirect()->guest(action('Portal\Auth\AuthController@getLogin'));
                     }
                 }
 
