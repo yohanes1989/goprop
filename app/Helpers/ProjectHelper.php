@@ -51,12 +51,25 @@ class ProjectHelper
         return NULL;
     }
 
-    public function getExclusiveProperties($take)
+    public function getFeaturedProperties($take = 10)
+    {
+        $qb = Property::active()->where('featured', true)->orderBy(DB::raw('RAND()'))->take($take);
+        $properties = $qb->get();
+
+        if($properties->count() < 1){
+            $qb = Property::active()->whereHas('photos')->orderBy(DB::raw('RAND()'))->take($take);
+            $properties = $qb->get();
+        }
+
+        return $properties;
+    }
+
+    public function getExclusiveProperties($take = 5)
     {
         $qb = Property::active()
             ->with('type')
             ->orderBy(DB::raw('RAND()'))
-            ->take(5);
+            ->take($take);
 
         $sellQb = clone $qb;
         $sellExclusiveProperties = $sellQb->select(DB::raw('properties.*, "sell" AS exclusive_type'))
@@ -78,7 +91,7 @@ class ProjectHelper
 
         $properties = array_merge($rentExclusiveProperties, $sellExclusiveProperties);
         shuffle($properties);
-        $properties = array_slice($properties, 0, 5);
+        $properties = array_slice($properties, 0, $take);
 
         return $properties;
     }

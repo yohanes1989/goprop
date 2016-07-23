@@ -1,4 +1,11 @@
 <div class="col-md-6">
+    @if(Auth::user()->is('administrator'))
+        <div class="form-group">
+            {!! Form::label('featured', 'Show on Homepage', array('class'=>'col-md-4 control-label')) !!}
+            <div class="col-md-8" style="padding-top: 5px;">{!! Form::checkbox('featured', 1, old('featured', $property->featured), ['id' => 'featured-checkbox']) !!}</div>
+        </div>
+    @endif
+
     <div class="form-group">
         {!! Form::label('listing_code', 'Listing Code', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">

@@ -558,7 +558,47 @@ $tablet-size: 1024px;
 
 // Slideshow Section
 .slideshow-columns {
+  &:hover{
+    .owl-nav{
+      @include opacity(1);
+    }
+  }
 
+  .owl-nav{
+    @include opacity(0);
+    @include single-transition(all, 1s);
+
+    .owl-next, .owl-prev{
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      margin: auto 0;
+      top: 0;
+      bottom: 0;
+
+      &:before{
+        font-size: 40px;
+        color: $color-yellow;
+        font-family: 'FontAwesome';
+      }
+    }
+
+    .owl-next{
+      right: 20px;
+
+      &:before{
+        content: '\f105';
+      }
+    }
+
+    .owl-prev{
+      left: 20px;
+
+      &:before{
+        content: '\f104';
+      }
+    }
+  }
 }
 
 // Post Section

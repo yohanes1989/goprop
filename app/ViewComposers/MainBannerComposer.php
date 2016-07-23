@@ -29,7 +29,7 @@ class MainBannerComposer
             $path = str_replace($currentLanguage, '', $path);
         }
 
-        $main_banners = MainBanner::inURL($path)->get();
+        $main_banners = MainBanner::inURL($path)->orderBy('sort_order', 'ASC')->get();
 
         $view->with([
             'main_banners' => $main_banners

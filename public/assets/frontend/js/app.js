@@ -16,11 +16,21 @@ var app = {
           $('#slideshows', context).owlCarousel({
               autoplay:true,
               autoplayTimeout: 3000,
-              smartSpeed: 500,
+              smartSpeed: 800,
               items: 1,
               loop: true,
               autoplayHoverPause: true,
-              lazyLoad: true
+              lazyLoad: true,
+              dots: false,
+              navText: ['', ''],
+              responsive: {
+                  640: {
+                      nav: false
+                  },
+                  800: {
+                      nav: true
+                  }
+              }
           });
       }
 

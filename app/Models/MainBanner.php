@@ -11,7 +11,7 @@ class MainBanner extends Model
 
     protected $guarded = [];
 
-    public $translatedAttributes = ['title', 'image'];
+    public $translatedAttributes = ['title', 'image', 'link_path', 'link_target'];
 
     //Scopes
     public function scopeInURL($query, $url)

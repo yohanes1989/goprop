@@ -25,6 +25,27 @@
 </div>
 
 <div class="form-group">
+    {!! Form::label('link_path', 'Link ('.$lang.')', array('class'=>'col-md-2 control-label')) !!}
+    <div class="col-md-10">
+        {!! Form::text('link_path', null, array('class'=>'form-control', 'id' => 'link_path', 'placeholder'=>'Link')) !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('link_target', 'Link Target ('.$lang.')', array('class'=>'col-md-2 control-label')) !!}
+    <div class="col-md-10">
+        {!! Form::select('link_target', ['_self' => 'Current Window', '_blank' => 'new Tab'], null, array('class'=>'form-control', 'id' => 'link_target')) !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('sort_order', 'Sort Order', array('class'=>'col-md-2 control-label')) !!}
+    <div class="col-md-10">
+        {!! Form::text('sort_order', null, array('class'=>'form-control', 'id' => 'sort_order', 'placeholder'=>'Sort Order')) !!}
+    </div>
+</div>
+
+<div class="form-group">
     {!! Form::submit('Save',array('class'=>'btn btn-primary')) !!}
     {!! Form::reset('Reset',array('class'=>'btn btn-default')) !!}
 

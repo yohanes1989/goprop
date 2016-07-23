@@ -244,6 +244,9 @@ return [
     'exclusive_property_widget' => [
         'title' => 'Exclusive Property',
     ],
+    'featured_property_widget' => [
+        'title' => 'Featured Property',
+    ],
     'my_properties' => [
         'property_i_sell' => 'Property I Sell',
         'property_i_lease' => 'Property I Lease',

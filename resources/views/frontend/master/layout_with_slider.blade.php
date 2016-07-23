@@ -8,7 +8,11 @@
         @if($main_banners)
         <section class="slideshow-columns" id="slideshows">
             @foreach($main_banners as $main_banner)
-            <div class="slide"><img src="{{ asset('assets/frontend/'.\GoProp\Models\MainBannerTranslation::$photosUploadPath.'/'.$main_banner->image) }}" class="img-responsive" alt=""></div>
+            <div class="slide">
+                @if($main_banner->link_path)<a href="{{ $main_banner->link_path }}" {{ $main_banner->target?'target="'.$main_banner->target.'"':'' }}>@endif
+                <img src="{{ asset('assets/frontend/'.\GoProp\Models\MainBannerTranslation::$photosUploadPath.'/'.$main_banner->image) }}" class="img-responsive" alt="">
+                @if($main_banner->link_path)</a>@endif
+            </div>
             @endforeach
         </section>
         @endif

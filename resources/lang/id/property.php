@@ -244,6 +244,9 @@ return [
     'exclusive_property_widget' => [
         'title' => 'Properti Ekslusif',
     ],
+    'featured_property_widget' => [
+        'title' => 'Properti Terpopuler',
+    ],
     'my_properties' => [
         'property_i_sell' => 'Properti dijual',
         'property_i_lease' => 'Properti disewakan',

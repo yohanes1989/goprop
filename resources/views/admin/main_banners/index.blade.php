@@ -24,7 +24,8 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th>Title</th>
-                        <th>URL</th>
+                        <th>Show On</th>
+                        <th>Link</th>
                         <th>EN</th>
                         <th>ID</th>
                         <th class="text-center">Actions</th>
@@ -37,6 +38,7 @@
                         <td class="text-center">{{ $idx + 1 + (($main_banners->currentPage() - 1) * $main_banners->perPage()) }}</td>
                         <td>{{ $main_banner->title }}</td>
                         <td>{{ $main_banner->url }}</td>
+                        <td>{{ $main_banner->link_path }}</td>
                         <td>
                             @if($main_banner->hasTranslation('en'))
                                 <a href="{{ route('admin.main_banner.edit', ['lang' => 'en', 'id' => $main_banner->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-xs btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>

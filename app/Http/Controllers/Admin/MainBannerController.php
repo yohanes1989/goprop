@@ -35,6 +35,7 @@ class MainBannerController extends Controller
 
         $main_banner = new MainBanner([
             'url' => $request->get('url'),
+            'sort_order' => $request->get('sort_order')
         ]);
 
         $translation = $main_banner->translateOrNew($lang);
@@ -73,6 +74,7 @@ class MainBannerController extends Controller
         $main_banner = MainBanner::findOrFail($id);
         $main_banner->fill([
             'url' => $request->get('url'),
+            'sort_order' => $request->get('sort_order')
         ]);
 
         $translation = $main_banner->translateOrNew($lang);

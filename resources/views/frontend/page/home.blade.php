@@ -236,7 +236,7 @@
     </section>
     @endif
 
-    @include('frontend.includes.home_exclusive_properties')
+    @include('frontend.includes.home_featured_properties')
 
     @include('frontend.includes.partner')
 
