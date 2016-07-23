@@ -11,7 +11,7 @@ $exclusiveProperties = \GoProp\Facades\ProjectHelper::getFeaturedProperties(10);
             <div class="exclusive-property-carousel">
                 <div id="exclusiveProperty-list">
                     @foreach($exclusiveProperties as $exclusiveProperty)
-                        <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->exclusive_type }}">
+                        <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->for_sell?'sell':'rent' }}">
                             <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id]) }}">
                                 <img src="{{ url('images/exclusive_thumbnail/'.$exclusiveProperty->getPhotoThumbnail()) }}" />
 
