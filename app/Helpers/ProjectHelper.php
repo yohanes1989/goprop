@@ -57,7 +57,7 @@ class ProjectHelper
         $properties = $qb->get();
 
         if($properties->count() < 1){
-            $qb = Property::active()->whereHas('photos')->orderBy(DB::raw('RAND()'))->take($take);
+            $qb = Property::active()->has('photos')->orderBy(DB::raw('RAND()'))->take($take);
             $properties = $qb->get();
         }
 
