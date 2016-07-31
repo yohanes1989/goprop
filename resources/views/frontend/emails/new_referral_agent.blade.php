@@ -29,6 +29,35 @@
     <em>Kamu tinggal memantau proses properti yang kamu referensikan di Portal.</em>
     </p>
 
+    <p class="lead" style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 17px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+        Berikut adalah keunggulan yang dapat kamu perkenalkan, yang PASTI akan membuat para owner tertarik.
+    </p>
+
+    <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+        <strong>1. Lebih Hemat</strong><br/>
+        GoProp mengambil komisi lebih kecil dan murah (1.5%) dibandingkan agen properti tradisional (2.5%)
+    </p>
+
+    <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+        <strong>2. Akses Online 24 Jam</strong><br/>
+        Owner dapat memantau progress penjualan secara online.
+    </p>
+
+    <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+        <strong>3. Fotografi Professional</strong><br/>
+        Presentasi adalah segalanya. Dan dengan layanan fotografi profesional, properti akan terlihat lebih atraktif bagi calon pembeli.
+    </p>
+
+    <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+        <strong>4. Gratis Floorplan (Denah)</strong><br/>
+        Riset membuktikan 1 dari 3 calon pembeli akan melewatkan properti TANPA Denah. Adanya denah membantu calon pembeli membayangkan potensi properti tersebut.
+    </p>
+
+    <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
+        <strong>5. Iklan Nasional Online & Offline</strong><br/>
+        Properti akan diiklankan dalam portal properti nasional terbesar: <strong>rumah.com, rumahdijual.com, rumah123.com, lamudi.com</strong> dan media offline lain seperti majalah dan spanduk.
+    </p>
+
     <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-weight: normal; font-size: 14px; line-height: 1.6; margin: 0 0 10px; padding: 0;">
         Apabila kamu memiliki pertanyaan, silahkan hubungi kami di <a href="tel:{{ config('app.contact_number') }}">{{ config('app.contact_number') }}</a> atau <a href="mailto:marketing@goprop.co.id">marketing@goprop.co.id</a>. Kami akan secepatnya merespon pada jam kerja.</p>
 

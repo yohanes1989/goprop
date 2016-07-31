@@ -234,5 +234,10 @@ return [
     'contact_number' => '+62 853 1133 7779',
     'contact_destination' => explode(',', env('CONTACT_EMAILS')),
     'system_email_from_name' => 'GoProp',
-    'system_email_from' => 'admin@goprop.co.id'
+    'system_email_from' => 'admin@goprop.co.id',
+    'mailerlite_api_key' => '64e0c87a67c1574375ebb14926be4941',
+    'mailerlite_subscriber_groups' => [
+        'referral_agent' => 4329809,
+        'website_database' => 4277875
+    ],
 ];

@@ -20,7 +20,8 @@
         "dimsav/laravel-translatable": "^5.4",
         "proengsoft/laravel-jsvalidation": "~1.1",
         "maatwebsite/excel": "~2.1.0",
-        "laravel/socialite": "^2.0"
+        "laravel/socialite": "^2.0",
+        "mailerlite/mailerlite-api-v2-php-sdk": "^0.1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

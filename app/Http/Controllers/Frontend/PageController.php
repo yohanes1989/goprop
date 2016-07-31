@@ -2,6 +2,7 @@
 
 namespace GoProp\Http\Controllers\Frontend;
 
+use GoProp\Facades\SubscribeHelper;
 use GoProp\Http\Controllers\Controller;
 use GoProp\Models\Category;
 use GoProp\Models\CategoryTranslation;
@@ -143,6 +144,8 @@ class PageController extends Controller
                 'address' => $request->input('address'),
                 'city' => $request->input('city'),
             ];
+
+            SubscribeHelper::subscribe('referral_agent', $messageVars['email'], $messageVars['name'], null, ['phone' => $messageVars['phone']]);
 
             Mail::send('frontend.emails.referral_listing', $messageVars, function ($m){
                 $m->from(config('app.contact_from_email'), config('app.contact_from_name'));

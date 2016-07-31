@@ -2,6 +2,7 @@
 
 namespace GoProp\Http\Controllers\Frontend;
 
+use GoProp\Facades\SubscribeHelper;
 use GoProp\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GoProp\Models\Page;
@@ -28,6 +29,8 @@ class ContactController extends Controller
                 'subject' => $request->input('subject'),
                 'content' => $request->input('message'),
             ];
+
+            SubscribeHelper::subscribe('website_database', $messageVars['email'], $messageVars['name'], null, ['phone' => $messageVars['phone']]);
 
             Mail::send('frontend.emails.contact', $messageVars, function ($m){
                 $m->from(config('app.contact_from_email'), config('app.contact_from_name'));
@@ -59,6 +62,8 @@ class ContactController extends Controller
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
         ];
+
+        SubscribeHelper::subscribe('website_database', $messageVars['email'], $messageVars['name'], null, ['phone' => $messageVars['phone']]);
 
         Mail::send('frontend.emails.contact', $messageVars, function ($m){
             $m->from(config('app.contact_from_email'), config('app.contact_from_name'));

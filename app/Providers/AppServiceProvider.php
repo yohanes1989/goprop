@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('agent_helper', 'GoProp\Helpers\AgentHelper');
         $this->app->singleton('address_helper', 'GoProp\Helpers\AddressHelper');
         $this->app->singleton('property_compare_helper', 'GoProp\Helpers\PropertyCompareHelper');
+        $this->app->singleton('subscribe_helper', 'GoProp\Helpers\SubscribeHelper');
 
         view()->composer('frontend.account.logged_in.layout', 'GoProp\ViewComposers\LoggedInComposer');
 
