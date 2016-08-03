@@ -3,6 +3,7 @@
 namespace GoProp\Models;
 
 use GoProp\Facades\AddressHelper;
+use GoProp\Facades\ProjectHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\File;
@@ -51,6 +52,8 @@ class Property extends Model
     public static $residentialSlugs = ['house', 'apartment', 'townhouse'];
 
     public static $availableElectricity = [450, 900, 1300, 2200, 3500, 4400, 5500, 6600, 7600, 7700, 8000, 9000, 10000, 10600, 11000, 12700, 13200, 13300, 13900, 16500, 17600, 19000, 22000, 23000, 24000, 30500, 38100, 41500, 47500, 53000, 61000, 66000, 76000, 82500, 85000, 95000];
+
+    public $external_url;
 
     protected $dates = ['deleted_at', 'checkout_at'];
     protected $casts = [
@@ -176,6 +179,26 @@ class Property extends Model
         $currentDateCode = $this->checkout_at->format('ym');
 
         $this->listing_code = 'GO'.$currentDateCode.str_pad($listingNumber, 2, '0', STR_PAD_LEFT);
+    }
+
+    public function getExternalUrl($params = [])
+    {
+        if(!isset($this->external_url)){
+            $parts = [
+                'property',
+                trans('property.for.'.$this->getViewFor().'_property_title', ['name' => trans('property.property_type.'.$this->type->slug)]),
+                trans('property.view.in_city', ['location' => AddressHelper::getAddressLabel($this->subdistrict, 'subdistrict').' '.preg_replace('/(Kota|Kabupaten)/', '', AddressHelper::getAddressLabel($this->city, 'city'))]),
+                $this->listing_code,
+            ];
+
+            foreach($parts as &$part){
+                $part = ProjectHelper::sluggify($part);
+            }
+
+            $this->external_url = implode('/', $parts);
+        }
+
+        return url($this->external_url, $params);
     }
 
     //Accessors

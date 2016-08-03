@@ -32,8 +32,8 @@ class PropertyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['postAddToCart', 'getCompare', 'getAddToComparison', 'getRemoveFromComparison', 'getLikeProperty', 'getUnlikeProperty', 'getToggleLikeProperty', 'getSearch', 'getSimpleSearch', 'getView']]);
-        $this->middleware('property_owner', ['except' => ['index', 'getCompare', 'getAddToComparison', 'getRemoveFromComparison', 'getScheduleViewing', 'postScheduleViewing', 'getLikeProperty', 'getUnlikeProperty', 'getToggleLikeProperty', 'getSearch', 'getSimpleSearch', 'getView', 'getCreate', 'postCreate', 'postAddToCart']]);
+        $this->middleware('auth', ['except' => ['postAddToCart', 'getCompare', 'getAddToComparison', 'getRemoveFromComparison', 'getLikeProperty', 'getUnlikeProperty', 'getToggleLikeProperty', 'getSearch', 'getSimpleSearch', 'getView', 'getViewExternal']]);
+        $this->middleware('property_owner', ['except' => ['index', 'getCompare', 'getAddToComparison', 'getRemoveFromComparison', 'getScheduleViewing', 'postScheduleViewing', 'getLikeProperty', 'getUnlikeProperty', 'getToggleLikeProperty', 'getSearch', 'getSimpleSearch', 'getView', 'getViewExternal', 'getCreate', 'postCreate', 'postAddToCart']]);
         $this->middleware('likeable', ['only' => ['getLikeProperty', 'getUnlikeProperty', 'getToggleLikeProperty']]);
         $this->middleware('property_editable', ['only' => [
             'getEdit', 'postEdit',
@@ -223,10 +223,20 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function getView($id)
+    public function getView($property, $forwarded = false)
     {
         $user = Auth::user();
-        $property = Property::findOrFail($id);
+
+        if($property instanceof Property){
+
+        }else{
+            $property = Property::findOrFail($property);
+        }
+
+        if(!$forwarded){
+            return redirect($property->getExternalUrl(), 301);
+        }
+
         $province = AddressHelper::getAddressLabel($property->province, 'province');
         $city = AddressHelper::getAddressLabel($property->city, 'city');
         $subdistrict = AddressHelper::getAddressLabel($property->subdistrict, 'subdistrict');
@@ -240,8 +250,17 @@ class PropertyController extends Controller
             'province' => $province,
             'city' => $city,
             'subdistrict' => $subdistrict,
-            'liked' => $liked
+            'liked' => $liked,
+            'forwarded' => $forwarded
         ]);
+    }
+
+    public function getViewExternal($for, $location, $property)
+    {
+        $propertyListingCode = last(explode('-', $property));
+        $propertyObj = Property::where('listing_code', $propertyListingCode)->firstOrFail();
+
+        return $this->getView($propertyObj, true);
     }
 
     public function postAddToCart(Request $request)

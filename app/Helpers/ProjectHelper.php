@@ -2,6 +2,7 @@
 
 namespace GoProp\Helpers;
 
+use Cocur\Slugify\Slugify;
 use GoProp\Models\Property;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 class ProjectHelper
 {
     private $_currentOrder;
+    private $_sluggify;
 
     public function getGlobalCartOrder($createIfNone = false)
     {
@@ -204,5 +206,14 @@ class ProjectHelper
         }
 
         return $result;
+    }
+
+    public function sluggify($string, $separator = '-')
+    {
+        if(!isset($this->_sluggify)){
+            $this->_sluggify = new Slugify();
+        }
+
+        return $this->_sluggify->slugify($string, $separator);
     }
 }

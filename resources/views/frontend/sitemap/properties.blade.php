@@ -4,7 +4,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     @foreach($properties as $property)
     <url>
-        <loc>{{ route('frontend.property.view', ['id' => $property->id]) }}</loc>
+        <loc>{{ $property->getExternalUrl() }}</loc>
         <changefreq>monthly</changefreq>
 
         @if($property->hasThumbnail())

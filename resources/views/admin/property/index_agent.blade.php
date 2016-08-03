@@ -67,7 +67,7 @@
                         <td>{{ $property->checkout_at?$property->checkout_at->format('d M Y H:i'):null }}</td>
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
-                                <a href="{{ route('frontend.property.view', ['id' => $property->id]) }}" target="_blank" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="View"><i class="fa fa-eye"></i></a>
+                                <a href="{{ $property->getExternalUrl() }}" target="_blank" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="View"><i class="fa fa-eye"></i></a>
                             </div>
                         </td>
                     </tr>

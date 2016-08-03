@@ -1,7 +1,7 @@
 <div class="propertyItem-child">
     <div class="col-sm-5">
         <div class="img-wrap">
-            <a href="{{ route('frontend.property.view', ['id' => $property->id]) }}"><img src="{{ url('images/property_thumbnail/'.$property->getPhotoThumbnail()) }}" class="img-responsive"></a>
+            <a href="{{ $property->getExternalUrl() }}"><img src="{{ url('images/property_thumbnail/'.$property->getPhotoThumbnail()) }}" class="img-responsive"></a>
         </div>
     </div>
     <div class="col-sm-7 account-property-detail">
@@ -10,7 +10,7 @@
                 @include('frontend.property.includes.price')
             </h4>
 
-            <h4 class="entry-title"><a href="{{ route('frontend.property.view', ['id' => $property->id]) }}">{{ $property->property_name }}</a></h4>
+            <h4 class="entry-title"><a href="{{ $property->getExternalUrl() }}">{{ $property->property_name }}</a></h4>
 
             <div class="entry-desc">
                 {{ trans('property.for.'.$for.'_property_title', ['name' => trans('property.property_type.'.$property->type->slug)]) }}

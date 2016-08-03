@@ -12,7 +12,7 @@ $exclusiveProperties = \GoProp\Facades\ProjectHelper::getFeaturedProperties(10);
                 <div id="exclusiveProperty-list">
                     @foreach($exclusiveProperties as $exclusiveProperty)
                         <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->for_sell?'sell':'rent' }}">
-                            <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id]) }}">
+                            <a href="{{ $exclusiveProperty->getExternalUrl() }}">
                                 <img src="{{ url('images/exclusive_thumbnail/'.$exclusiveProperty->getPhotoThumbnail()) }}" />
 
                                 <div class="exclusiveProperty-overlay">

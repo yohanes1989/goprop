@@ -68,7 +68,7 @@
                             <div class="compare-child propertyItem-child col-md-3 col-sm-12">
                                 <div class="compare-top">
                                     <div class="img-wrap">
-                                        <a href="{{ route('frontend.property.view', ['id' => $property->id]) }}"><img src="{{ url('images/property_thumbnail/'.$property->getPhotoThumbnail()) }}" class="img-responsive"></a>
+                                        <a href="{{ $property->getExternalUrl() }}"><img src="{{ url('images/property_thumbnail/'.$property->getPhotoThumbnail()) }}" class="img-responsive"></a>
                                         <div class="user-info">
                                             <ul class="list-unstyled">
                                                 @include('frontend.property.includes.shareTo', ['for' => $property->getViewFor()])
@@ -88,7 +88,7 @@
                                     <div class="container">
                                         <header class="entry-header clearfix">
                                             <div class="pull-left">
-                                                <h4 class="entry-title"><a href="{{ route('frontend.property.view', ['id' => $property->id]) }}">{{ $property->property_name }}</a></h4>
+                                                <h4 class="entry-title"><a href="{{ $property->getExternalUrl() }}">{{ $property->property_name }}</a></h4>
                                             </div>
                                         </header>
                                         <div class="entry-content clearfix">

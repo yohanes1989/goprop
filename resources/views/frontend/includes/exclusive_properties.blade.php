@@ -6,7 +6,7 @@ $exclusiveProperties = \GoProp\Facades\ProjectHelper::getExclusiveProperties(5);
     <div id="exclusivePropertyWidget-list">
         @foreach($exclusiveProperties as $exclusiveProperty)
         <div class="exclusiveProperty-item exclusiveProperty-{{ $exclusiveProperty->exclusive_type }}">
-            <a href="{{ route('frontend.property.view', ['id' => $exclusiveProperty->id]) }}">
+            <a href="{{ $exclusiveProperty->getExternalUrl() }}">
                 @if($exclusiveProperty->photos->count() > 0)
                 <img src="{{ url('images/exclusive_thumbnail/'.$exclusiveProperty->photos->first()->filename) }}" />
                 @endif

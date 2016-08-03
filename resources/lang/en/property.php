@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'property' => 'Property',
     'for' => [
         'sell' => 'Sell',
         'rent' => 'Rent',

@@ -5,7 +5,7 @@
             @foreach($propertiesInComparison as $propertyInComparison)
                 <div class="propertyCompare-child">
                     <div class="img-wrap">
-                        <a href="{{ route('frontend.property.view', ['id' => $propertyInComparison->id]) }}"><img src="{{ url('images/property_thumbnail/'.$propertyInComparison->getPhotoThumbnail()) }}"></a>
+                        <a href="{{ $propertyInComparison->getExternalUrl() }}"><img src="{{ url('images/property_thumbnail/'.$propertyInComparison->getPhotoThumbnail()) }}"></a>
 
                         <div class="user-info">
                             <ul class="list-unstyled">
