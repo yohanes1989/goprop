@@ -45,6 +45,11 @@ class Message extends Model
         return $this->morphTo();
     }
 
+    public function property()
+    {
+        return $this->morphTo('referenced', 'GoProp\Models\Property');
+    }
+
     //Accessor
     public function getLastReplyAttribute()
     {

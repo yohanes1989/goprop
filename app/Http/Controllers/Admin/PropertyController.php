@@ -32,6 +32,11 @@ class PropertyController extends Controller
             $agentOptionsQb = clone $qb;
         }
 
+        if($user->is('property_manager')){
+            $qb->where('properties.province', $user->profile->province);
+            $agentOptionsQb = clone $qb;
+        }
+
         if($request->has('search')){
             if($request->input('search.deleted', false)){
                 $qb->onlyTrashed();
@@ -482,6 +487,10 @@ class PropertyController extends Controller
         $user = Auth::user();
         $property = Property::withTrashed()->findOrFail($id);
 
+        if($user->is('property_manager') && $user->profile->province != $property->province){
+            abort(401, 'Unauthorized access.');
+        }
+
         $ownerEmail = $request->get('owner', $user->email);
         $owner = User::where('email', $ownerEmail)->firstOrFail();
 
@@ -547,6 +556,12 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
+        $user = Auth::user();
+
+        if($user->is('property_manager') && $user->profile->province != $property->province){
+            abort(401, 'Unauthorized access.');
+        }
+
         $property->delete();
         return redirect()->back()->with('messages', ['Property is successfully deleted.']);
     }
@@ -554,6 +569,12 @@ class PropertyController extends Controller
     public function deleteForce(Request $request, $id)
     {
         $property = Property::withTrashed()->findOrFail($id);
+
+        $user = Auth::user();
+
+        if($user->is('property_manager') && $user->profile->province != $property->province){
+            abort(401, 'Unauthorized access.');
+        }
 
         $property->forceDelete();
         return redirect()->back()->with('messages', ['Property is successfully deleted from Trash.']);
@@ -563,6 +584,12 @@ class PropertyController extends Controller
     {
         $property = Property::withTrashed()->findOrFail($id);
 
+        $user = Auth::user();
+
+        if($user->is('property_manager') && $user->profile->province != $property->province){
+            abort(401, 'Unauthorized access.');
+        }
+
         $property->restore();
         return redirect()->back()->with('messages', ['Property is successfully restored.']);
     }
@@ -570,6 +597,12 @@ class PropertyController extends Controller
     public function media($id)
     {
         $property = Property::withTrashed()->findOrFail($id);
+
+        $user = Auth::user();
+
+        if($user->is('property_manager') && $user->profile->province != $property->province){
+            abort(401, 'Unauthorized access.');
+        }
 
         return view('admin.property.media', [
             'property' => $property

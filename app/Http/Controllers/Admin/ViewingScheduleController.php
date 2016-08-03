@@ -7,12 +7,21 @@ use GoProp\Http\Controllers\Controller;
 use GoProp\Models\ViewingSchedule;
 use Illuminate\Http\Request;
 use GoProp\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ViewingScheduleController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+
         $qb = ViewingSchedule::with(['user', 'user.profile', 'agent', 'agent.profile', 'property'])->orderBy('id', 'DESC');
+
+        if($user->is('property_manager')){
+            $qb->whereHas('property', function($query) use ($user){
+                $query->where('province', $user->profile->province);
+            });
+        }
 
         $viewingSchedules = $qb->paginate(50);
 
@@ -93,6 +102,13 @@ class ViewingScheduleController extends Controller
     public function delete(Request $request, $id)
     {
         $viewingSchedule = ViewingSchedule::findOrFail($id);
+
+        $user = Auth::user();
+
+        if(!$user->is('administrator')){
+            abort(401, 'Unauthorized action.');
+        }
+
         $viewingSchedule->delete();
 
         return redirect($request->get('backUrl', route('admin.viewing_schedule.index')))->with('messages', ['Viewing Schedule has been deleted.']);

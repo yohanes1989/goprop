@@ -19,6 +19,8 @@ return [
         'send_btn' => 'Send Enquiry',
         'register_btn' => 'Register Now',
         'address' => 'Address',
+        'province' => 'Province',
         'city' => 'City',
+        'subdistrict' => 'Subdistrict',
     ]
 ];

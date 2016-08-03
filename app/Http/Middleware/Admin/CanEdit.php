@@ -38,7 +38,7 @@ class CanEdit
         $propertyId = $request->route('id');
         $property = Property::withTrashed()->findOrFail($propertyId);
 
-        if($this->auth->user()->is('agent') && $property->user_id != $this->auth->user()->id){
+        if(!$property->canEdit($this->auth->user())){
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {

@@ -19,6 +19,8 @@ return [
         'send_btn' => 'Kirim Pesan',
         'register_btn' => 'Daftar Sekarang',
         'address' => 'Alamat',
+        'province' => 'Provinsi',
         'city' => 'Kota',
+        'subdistrict' => 'Kecamatan',
     ]
 ];

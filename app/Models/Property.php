@@ -541,6 +541,11 @@ class Property extends Model
         return $this->orders()->where('status', Order::STATUS_CART)->first();
     }
 
+    public function canEdit(User $user)
+    {
+        return $user->is('administrator') || ($user->is('agent') && $user->id == $this->user_id) || ($user->is('property_manager') && $user->profile->province == $this->province);
+    }
+
     //Scopes
     public function scopeIncomplete($query)
     {

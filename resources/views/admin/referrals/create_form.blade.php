@@ -1,29 +1,37 @@
+<?php
+$disabled = null;
+
+if(Auth::user()->is('property_manager')){
+    $disabled = 'disabled';
+}
+?>
+
 <div class="col-md-6">
     <div class="form-group">
         {!! Form::label('name', 'Nama Pemilik *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::text('name', null, array('class'=>'form-control', 'id' => 'name', 'placeholder'=>'Full Name')) !!}
+            {!! Form::text('name', null, array($disabled, 'class'=>'form-control', 'id' => 'name', 'placeholder'=>'Full Name')) !!}
         </div>
     </div>
 
     <div class="form-group">
         {!! Form::label('contact_number', 'Nomor Telpon *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::text('contact_number', null, array('class'=>'form-control', 'id' => 'contact_number', 'placeholder'=>'Contact Number')) !!}
+            {!! Form::text('contact_number', null, array($disabled, 'class'=>'form-control', 'id' => 'contact_number', 'placeholder'=>'Contact Number')) !!}
         </div>
     </div>
 
     <div class="form-group">
         {!! Form::label('other_contact_number', 'Nomor Telpon lain', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::text('other_contact_number', null, array('class'=>'form-control', 'id' => 'other_contact_number', 'placeholder'=>'Other Contact Number')) !!}
+            {!! Form::text('other_contact_number', null, array($disabled, 'class'=>'form-control', 'id' => 'other_contact_number', 'placeholder'=>'Other Contact Number')) !!}
         </div>
     </div>
 
     <div class="form-group">
         {!! Form::label('email', 'Email', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::email('email', null, array('class'=>'form-control', 'id' => 'email', 'placeholder'=>'Email Address')) !!}
+            {!! Form::email('email', null, array($disabled, 'class'=>'form-control', 'id' => 'email', 'placeholder'=>'Email Address')) !!}
         </div>
     </div>
 </div>
@@ -32,25 +40,25 @@
     <div class="form-group">
         {!! Form::label('property_type', 'Tipe Properti *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::select('property_type_id', ['' => trans('forms.please_select')] + \GoProp\Models\PropertyType::getOptions(), null, ['class' => 'form-control select-chosen', 'id' => 'property_type']) !!}
+            {!! Form::select('property_type_id', ['' => trans('forms.please_select')] + \GoProp\Models\PropertyType::getOptions(), null, [$disabled, 'class' => 'form-control select-chosen', 'id' => 'property_type']) !!}
         </div>
     </div>
 
    <div class="form-group">
         {!! Form::label('address', 'Alamat *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::textarea('address', null, array('class'=>'form-control', 'id' => 'address', 'rows' => 3)) !!}
+            {!! Form::textarea('address', null, array($disabled, 'class'=>'form-control', 'id' => 'address', 'rows' => 3)) !!}
         </div>
     </div>
 
     <div class="form-group">
         {!! Form::label('location', 'Lokasi *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
-            {!! Form::select('province', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getProvinces(true), null, ['class' => 'form-control form-address-selector-province', 'id' => 'province']) !!}
+            {!! Form::select('province', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getProvinces(true), null, [$disabled, 'class' => 'form-control form-address-selector-province', 'id' => 'province']) !!}
             <div style="height: 10px;"></div>
-            {!! Form::select('city', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getCities(old('province', $referralInformation->province), true), null, ['class' => 'form-control form-address-selector-city', 'id' => 'city']) !!}
+            {!! Form::select('city', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getCities(old('province', $referralInformation->province), true), null, [$disabled, 'class' => 'form-control form-address-selector-city', 'id' => 'city']) !!}
             <div style="height: 10px;"></div>
-            {!! Form::select('subdistrict', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getSubdistricts(old('city', $referralInformation->city), true), null, ['class' => 'form-control form-address-selector-subdistrict', 'id' => 'subdistrict']) !!}
+            {!! Form::select('subdistrict', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getSubdistricts(old('city', $referralInformation->city), true), null, [$disabled, 'class' => 'form-control form-address-selector-subdistrict', 'id' => 'subdistrict']) !!}
         </div>
     </div>
 </div>

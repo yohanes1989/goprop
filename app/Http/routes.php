@@ -78,7 +78,39 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             ]);
         });
 
-        Route::group(['prefix' => '/agents', 'is' => 'administrator'], function(){
+        Route::group(['prefix' => '/users', 'is' => 'administrator'], function(){
+            Route::get('/index', [
+                'as' => 'admin.user.index',
+                'uses' => 'UserController@index'
+            ]);
+
+            Route::get('/create', [
+                'as' => 'admin.user.create',
+                'uses' => 'UserController@create'
+            ]);
+
+            Route::post('/store', [
+                'as' => 'admin.user.store',
+                'uses' => 'UserController@store'
+            ]);
+
+            Route::get('/{id}/edit', [
+                'as' => 'admin.user.edit',
+                'uses' => 'UserController@edit'
+            ]);
+
+            Route::post('/{id}/update', [
+                'as' => 'admin.user.update',
+                'uses' => 'UserController@update'
+            ]);
+
+            Route::post('/{id}/delete', [
+                'as' => 'admin.user.delete',
+                'uses' => 'UserController@delete'
+            ]);
+        });
+
+        Route::group(['prefix' => '/agents', 'is' => 'administrator|property_manager'], function(){
             Route::get('/index', [
                 'as' => 'admin.agent.index',
                 'uses' => 'AgentController@index'
@@ -110,7 +142,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             ]);
         });
 
-        Route::group(['prefix' => '/viewing-schedules', 'is' => 'administrator'], function(){
+        Route::group(['prefix' => '/viewing-schedules', 'is' => 'administrator|property_manager'], function(){
             Route::get('/index', [
                 'as' => 'admin.viewing_schedule.index',
                 'uses' => 'ViewingScheduleController@index'
@@ -132,7 +164,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             ]);
         });
 
-        Route::group(['prefix' => '/customer-inquiry', 'is' => 'administrator|agent'], function(){
+        Route::group(['prefix' => '/customer-inquiry', 'is' => 'administrator|agent|property_manager'], function(){
             Route::get('/{type}/index', [
                 'as' => 'admin.customer_inquiry.index',
                 'uses' => 'CustomerInquiryController@index'
@@ -163,7 +195,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
         });
 
         //Properties
-        Route::group(['prefix' => '/properties', 'is' => 'administrator|agent'], function(){
+        Route::group(['prefix' => '/properties', 'is' => 'administrator|agent|property_manager'], function(){
             Route::get('/index', [
                 'as' => 'admin.property.index',
                 'uses' => 'PropertyController@index'
@@ -248,7 +280,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             });
         });
 
-        Route::group(['prefix' => '/properties', 'is' => 'administrator'], function(){
+        Route::group(['prefix' => '/properties', 'is' => 'administrator|property_manager'], function(){
             Route::any('/{id}/assign-to-agent', [
                 'as' => 'admin.property.assign_to_agent',
                 'uses' => 'PropertyController@assignToAgent'
@@ -499,7 +531,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
         });
 
         //Referrals
-        Route::group(['prefix' => '/referrals', 'is' => 'administrator|agent'], function(){
+        Route::group(['prefix' => '/referrals', 'is' => 'administrator|agent|property_manager'], function(){
             Route::get('index', [
                 'as' => 'admin.referrals.index',
                 'uses' => 'ReferralController@index'

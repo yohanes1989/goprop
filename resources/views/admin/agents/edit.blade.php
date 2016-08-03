@@ -3,7 +3,7 @@
 @section('title', 'Edit Agent ('.$agent->profile->singleName.')')
 
 @section('breadcrumb_list')
-    <li><a href="{{ URL::route('admin.member.index') }}"><i class="fa fa-users"></i> Agents</a></li>
+    <li><a href="{{ URL::route('admin.agent.index') }}"><i class="fa fa-users"></i> Agents</a></li>
     <li>Edit Member ({{ $agent->profile->singleName }})</li>
 @endsection
 

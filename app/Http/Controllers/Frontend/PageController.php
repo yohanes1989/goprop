@@ -97,7 +97,9 @@ class PageController extends Controller
             'email' => 'required|email|unique:users,email',
             'contact_number' => 'required',
             'address' => 'required|min:10',
+            'province' => 'required',
             'city' => 'required',
+            'subdistrict' => 'required',
         ];
 
         if($request->isMethod('POST')){
@@ -131,7 +133,10 @@ class PageController extends Controller
                 'first_name' => array_shift($names),
                 'last_name' => !empty($names)?implode(' ', $names):'',
                 'mobile_phone_number' => $request->input('contact_number'),
-                'address' => $request->input('address').', '.$request->input('city')
+                'address' => $request->input('address'),
+                'province' => $request->input('province'),
+                'city' => $request->input('city'),
+                'subdistrict' => $request->input('subdistrict'),
             ]);
             $profile->user()->associate($user);
             $profile->save();
@@ -142,7 +147,9 @@ class PageController extends Controller
                 'email' => $request->input('email'),
                 'phone' => $request->input('contact_number'),
                 'address' => $request->input('address'),
+                'province' => $request->input('province'),
                 'city' => $request->input('city'),
+                'subdistrict' => $request->input('subdistrict'),
             ];
 
             SubscribeHelper::subscribe('referral_agent', $messageVars['email'], $messageVars['name'], null, ['phone' => $messageVars['phone']]);

@@ -16,8 +16,10 @@ class CustomerInquiryController extends Controller
         $user = Auth::user();
 
         $qb = Message::with(['referenced', 'sender', 'recipient'])
+            ->select('messages.*')
             ->has('replies')
             ->whereNull('parent_id')
+            ->leftJoin('properties AS P', 'P.id', '=', 'referenced_id')
             ->orderBy('created_at', 'DESC');
 
         if($type == 'owner'){
@@ -28,6 +30,10 @@ class CustomerInquiryController extends Controller
 
         if($user->is('agent')){
             $qb->where('recipient_id', $user->id);
+        }
+
+        if($user->is('property_manager')){
+            $qb->where('P.province', $user->profile->province);
         }
 
         $conversations = $qb->paginate(50);

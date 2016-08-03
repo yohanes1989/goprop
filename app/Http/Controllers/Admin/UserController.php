@@ -9,29 +9,21 @@ use GoProp\Models\Profile;
 use GoProp\Models\User;
 use GoProp\Models\Subscription;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
-class AgentController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
         $qb = User::with('profile');
         $qb->whereHas('roles', function($query){
-            $query->where('slug', 'agent');
+            $query->where('slug', 'property_manager');
         });
 
-        $user = Auth::user();
+        $users = $qb->paginate(50);
 
-        if($user->is('property_manager')){
-            $qb->whereHas('profile', function($query) use ($user){
-                $query->where('province', $user->profile->province);
-            });
-        }
-
-        $agents = $qb->paginate(50);
-
-        return view('admin.agents.index', [
-            'agents' => $agents
+        return view('admin.users.index', [
+            'users' => $users
         ]);
     }
 
@@ -41,8 +33,8 @@ class AgentController extends Controller
         $profile = new Profile();
         $user->profile = $profile;
 
-        return view('admin.agents.create', [
-            'agent' => $user
+        return view('admin.users.create', [
+            'user' => $user,
         ]);
     }
 
@@ -54,9 +46,8 @@ class AgentController extends Controller
             'status' => $request->input('status'),
             'password' => bcrypt($request->input('password'))
         ]);
-        $user->manage_property = $request->input('manage_property', false);
         $user->save();
-        $user->assignRole('agent');
+        $user->assignRole($request->input('role'));
 
         $profile = new Profile($request->input('profile'));
         $profile->user()->associate($user);
@@ -65,44 +56,32 @@ class AgentController extends Controller
             $profile->profile_picture = $profile->saveProfilePicture($request->file('profile.profile_picture'));
         }
 
-        $profile->save();
+        $extendedProfile = new ExtendedProfile($request->input('profile.extendedProfile', []));
 
-        return redirect()->route('admin.agent.index')->with('messages', [$user->getName().' has been created.']);
+        $profile->save();
+        $profile->extendedProfile()->save($extendedProfile);
+
+        return redirect()->route('admin.user.index')->with('messages', [$user->getName().' has been created.']);
     }
 
     public function edit($id)
     {
         $user = User::findOrFail($id);
-
-        $currentUser = Auth::user();
-
-        if($currentUser->is('property_manager') && $currentUser->profile->province != $user->profile->province){
-            abort(401, 'Unauthorized access.');
-        }
-
         $user->load(['profile', 'profile.extendedProfile']);
 
-        return view('admin.agents.edit', [
-            'agent' => $user,
+        return view('admin.users.edit', [
+            'user' => $user
         ]);
     }
 
     public function update(UserFormRequest $request, $id)
     {
         $user = User::findOrFail($id);
-
-        $currentUser = Auth::user();
-
-        if($currentUser->is('property_manager') && $currentUser->profile->province != $user->profile->province){
-            abort(401, 'Unauthorized access.');
-        }
-
         $user->load(['profile', 'profile.extendedProfile']);
 
-        //$user->username = $request->input('username');
-        $user->email = $request->input('email');
+        $user->username = $request->input('username');
         $user->status = $request->input('status');
-        $user->manage_property = $request->input('manage_property', false);
+        $user->email = $request->input('email');
 
         if($request->input('remove_profile_picture') == 1){
             $user->profile->removeProfilePicture();
@@ -117,21 +96,18 @@ class AgentController extends Controller
         }
 
         $user->profile->fill($request->input('profile'));
+        $user->profile->extendedProfile->fill($request->input('profile.extendedProfile', []));
 
         $user->push();
 
-        return redirect($request->get('backUrl', route('admin.agent.index')))->with('messages', [$user->getName().' has been updated.']);
+        return redirect($request->get('backUrl', route('admin.user.index')))->with('messages', [$user->getName().' has been updated.']);
     }
 
     public function delete(Request $request, $id)
     {
-        if(!Auth::user()->is('administrator')){
-            return redirect()->back()->withErrors(['You are not authorized to do this.']);
-        }
-
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect($request->get('backUrl', route('admin.agent.index')))->with('messages', [$user->getName().' has been deleted.']);
+        return redirect($request->get('backUrl', route('admin.user.index')))->with('messages', [$user->getName().' has been deleted.']);
     }
 }

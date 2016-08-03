@@ -59,9 +59,12 @@ class ReferralController extends Controller
             }
         }
 
+        $agentOptions = [];
+
         if($user->is('agent')){
             $qb->where('user_id', $user->id);
-            $agentOptions = [];
+        }elseif($user->is('property_manager')){
+            $qb->where('province', $user->profile->province);
         }else{
             $agentOptions = AgentHelper::getAgentOptions();
         }
@@ -136,16 +139,12 @@ class ReferralController extends Controller
         $user = Auth::user();
         $referralInformation = ReferralInformation::findOrFail($id);
 
-        if(!$this->isEditable($referralInformation)){
-            return redirect()->route($user->backendAccess.'.referrals.index')->withErrors(['Your referral can\'t be edited because it has been followed up.']);
-        }
-
         $statusOptions = ReferralInformation::getStatusOptions();
 
         return view('admin.referrals.edit', [
             'referralInformation' => $referralInformation,
             'statusOptions' => $statusOptions,
-            'isAdmin' => Auth::user()->is('administrator')
+            'isAdmin' => Auth::user()->is('administrator|property_manager')
         ]);
     }
 
@@ -183,6 +182,10 @@ class ReferralController extends Controller
         $user = Auth::user();
         $referralInformation = ReferralInformation::findOrFail($id);
 
+        if($user->is('property_manager')){
+            abort(401, 'Unauthorized action.');
+        }
+
         if(!$this->isEditable($referralInformation)){
             return redirect()->route($user->backendAccess.'.referrals.index')->withErrors(['Your referral can\'t be deleted because it has been followed up.']);
         }
@@ -195,6 +198,7 @@ class ReferralController extends Controller
     protected function isEditable($referralInformation)
     {
         $user = Auth::user();
-        return $user->is('administrator') || !$referralInformation->followed_up;
+
+        return $user->is('administrator') || !$referralInformation->followed_up || ($user->is('property_manager') && $referralInformation->province == $user->profile->province);
     }
 }

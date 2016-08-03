@@ -101,7 +101,9 @@
                             <div class="btn-group btn-group-xs">
                                 @if(!$referral->followed_up || $isAdmin)
                                 <a href="{{ route(Auth::user()->backendAccess.'.referrals.edit', ['id' => $referral->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="btn btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                {!! Form::open(['route' => [Auth::user()->backendAccess.'.referrals.delete', 'id' => $referral->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete"><i class="fa fa-times"></i></button>{!! Form::close() !!}
+                                    @if(!Auth::user()->is('property_manager'))
+                                    {!! Form::open(['route' => [Auth::user()->backendAccess.'.referrals.delete', 'id' => $referral->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete"><i class="fa fa-times"></i></button>{!! Form::close() !!}
+                                    @endif
                                 @endif
                             </div>
                         </td>

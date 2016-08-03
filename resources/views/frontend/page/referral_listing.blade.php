@@ -42,8 +42,16 @@
                     {!! Form::text('address', null, ['class' => 'form-control', 'id' => 'address']) !!}
                 </div>
                 <div class="form-group">
+                    {!! Form::label('province', trans('contact.form.province')) !!} <sup class="text-danger">*</sup>
+                    {!! Form::select('province', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getProvinces(true), null, ['class' => 'form-control form-address-selector-province', 'id' => 'province']) !!}
+                </div>
+                <div class="form-group">
                     {!! Form::label('city', trans('contact.form.city')) !!} <sup class="text-danger">*</sup>
-                    {!! Form::text('city', null, ['class' => 'form-control', 'id' => 'city']) !!}
+                    {!! Form::select('city', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getCities(old('province'), true), null, ['class' => 'form-control form-address-selector-city', 'id' => 'city']) !!}
+                </div>
+                <div class="form-group">
+                    {!! Form::label('subdistrict', trans('contact.form.subdistrict')) !!} <sup class="text-danger">*</sup>
+                    {!! Form::select('subdistrict', ['' => trans('forms.please_select')] + \GoProp\Facades\AddressHelper::getSubdistricts(old('city'), true), null, ['class' => 'form-control form-address-selector-subdistrict', 'id' => 'subdistrict']) !!}
                 </div>
                 <div class="form-group form-submit text-center">
                     {!! Form::submit(trans('contact.form.register_btn'), ['class' => 'btn btn-yellow']) !!}

@@ -53,7 +53,9 @@
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">
                                 <a href="{{ route('admin.viewing_schedule.quick_edit', ['id' => $viewingSchedule->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()]) }}" data-toggle="tooltip" title="" class="open-modal btn btn-default" data-original-title="Quick Edit"><i class="fa fa-pencil"></i></a>
+                                @if(Auth::user()->is('administrator'))
                                 {!! Form::open(['route' => ['admin.viewing_schedule.delete', 'id' => $viewingSchedule->id, 'backUrl' => \Illuminate\Support\Facades\Request::fullUrl()], 'style' => 'display: inline;']) !!}<button data-toggle="tooltip" title="" class="btn btn-default btn-xs btn-confirm" data-original-title="Delete"><i class="fa fa-times"></i></button>{!! Form::close() !!}
+                                @endif
                             </div>
                         </td>
                     </tr>

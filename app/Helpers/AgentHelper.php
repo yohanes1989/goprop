@@ -3,16 +3,25 @@
 namespace GoProp\Helpers;
 
 use GoProp\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AgentHelper
 {
     public function getAgentOptions()
     {
+        $user = Auth::user();
+
         $qb = User::query();
         $qb->selectRaw($qb->getQuery()->from.'.id, CONCAT(first_name, " ", last_name) AS full_name')->leftJoin('profiles AS P', 'P.user_id', '=', $qb->getQuery()->from.'.id');
         $qb->whereHas('roles', function($query){
             $query->where('slug', 'agent');
         });
+
+        if($user->is('property_manager')){
+            $qb->whereHas('profile', function($query) use ($user){
+                $query->where('province', $user->profile->id);
+            });
+        }
 
         $agentOptions = $qb->lists('full_name', 'id')->all();
 
