@@ -5,6 +5,7 @@ namespace GoProp\Http\Controllers\Admin;
 use GoProp\Facades\AddressHelper;
 use GoProp\Facades\AgentHelper;
 use GoProp\Models\ReferralInformation;
+use GoProp\Models\User;
 use Illuminate\Http\Request;
 use GoProp\Http\Requests\Admin\ReferralInformationFormRequest;
 use GoProp\Http\Requests;
@@ -120,9 +121,23 @@ class ReferralController extends Controller
             'referralInformation' => $referralInformation,
         ];
 
-        Mail::send('frontend.emails.new_referral_information', $messageVars, function ($m){
+        Mail::send('frontend.emails.new_referral_information', $messageVars, function ($m) use ($referralInformation){
             $m->from(config('app.contact_from_email'), config('app.contact_from_name'));
-            $m->to(config('app.contact_destination'))->subject('New Referral Listing Information');
+
+            $sendToEmails = config('app.contact_destination');
+
+            //Find property manager in that province
+            $propertyManagers = User::whereHas('roles', function($query){
+                $query->where('slug', 'property_manager');
+            })->whereHas('profile', function($query) use ($referralInformation){
+                $query->where('province', '=', $referralInformation->province);
+            })->get();
+
+            foreach($propertyManagers as $propertyManager){
+                $sendToEmails[] = $propertyManager->email;
+            }
+
+            $m->to($sendToEmails)->subject('New Referral Listing Information');
         });
 
         return redirect()->route($user->backendAccess.'.referrals.index')->with('messages', ['Terima kasih untuk referensi properti kamu. Kami akan segera melakukan follow-up kepada Owner properti ini.']);
