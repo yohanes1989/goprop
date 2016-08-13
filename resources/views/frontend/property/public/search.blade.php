@@ -53,7 +53,7 @@
                             {!! Form::select('search[rooms]', ['' => trans('forms.fields.min_rooms')] + \GoProp\Models\Property::getBedroomsLabel(), \Illuminate\Support\Facades\Request::input('search.rooms', null), ['class' => 'form-control', 'id' => 'rooms']) !!}
                         </div>
                         <div class="form-group col-sm-6">
-                            <div>{{ trans('property.index.price_range') }}: <strong>IDR <span id="price-from">{{ $priceDefaultFrom }}</span> - IDR <span id="price-to">{{ $priceDefaultTo }}</span></strong></div>
+                            <strong>IDR</strong> &nbsp;<input style="display: inline-block; width: auto;" class="form-control input-sm" type="text" id="price-from" value="{{ $priceDefaultFrom }}" /> - <input class="form-control input-sm" type="text" style="display: inline-block; width: auto;" id="price-to" value="{{ $priceDefaultTo }}" />
                             <input type="text" id="inputPriceRange" name="search[price]" value="" data-min="10000000" data-max="100000000000"
                                    data-step="50000000" data-from="{{ $priceDefaultFrom }}" data-to="{{ $priceDefaultTo }}" />
                         </div>

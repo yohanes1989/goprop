@@ -124,12 +124,28 @@ var app = {
           hide_min_max: true,
           hide_from_to: true,
           onChange: function(data){
-              $('#price-from', context).text(accounting.formatNumber(data.from));
-              $('#price-to', context).text(accounting.formatNumber(data.to));
+              $('#price-from', context).val(accounting.formatNumber(data.from));
+              $('#price-to', context).val(accounting.formatNumber(data.to));
           }
       });
-      $('#price-from', context).text(accounting.formatNumber($('#price-from', context).text()));
-      $('#price-to', context).text(accounting.formatNumber($('#price-to', context).text()));
+      $('#price-from', context).val(accounting.formatNumber($('#price-from', context).val()));
+      $('#price-to', context).val(accounting.formatNumber($('#price-to', context).val()));
+
+      $('#price-from, #price-to', context).on('keyup', function(e){
+          var k = e.which;
+          /* numeric inputs can come from the keypad or the numeric row at the top */
+          if ( (k < 48 || k > 57) && (k < 96 || k > 105)) {
+              e.preventDefault();
+              return false;
+          }
+
+          $(this).val(accounting.formatNumber($(this).val()));
+
+          $rangeSlider.data('ionRangeSlider').update({
+              from: accounting.unformat($('#price-from', context).val()),
+              to: accounting.unformat($('#price-to', context).val())
+          });
+      });
 
       //Replace Links
       $('[data-replace-href]', context).each(function(idx, obj){
