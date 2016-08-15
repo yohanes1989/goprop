@@ -41,7 +41,9 @@
             {!! Form::text('selling_referral', old('selling_referral', $property->referralSell?$property->referralSell->email:''), ['class' => 'form-control', 'id' => 'selling_referral', 'data-autocomplete' => route('admin.member.find.auto_complete', ['roles' => ['agent']])]) !!}
         </div>
     </div>
+    @endif
 
+    @if(Auth::user()->is('administrator|property_manager'))
     <div class="form-group">
         {!! Form::label('status', 'Status *', array('class'=>'col-md-4 control-label')) !!}
         <div class="col-md-8">
