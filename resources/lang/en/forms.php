@@ -11,6 +11,7 @@ return [
     'sign_up_btn' => 'Sign Up',
     'cancel_btn' => 'Cancel',
     'purchase_btn' => 'Purchase',
+    'submit_btn' => 'Submit',
     'search_btn' => 'Search',
     'yes' => 'Yes',
     'no' => 'No',

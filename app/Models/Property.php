@@ -198,7 +198,12 @@ class Property extends Model
             $this->external_url = implode('/', $parts);
         }
 
-        return url($this->external_url, $params);
+        $finalUrl = $this->external_url;
+        if($params){
+            $finalUrl .= (strpos($finalUrl, '?') !== false?'&':'?').http_build_query($params);
+        }
+
+        return url($finalUrl);
     }
 
     //Accessors

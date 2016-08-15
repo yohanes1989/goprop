@@ -11,6 +11,7 @@ return [
     'sign_up_btn' => 'Daftar',
     'cancel_btn' => 'Batal',
     'purchase_btn' => 'Beli',
+    'submit_btn' => 'Kirim',
     'search_btn' => 'Cari',
     'yes' => 'Ya',
     'no' => 'Tidak',

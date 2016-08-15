@@ -186,7 +186,7 @@ return [
         'confirm_message' => 'Apakah anda ingin menyelesaikan proses ini?'
     ],
     'success' => [
-        'page_title' => 'Pembelian paket selesai!',
+        'page_title' => 'Properti selesai di upload!',
         'body_copy' => 'Terima kasih telah memilih GoProp sebagai partner anda. Jangan khawatir, properti anda berada di tangan terbaik. Kami akan mengontak anda secepatnya untuk proses verifikasi dan informasi lanjutan. Jika anda memiliki pertanyaan, silahkan hubungi kami di :phone atau :email.'
     ],
     'index' => [

@@ -223,7 +223,7 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function getView($property, $forwarded = false)
+    public function getView(Request $request, $property, $forwarded = false)
     {
         $user = Auth::user();
 
@@ -233,7 +233,7 @@ class PropertyController extends Controller
             $property = Property::findOrFail($property);
         }
 
-        if(!$forwarded){
+        if(!$forwarded && !$request->get('preview')){
             return redirect($property->getExternalUrl(), 301);
         }
 
@@ -602,6 +602,17 @@ class PropertyController extends Controller
                 $order = $globalCartOrder;
                 $order->property()->associate($property);
                 $order->save();
+
+                $addons = [];
+                foreach($order->getAddons() as $addon){
+                    $addons[] = $addon->id;
+                }
+
+                $property->packages()->attach([
+                    $order->package->id => [
+                        'addons' => implode('|', $addons)
+                    ]
+                ]);
 
                 ProjectHelper::forgetGlobalCartOrder();
 

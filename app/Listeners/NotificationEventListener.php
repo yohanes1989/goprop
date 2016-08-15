@@ -3,6 +3,7 @@
 namespace GoProp\Listeners;
 
 use GoProp\Facades\ProjectHelper;
+use GoProp\Models\User;
 use Kodeine\Acl\Models\Eloquent\Role;
 
 class NotificationEventListener
@@ -15,12 +16,23 @@ class NotificationEventListener
         $property = $event->property;
 
         if($event->type == 'new'){
-            //Send order confirmation to admin
+            //Find admin
             $administratorRole = Role::where('slug', 'administrator')->first();
             $users = $administratorRole->users;
 
+            $sendToEmails = $users->pluck('email')->all();
+
+            //Find property manager in that province
+            $propertyManagers = User::whereHas('roles', function($query){
+                $query->where('slug', 'property_manager');
+            })->whereHas('profile', function($query) use ($property){
+                $query->where('province', '=', $property->province);
+            })->get();
+
+            $sendToEmails = array_merge($sendToEmails, $propertyManagers->pluck('email')->all());
+
             ProjectHelper::sendMail(
-                $users->lists('email')->all(),
+                $sendToEmails,
                 'New Property: '.$property->property_name,
                 'admin.emails.property.new',
                 [

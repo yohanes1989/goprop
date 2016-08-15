@@ -1,6 +1,6 @@
 <div class="property-quick-bar">
     <div class="pull-left">
-        <a href="{{ (\Illuminate\Support\Facades\Request::has('backUrl'))?Illuminate\Support\Facades\Request::get('backUrl'):route('frontend.property.edit', ['id' => $property->id]) }}" class="btn btn-grey">{{ trans('property.view.preview_edit') }}</a>
+        <a href="{{ (Request::has('backUrl'))?url(Request::get('backUrl')):route('frontend.property.edit', ['id' => $property->id]) }}" class="btn btn-grey">{{ trans('property.view.preview_edit') }}</a>
     </div>
 
     <div class="pull-right">

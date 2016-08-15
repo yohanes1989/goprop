@@ -244,7 +244,7 @@
                         {!! Form::button(trans('forms.change_package_btn'), ['name' => 'action', 'value' => 'change_package', 'type' => 'submit', 'class' => 'btn btn-transparent']) !!}
                     </div>
                     <div class="col-xs-6 is-right">
-                        {!! Form::button(trans('forms.purchase_btn'), ['name' => 'action', 'value' => 'purchase', 'data-confirm' => trans('property.order_review.confirm_message'), 'type' => 'submit', 'class' => 'btn btn-grey']) !!}
+                        {!! Form::button(trans('forms.submit_btn'), ['name' => 'action', 'value' => 'purchase', 'data-confirm' => trans('property.order_review.confirm_message'), 'type' => 'submit', 'class' => 'btn btn-grey']) !!}
                     </div>
                 </div>
                 {!! Form::close() !!}
