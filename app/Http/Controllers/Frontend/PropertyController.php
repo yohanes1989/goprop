@@ -255,12 +255,12 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function getViewExternal($for, $location, $property)
+    public function getViewExternal(Request $request, $for, $location, $property)
     {
         $propertyListingCode = last(explode('-', $property));
         $propertyObj = Property::where('listing_code', $propertyListingCode)->firstOrFail();
 
-        return $this->getView($propertyObj, true);
+        return $this->getView($request, $propertyObj, true);
     }
 
     public function postAddToCart(Request $request)
