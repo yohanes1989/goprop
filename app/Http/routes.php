@@ -803,11 +803,6 @@ Route::group([
             'uses' => 'PropertyController@getView'
         ]);
 
-        Route::get('/{for}/{location}/{property}', [
-            'as' => 'frontend.property.view_external',
-            'uses' => 'PropertyController@getViewExternal'
-        ]);
-
         Route::get('/{id}/like', [
             'as' => 'frontend.property.like',
             'uses' => 'PropertyController@getLikeProperty'
@@ -971,6 +966,12 @@ Route::group([
         Route::get('/xml/lamudi', [
             'as' => 'frontend.property.xml.lamudi',
             'uses' => 'PortalController@getXMLLamudi'
+        ]);
+
+        //Pretty URL
+        Route::get('/{for}/{location}/{property}', [
+            'as' => 'frontend.property.view_external',
+            'uses' => 'PropertyController@getViewExternal'
         ]);
     });
 
