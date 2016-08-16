@@ -40,6 +40,10 @@ class AppropriateBackend
             $isBackend = in_array('admin.auth', $routeAction['middleware']);
 
             //If Referral Agent in wrong backend url
+            if(!$this->auth->user()->hasBackendAccess){
+                return redirect()->route('frontend.page.home');
+            }
+
             if($this->auth->user()->backendAccess != 'admin' && $isBackend){
                 return redirect()->route('portal.dashboard');
             }elseif($this->auth->user()->backendAccess == 'admin' && !$isBackend){

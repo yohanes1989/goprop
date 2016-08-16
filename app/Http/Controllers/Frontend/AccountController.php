@@ -22,7 +22,7 @@ class AccountController extends Controller
 
         if($user->backendAccess == 'portal'){
             return redirect()->route('portal.dashboard');
-        }else{
+        }elseif($user->backendAccess == 'admin'){
             return redirect()->route('admin.dashboard');
         }
 
