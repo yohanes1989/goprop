@@ -184,7 +184,7 @@ class PropertyController extends Controller
         $sortKeys = explode('_', $request->input('sort', 'date_desc'));
 
         if($sortKeys[0] == 'price'){
-            if($for != 'all'){
+            if($for != 'all' && $for){
                 $sortColumn = $for.'_'.$sortKeys[0];
             }else{
                 $sortColumn = 'all_price';
