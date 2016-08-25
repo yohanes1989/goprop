@@ -72,7 +72,9 @@ return [
         'upload_photos_title' => 'Upload Gambar(Disarankan dengan format Landscape)',
         'upload_photos_hint' => 'Anda dapat upload lebih dari satu gambar. (Max: 5MB)',
         'choose_photos' => 'Pilih Gambar',
-        'uploaded_photos_title' => 'Gambar Properti Anda'
+        'uploaded_photos_title' => 'Gambar Properti Anda',
+        'before_title' => 'Foto Biasa',
+        'after_title' => 'Fotografi Professional'
     ],
     'floorplans' => [
         'page_title' => 'Denah Bangunan <span>:title<span>',
@@ -133,7 +135,7 @@ return [
     ],
     'package' => [
         'sign_up_btn' => 'Daftar',
-        'submit_btn' => 'Kirim',
+        'submit_btn' => 'Pilih',
         'min_fee' => 'biaya minimum sebesar IDR. 5,000,000',
         'save_calculation' => 'nilai properti x 2.5% (komisi agent tradisional) - (harga properti x komisi GoProp) + harga di muka',
         'category' => [

@@ -72,7 +72,9 @@ return [
         'upload_photos_title' => 'Upload photos(landscape only)',
         'upload_photos_hint' => 'You can upload multiple photos it one go. You can upload up to 15 images (Max: 5MB)',
         'choose_photos' => 'Choose Photos',
-        'uploaded_photos_title' => 'Uploaded Photos'
+        'uploaded_photos_title' => 'Uploaded Photos',
+        'before_title' => 'Standard Photo',
+        'after_title' => 'Professional Photography'
     ],
     'floorplans' => [
         'page_title' => 'Floorplans of <span>:title<span>',
@@ -133,7 +135,7 @@ return [
     ],
     'package' => [
         'sign_up_btn' => 'Sign Up',
-        'submit_btn' => 'Submit',
+        'submit_btn' => 'Select',
         'min_fee' => 'min fee IDR. 5,000,000',
         'save_calculation' => 'property value x 2.5% (other traditional commission agent) - (property value x go prop fee) + upfront cost',
         'category' => [
