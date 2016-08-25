@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="userform-columns">
+    <section id="register-section" class="userform-columns" data-jump="1">
         <div class="container">
             <div class="col-xs-12">
                 @include('frontend.master.messages')

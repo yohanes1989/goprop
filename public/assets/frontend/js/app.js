@@ -637,6 +637,10 @@ var app = {
 
       //Input mask
       $('input[data-inputmask]', context).inputmask();
+
+      if($('[data-jump="1"]').length > 0){
+          $('html, body').scrollTop($('[data-jump="1"]').offset().top);
+      }
   },
     calculateCommission: function(price, package)
     {
@@ -782,7 +786,7 @@ var app = {
 };
 
 $(function() {
-	$(document).ready(function() {
+	$(document).ready(function(){
         app.init(document);
 	});
 

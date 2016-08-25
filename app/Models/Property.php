@@ -188,7 +188,7 @@ class Property extends Model
                 'property',
                 trans('property.for.'.$this->getViewFor().'_property_title', ['name' => trans('property.property_type.'.$this->type->slug)]),
                 trans('property.view.in_city', ['location' => AddressHelper::getAddressLabel($this->subdistrict, 'subdistrict').' '.preg_replace('/(Kota|Kabupaten)/', '', AddressHelper::getAddressLabel($this->city, 'city'))]),
-                $this->listing_code,
+                !empty($this->listing_code)?$this->listing_code:$this->id,
             ];
 
             foreach($parts as &$part){

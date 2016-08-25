@@ -196,6 +196,7 @@ return [
         'price_range' => 'Jarak Harga',
         'for_sell_title' => 'Properti dijual',
         'for_rent_title' => 'Properti disewakan',
+        'for_all_title' => 'Properti dijual / disewakan',
         'in_city' => 'di <strong>:location</strong>',
         'advanced_search' => 'Pencarian (:count)',
         'submit_property' => 'Upload Properti',
