@@ -159,7 +159,7 @@ class ReferralController extends Controller
         return view('admin.referrals.edit', [
             'referralInformation' => $referralInformation,
             'statusOptions' => $statusOptions,
-            'isAdmin' => Auth::user()->is('administrator|property_manager')
+            'isAdmin' => Auth::user()->is('administrator|property_manager|normal_administrator')
         ]);
     }
 

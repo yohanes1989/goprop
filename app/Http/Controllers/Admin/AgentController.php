@@ -37,6 +37,12 @@ class AgentController extends Controller
 
     public function create()
     {
+        $currentUser = Auth::user();
+
+        if(!$currentUser->is('administrator')){
+            return redirect()->back()->withErrors(['You are not authorized to do this.']);
+        }
+
         $user = new User();
         $profile = new Profile();
         $user->profile = $profile;
@@ -48,6 +54,12 @@ class AgentController extends Controller
 
     public function store(UserFormRequest $request)
     {
+        $currentUser = Auth::user();
+
+        if(!$currentUser->is('administrator')){
+            return redirect()->back()->withErrors(['You are not authorized to do this.']);
+        }
+
         $user = new User([
             //'username' => $request->input('username'),
             'email' => $request->input('email'),
