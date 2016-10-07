@@ -29,6 +29,7 @@
                         <th>Phone</th>
                         <th>Managed Province</th>
                         <th>Status</th>
+                        <th>Role</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
@@ -48,6 +49,9 @@
                         <td>{{ $user->profile?AddressHelper::getAddressLabel($user->profile->province, 'province'):'' }}</td>
                         <td>
                             {{ $user->getStatusLabel($user->status) }}
+                        </td>
+                        <td>
+                            {{ $user->roles->get(0)->name }}
                         </td>
                         <td class="text-center">
                             <div class="btn-group btn-group-xs">

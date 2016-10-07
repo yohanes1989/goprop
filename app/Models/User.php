@@ -46,7 +46,7 @@ class User extends Model implements AuthenticatableContract,
     //Accessors
     public function getHasBackendAccessAttribute()
     {
-        return $this->is('administrator|property_manager|agent');
+        return $this->is('administrator|property_manager|normal_administrator|agent');
     }
 
     public function getBackendAccessAttribute()

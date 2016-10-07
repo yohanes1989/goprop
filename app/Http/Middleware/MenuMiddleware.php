@@ -73,6 +73,12 @@ class MenuMiddleware
                         $menu->add('Viewing Schedules', ['route' => ['admin.viewing_schedule.index']])->prepend('<i class="fa fa-calendar"></i> ');
                         $menu->add('Owner Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'owner']])->prepend('<i class="fa fa-comments"></i> ');
                         $menu->add('User Inquiry', ['route' => ['admin.customer_inquiry.index', 'type' => 'user']])->prepend('<i class="fa fa-comments"></i> ');
+                    }elseif($this->auth->user()->is('normal_administrator')){
+                        $menu->raw('<h2 class="sidebar-header">Operations</h2>');
+                        $menu->add('Agents', ['route' => ['admin.agent.index']])->prepend('<i class="fa fa-users"></i> ');
+
+                        $menu->add('Property Listings', ['route' => ['admin.property.index']])->prepend('<i class="gi gi-home"></i> ');
+                        $menu->add('Referrals Info', ['route' => ['admin.referrals.index']])->prepend('<i class="fa fa-bell-o"></i> ');
                     }elseif($this->auth->user()->is('agent')){
                         if($this->auth->user()->manage_property){
                             $menu->raw('<h2 class="sidebar-header">Operations</h2>');

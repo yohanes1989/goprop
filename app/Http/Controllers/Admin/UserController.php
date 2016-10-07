@@ -17,7 +17,7 @@ class UserController extends Controller
     {
         $qb = User::with('profile');
         $qb->whereHas('roles', function($query){
-            $query->where('slug', 'property_manager');
+            $query->whereIn('slug', ['property_manager', 'normal_administrator']);
         });
 
         $users = $qb->paginate(50);
@@ -82,6 +82,7 @@ class UserController extends Controller
         $user->username = $request->input('username');
         $user->status = $request->input('status');
         $user->email = $request->input('email');
+        $user->syncRoles([$request->input('role')]);
 
         if($request->input('remove_profile_picture') == 1){
             $user->profile->removeProfilePicture();

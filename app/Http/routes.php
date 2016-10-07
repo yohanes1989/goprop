@@ -110,7 +110,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
             ]);
         });
 
-        Route::group(['prefix' => '/agents', 'is' => 'administrator|property_manager'], function(){
+        Route::group(['prefix' => '/agents', 'is' => 'administrator|property_manager|normal_administrator'], function(){
             Route::get('/index', [
                 'as' => 'admin.agent.index',
                 'uses' => 'AgentController@index'
@@ -195,7 +195,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
         });
 
         //Properties
-        Route::group(['prefix' => '/properties', 'is' => 'administrator|agent|property_manager'], function(){
+        Route::group(['prefix' => '/properties', 'is' => 'administrator|agent|property_manager|normal_administrator'], function(){
             Route::get('/index', [
                 'as' => 'admin.property.index',
                 'uses' => 'PropertyController@index'
@@ -531,7 +531,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'backend'], function(){
         });
 
         //Referrals
-        Route::group(['prefix' => '/referrals', 'is' => 'administrator|agent|property_manager'], function(){
+        Route::group(['prefix' => '/referrals', 'is' => 'administrator|agent|property_manager|normal_administrator'], function(){
             Route::get('index', [
                 'as' => 'admin.referrals.index',
                 'uses' => 'ReferralController@index'

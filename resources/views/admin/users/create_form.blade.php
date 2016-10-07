@@ -35,6 +35,13 @@
             {!! Form::select('status', \GoProp\Models\User::getStatusLabel(), null, array('id' => 'status-select','class'=>'form-control')) !!}
         </div>
     </div>
+
+    <div class="form-group">
+        {!! Form::label('role', 'Role *', array('class'=>'col-md-4 control-label')) !!}
+        <div class="col-md-8">
+            {!! Form::select('role', ['property_manager' => 'Property Manager', 'normal_administrator' => 'Normal Admin'], null, ['class' => 'form-control']) !!}
+        </div>
+    </div>
 </div>
 
 <div class="col-md-4">
@@ -124,7 +131,6 @@
 
 <div class="form-group">
     <div class="col-md-12 text-center">
-        {!! Form::hidden('role', 'property_manager') !!}
         {!! Form::submit('Save',array('class'=>'btn btn-primary')) !!}
         {!! Form::reset('Reset',array('class'=>'btn btn-default')) !!}
 

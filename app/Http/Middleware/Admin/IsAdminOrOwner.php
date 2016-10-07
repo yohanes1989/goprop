@@ -38,7 +38,7 @@ class IsAdminOrOwner
         $id = $request->route('id');
         $referralInformation = ReferralInformation::findOrFail($id);
 
-        if(!($this->auth->user()->is('administrator') || ($this->auth->user()->is('property_manager') && $referralInformation->province == $this->auth->user()->profile->province)) && $referralInformation->user_id != $this->auth->user()->id){
+        if(!($this->auth->user()->is('administrator') || ($this->auth->user()->is('property_manager|normal_administrator') && $referralInformation->province == $this->auth->user()->profile->province)) && $referralInformation->user_id != $this->auth->user()->id){
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {

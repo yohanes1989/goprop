@@ -76,8 +76,8 @@ class AgentController extends Controller
 
         $currentUser = Auth::user();
 
-        if($currentUser->is('property_manager') && $currentUser->profile->province != $user->profile->province){
-            abort(401, 'Unauthorized access.');
+        if($currentUser->is('normal_administrator') || ($currentUser->is('property_manager') && $currentUser->profile->province != $user->profile->province)){
+            return redirect()->back()->withErrors(['You are not authorized to do this.']);
         }
 
         $user->load(['profile', 'profile.extendedProfile']);
@@ -93,8 +93,8 @@ class AgentController extends Controller
 
         $currentUser = Auth::user();
 
-        if($currentUser->is('property_manager') && $currentUser->profile->province != $user->profile->province){
-            abort(401, 'Unauthorized access.');
+        if($currentUser->is('normal_administrator') || ($currentUser->is('property_manager') && $currentUser->profile->province != $user->profile->province)){
+            return redirect()->back()->withErrors(['You are not authorized to do this.']);
         }
 
         $user->load(['profile', 'profile.extendedProfile']);

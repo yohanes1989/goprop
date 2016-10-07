@@ -258,7 +258,7 @@ class PropertyController extends Controller
     public function getViewExternal(Request $request, $for, $location, $property)
     {
         $propertyListingCode = last(explode('-', $property));
-        
+
         if(strpos($propertyListingCode, 'go') === false){
             $propertyObj = Property::find($propertyListingCode);
         }else{
